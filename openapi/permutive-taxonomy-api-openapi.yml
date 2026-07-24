@@ -1,0 +1,366 @@
+openapi: 3.1.0
+info:
+  title: Permutive Cohorts Taxonomy API
+  version: '2.0'
+  description: Permutive is an agentic data collaboration and activation platform for premium publishers, advertisers and agencies. This OpenAPI description was DERIVED by API Evangelist from Permutive's public developer documentation (https://developer.permutive.com/) — the operation set, paths, HTTP methods, titles and descriptions are taken verbatim from the published API reference; request/response schemas are lightly modeled where the docs do not publish a machine-readable spec. It is a discovery aid, not the authoritative Permutive contract.
+  contact:
+    name: Permutive Developer Support
+    url: https://developer.permutive.com/
+  x-apievangelist-generated: '2026-07-20'
+  x-apievangelist-method: derived
+  x-apievangelist-source: https://developer.permutive.com/
+servers:
+- url: https://api.permutive.com
+  description: Permutive API host
+security:
+- ApiKeyAuth: []
+tags:
+- name: Taxonomy
+  description: Manage second-party data imports and their segment taxonomy.
+paths:
+  /imports:
+    get:
+      tags:
+      - Taxonomy
+      operationId: getImports
+      summary: Get all imports
+      description: Retrieves all second-party data imports available to the workspace.
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /imports/{importId}:
+    get:
+      tags:
+      - Taxonomy
+      operationId: retrieveImport
+      summary: Retrieve an import
+      description: Retrieves a single second-party data import by its identifier.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /imports/{importId}/segments:
+    get:
+      tags:
+      - Taxonomy
+      operationId: getSegmentsForImport
+      summary: Get all segments for an import
+      description: Retrieves all segments for an import. This is a paginated endpoint and takes an optional pagination cursor.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+      - Taxonomy
+      operationId: createSegment
+      summary: Create a segment
+      description: Creates a new segment within the given import.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Segment'
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags:
+      - Taxonomy
+      operationId: batchUpdateSegments
+      summary: Batch update segments
+      description: Applies a batch of segment operations. Operation order is not guaranteed and no more than 5,000 operations can be contained in a single request.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /imports/{importId}/segments/{segmentId}:
+    get:
+      tags:
+      - Taxonomy
+      operationId: getSegmentById
+      summary: Get a segment by its public ID
+      description: Retrieves a single segment for a given import, identified by its globally unique public ID.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: segmentId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags:
+      - Taxonomy
+      operationId: updateSegmentById
+      summary: Update a segment by its public ID
+      description: Updates a segment for an import, identified by its globally unique public ID.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: segmentId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+      - Taxonomy
+      operationId: deleteSegmentById
+      summary: Delete a segment by its public ID
+      description: Deletes a segment for an import, identified by its globally unique public ID.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: segmentId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Segment deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /imports/{importId}/segments/code/{segmentCode}:
+    get:
+      tags:
+      - Taxonomy
+      operationId: getSegmentByCode
+      summary: Get a segment by its code
+      description: Retrieves a single segment for a given import, identified by its code.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: segmentCode
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags:
+      - Taxonomy
+      operationId: updateSegmentByCode
+      summary: Update a segment by its code
+      description: Updates a segment for an import, identified by its code.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: segmentCode
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+      - Taxonomy
+      operationId: deleteSegmentByCode
+      summary: Delete a segment by its code
+      description: Deletes a segment for an import, identified by its code.
+      parameters:
+      - name: importId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: segmentCode
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Segment deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  responses:
+    Created:
+      description: Resource created
+      content:
+        application/json:
+          schema:
+            type: object
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    OK:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    ServerError:
+      description: An unexpected error occurred on Permutive's side.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  schemas:
+    Segment:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        import_id:
+          type: string
+    Problem:
+      type: object
+      description: Error payload.
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer
+      description: Permutive workspace API key supplied as a bearer token. See https://developer.permutive.com/api/authentication for the exact header and key-provisioning details.

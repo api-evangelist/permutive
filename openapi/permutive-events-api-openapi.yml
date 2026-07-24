@@ -1,0 +1,116 @@
+openapi: 3.1.0
+info:
+  title: Permutive Cohorts Events API
+  version: '2.0'
+  description: Permutive is an agentic data collaboration and activation platform for premium publishers, advertisers and agencies. This OpenAPI description was DERIVED by API Evangelist from Permutive's public developer documentation (https://developer.permutive.com/) — the operation set, paths, HTTP methods, titles and descriptions are taken verbatim from the published API reference; request/response schemas are lightly modeled where the docs do not publish a machine-readable spec. It is a discovery aid, not the authoritative Permutive contract.
+  contact:
+    name: Permutive Developer Support
+    url: https://developer.permutive.com/
+  x-apievangelist-generated: '2026-07-20'
+  x-apievangelist-method: derived
+  x-apievangelist-source: https://developer.permutive.com/
+servers:
+- url: https://api.permutive.com
+  description: Permutive API host
+security:
+- ApiKeyAuth: []
+tags:
+- name: Events
+  description: Track first-party behavioural events into Permutive.
+paths:
+  /events:
+    post:
+      tags:
+      - Events
+      operationId: trackEvent
+      summary: Track an event
+      description: Creates a new event for a user, persisting the event in Permutive for downstream segmentation and activation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  responses:
+    Forbidden:
+      description: The API key does not have access to this resource or operation.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    TooManyRequests:
+      description: Rate limit exceeded.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    OK:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    ServerError:
+      description: An unexpected error occurred on Permutive's side.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  schemas:
+    Problem:
+      type: object
+      description: Error payload.
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+    Event:
+      type: object
+      properties:
+        user_id:
+          type: string
+        name:
+          type: string
+        properties:
+          type: object
+        time:
+          type: string
+          format: date-time
+      required:
+      - name
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer
+      description: Permutive workspace API key supplied as a bearer token. See https://developer.permutive.com/api/authentication for the exact header and key-provisioning details.
