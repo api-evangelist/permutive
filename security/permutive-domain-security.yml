@@ -1,0 +1,21 @@
+generated: '2026-07-20'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: permutive.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 25 12:10:02 2026 GMT
+  hsts: false
+- host: api.permutive.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 13 03:15:31 2026 GMT
+  hsts: null
+domains:
+- domain: permutive.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none

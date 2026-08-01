@@ -1,0 +1,19 @@
+generated: '2026-07-20'
+method: searched
+source: https://developer.permutive.com/api/versioning
+notes: >-
+  Versioning is expressed in the URI path (v1/v2 prefixes per product). Permutive
+  operates an Atlassian Statuspage at status.permutive.com. No public,
+  machine-readable deprecation policy (RFC 8594 Sunset/Deprecation headers) was
+  found, so no Deprecation pointer is emitted.
+versioning:
+  scheme: uri-path
+  current: v2
+  examples: [/v2/cohorts, /ccs/v1/segmentation, /ctx/v1/segment]
+  docs: https://developer.permutive.com/api/versioning
+status_page: https://status.permutive.com/
+sdk_release_notes:
+  javascript: https://developer.permutive.com/sdks/web/javascript-sdk/release-notes/index
+  ios: https://developer.permutive.com/sdks/mobile/ios/release-notes/index
+  android: https://developer.permutive.com/sdks/mobile/android/release-notes/index
+deprecated_operations: []

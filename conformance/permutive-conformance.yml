@@ -1,0 +1,26 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/permutive-openapi.yml
+notes: >-
+  Cross-cutting standards conformance derived from the Permutive API surface.
+  Authentication is workspace API-key (bearer), not OAuth2/OIDC. No published
+  certification program was machine-verified, so no Compliance pointer is
+  emitted from this file (a Trust Center exists — see security/).
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: API uses workspace API key (bearer token), not OAuth2 flows.
+  - id: openid-connect
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: partial
+    evidence: Error responses modeled as application/problem+json in the derived spec; provider error format not verified verbatim.
+  - id: cursor-pagination
+    conforms: true
+    evidence: Import segment listing uses a cursor query parameter.
+  - id: rest-json
+    conforms: true
+    evidence: JSON request/response over HTTPS with resource-oriented paths.
+  - id: idempotency
+    conforms: false
+    evidence: No documented idempotency-key contract.

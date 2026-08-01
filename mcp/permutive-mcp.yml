@@ -1,0 +1,34 @@
+generated: '2026-07-20'
+method: searched
+status: published
+source: https://developer.permutive.com/api/mcp/introduction
+notes: >-
+  Permutive publishes an official Model Context Protocol (MCP) server —
+  "Audience intelligence, built for AI agents" — exposing cohort and workspace
+  intelligence tools for agents. The tool set below is taken from the published
+  MCP reference (https://developer.permutive.com/api/mcp/tools). The transport
+  endpoint URL is not published verbatim in the public docs and is left unset.
+server:
+  name: permutive
+  description: Audience intelligence, built for AI agents.
+  transport: http
+  docs: https://developer.permutive.com/api/mcp/introduction
+tools:
+  - name: get_cohort_detail
+    description: Retrieve full detail for a single cohort.
+    docs: https://developer.permutive.com/api/mcp/get_cohort_detail
+  - name: get_orgs_and_workspaces
+    description: List the organizations and workspaces available to the caller.
+    docs: https://developer.permutive.com/api/mcp/get_orgs_and_workspaces
+  - name: get_workspace_details
+    description: Retrieve details for a specific workspace.
+    docs: https://developer.permutive.com/api/mcp/get_workspace_details
+  - name: list_cohorts
+    description: List cohorts in a workspace.
+    docs: https://developer.permutive.com/api/mcp/list_cohorts
+  - name: measure_audiences
+    description: Measure and size audiences across cohorts.
+    docs: https://developer.permutive.com/api/mcp/measure_audiences
+  - name: search_cohorts
+    description: Search cohorts by name or attributes.
+    docs: https://developer.permutive.com/api/mcp/search_cohorts

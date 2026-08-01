@@ -1,0 +1,16 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/permutive-openapi.yml
+skills:
+  - file: permutive-manage-cohorts.md
+    name: Manage Permutive audience cohorts
+    api: openapi/permutive-openapi.yml
+    operations: [createCohort, getCohorts, getCohort, updateCohort, deleteCohort]
+  - file: permutive-track-and-identify.md
+    name: Track events and identify Permutive users
+    api: openapi/permutive-openapi.yml
+    operations: [createUserId, trackEvent, identifyUser, retrieveIdentities]
+  - file: permutive-manage-import-taxonomy.md
+    name: Manage Permutive import segment taxonomy
+    api: openapi/permutive-openapi.yml
+    operations: [getImports, retrieveImport, getSegmentsForImport, getSegmentById, getSegmentByCode, createSegment, updateSegmentById, updateSegmentByCode, batchUpdateSegments, deleteSegmentById, deleteSegmentByCode]

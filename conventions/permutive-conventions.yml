@@ -1,0 +1,39 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/permutive-openapi.yml
+docs: https://developer.permutive.com/api/requests-and-responses
+notes: >-
+  Cross-cutting request/response semantics for the Permutive API, derived from
+  the public developer documentation and the derived OpenAPI. Idempotency is not
+  documented as a first-party contract, so no Idempotency pointer is emitted.
+authentication:
+  style: api-key
+  transport: bearer-token
+  scope: workspace
+  docs: https://developer.permutive.com/api/authentication
+pagination:
+  style: cursor
+  request_params: [cursor]
+  applies_to:
+    - GET /imports/{importId}/segments
+  docs: https://developer.permutive.com/api/taxonomy/get-segments-for-import
+batching:
+  supported: true
+  notes: >-
+    Segment taxonomy supports batch operations (PATCH /imports/{importId}/segments)
+    with a maximum of 5,000 operations per request; operation order is not
+    guaranteed.
+versioning:
+  style: uri-path
+  examples: [/v2/cohorts, /ccs/v1/segmentation, /ctx/v1/segment]
+  docs: https://developer.permutive.com/api/versioning
+error_envelope:
+  format: problem-json-like
+  reference: errors/permutive-problem-types.yml
+  docs: https://developer.permutive.com/api/errors
+rate_limiting:
+  documented: false
+cross_links:
+  authentication: authentication/permutive-authentication.yml
+  errors: errors/permutive-problem-types.yml
+  lifecycle: lifecycle/permutive-lifecycle.yml

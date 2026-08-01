@@ -1,0 +1,18 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/permutive-openapi.yml
+docs: https://developer.permutive.com/api/authentication
+notes: >-
+  Permutive APIs authenticate with a workspace-scoped API key. Cohorts, imports
+  and admin operations are authorized against the workspace that owns the key.
+summary:
+  types:
+  - http
+schemes:
+- name: ApiKeyAuth
+  type: http
+  scheme: bearer
+  description: Permutive workspace API key supplied as a bearer token. See https://developer.permutive.com/api/authentication
+    for the exact header and key-provisioning details.
+  sources:
+  - openapi/permutive-openapi.yml

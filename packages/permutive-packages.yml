@@ -1,0 +1,58 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/permutive-engineering
+notes: >-
+  First-party Permutive client libraries are published under the
+  `permutive-engineering` GitHub organization and the `@permutive-engineering`
+  npm scope. Web (JavaScript) and mobile (iOS / tvOS / Android) SDKs are the
+  primary supported integration surface; the realtime-api-client packages wrap
+  the Permutive Realtime API.
+packages:
+  - language: javascript
+    registry: npm
+    name: "@permutive-engineering/realtime-api-client"
+    url: https://www.npmjs.com/package/@permutive-engineering/realtime-api-client
+    install: npm install @permutive-engineering/realtime-api-client
+    official: true
+    description: JavaScript client for the Permutive Realtime API.
+  - language: javascript
+    registry: npm
+    name: "@permutive-engineering/realtime-api-client-react"
+    url: https://www.npmjs.com/package/@permutive-engineering/realtime-api-client-react
+    install: npm install @permutive-engineering/realtime-api-client-react
+    official: true
+    description: React hooks for the Permutive Realtime API client.
+  - language: swift
+    registry: swift-package-manager
+    name: permutive-ios-spm
+    url: https://github.com/permutive-engineering/permutive-ios-spm
+    install: "Add https://github.com/permutive-engineering/permutive-ios-spm via Swift Package Manager"
+    official: true
+    description: Permutive iOS SDK (Swift Package Manager distribution).
+  - language: swift
+    registry: swift-package-manager
+    name: permutive-tvos-spm
+    url: https://github.com/permutive-engineering/permutive-tvos-spm
+    install: "Add https://github.com/permutive-engineering/permutive-tvos-spm via Swift Package Manager"
+    official: true
+    description: Permutive tvOS SDK (Swift Package Manager distribution).
+  - language: swift
+    registry: swift-package-manager
+    name: permutive-ios-appnexus-spm
+    url: https://github.com/permutive-engineering/permutive-ios-appnexus-spm
+    install: "Add https://github.com/permutive-engineering/permutive-ios-appnexus-spm via Swift Package Manager"
+    official: true
+    description: Permutive iOS AppNexus integration (Swift Package Manager distribution).
+  - language: kotlin
+    registry: github
+    name: android-sdk-demo
+    url: https://github.com/permutive-engineering/android-sdk-demo
+    install: "See the Android SDK docs at https://developer.permutive.com/sdks/mobile/android/getting-started/installation"
+    official: true
+    description: Permutive Android SDK demo and integration reference.
+sdk_docs:
+  javascript: https://developer.permutive.com/sdks/web/javascript-sdk/overview
+  ios: https://developer.permutive.com/sdks/mobile/ios/overview
+  android: https://developer.permutive.com/sdks/mobile/android/overview
+  react_native: https://developer.permutive.com/sdks/mobile/react-native
+  ctv: https://developer.permutive.com/sdks/ctv/overview

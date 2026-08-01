@@ -1,0 +1,34 @@
+generated: '2026-07-20'
+method: derived
+format: rfc9457
+source: openapi/permutive-openapi.yml
+docs: https://developer.permutive.com/api/errors
+notes: >-
+  Problem types derived from the standard HTTP error responses modeled across
+  the Permutive API operations. Titles/remediation are generic HTTP semantics;
+  see the Permutive error reference for product-specific detail.
+problems:
+  - status: 400
+    title: Bad Request
+    detail: The request was malformed or failed validation.
+    remediation: Check the request body and parameters against the API reference.
+  - status: 401
+    title: Unauthorized
+    detail: Missing or invalid API key.
+    remediation: Supply a valid workspace API key as a bearer token.
+  - status: 403
+    title: Forbidden
+    detail: The API key does not have access to this resource or operation.
+    remediation: Use a key whose workspace owns the resource, or request elevated access.
+  - status: 404
+    title: Not Found
+    detail: The requested resource does not exist.
+    remediation: Verify the cohort, import or segment identifier.
+  - status: 429
+    title: Too Many Requests
+    detail: Rate limit exceeded.
+    remediation: Back off and retry; batch where the API supports it.
+  - status: 500
+    title: Internal Server Error
+    detail: An unexpected error occurred on Permutive's side.
+    remediation: Retry with backoff; contact support if the error persists.

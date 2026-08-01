@@ -1,8 +1,27 @@
 aid: permutive
 name: Permutive
-description: 'Permutive is a company surfaced as a portfolio company of eqt-ventures, softbank-vision-fund,
-  y-combinator and added to the API Evangelist network as a stub for enrichment. Sector: publishing. This
-  profile is a lead awaiting the enrichment pipeline.'
+description: >-
+  Permutive is an agentic data collaboration and activation platform for premium
+  publishers, advertisers and agencies. Its platform spans a Data Management
+  Platform, a Data Clean Room for privacy-safe collaboration with 150+ premium
+  publishers, AI-curated audiences, and the Halo agentic suite that scales direct
+  buying. The developer platform exposes REST APIs for event tracking, identity,
+  audience cohort management, contextual segmentation and second-party data
+  imports, plus web, mobile and CTV SDKs and an official Model Context Protocol
+  (MCP) server that makes audience intelligence available to AI agents.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://mintcdn.com/permutive/zX9G7jjpccuZZlEf/logo/permutive-logo-light.svg
 url: https://raw.githubusercontent.com/api-evangelist/permutive/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,20 +29,141 @@ x-backed-by:
 - eqt-ventures
 - softbank-vision-fund
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-developer-docs
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
 - Publishing
-apis: []
+- Advertising
+- AdTech
+- MarTech
+- Audience
+- Data Collaboration
+- Data Management Platform
+- Contextual
+- Identity
+apis:
+- aid: permutive:permutive-cohorts-api
+  name: Permutive Cohorts API
+  description: Create, read, update and delete audience cohorts.
+  humanURL: https://developer.permutive.com/api/introduction
+  baseURL: https://api.permutive.com
+  tags:
+  - Cohorts
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-cohorts-api-openapi.yml
+- aid: permutive:permutive-contextual-api
+  name: Permutive Contextual API
+  description: Retrieve contextual cohort targeting values for ad-server integration.
+  humanURL: https://developer.permutive.com/api/introduction
+  baseURL: https://api.permutive.com
+  tags:
+  - Contextual
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-contextual-api-openapi.yml
+- aid: permutive:permutive-events-api
+  name: Permutive Events API
+  description: Track first-party behavioural events into Permutive.
+  humanURL: https://developer.permutive.com/api/introduction
+  baseURL: https://api.permutive.com
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-events-api-openapi.yml
+- aid: permutive:permutive-identity-api
+  name: Permutive Identity API
+  description: Create user IDs and associate identities with a Permutive user.
+  humanURL: https://developer.permutive.com/api/introduction
+  baseURL: https://api.permutive.com
+  tags:
+  - Identity
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-identity-api-openapi.yml
+- aid: permutive:permutive-segmentation-api
+  name: Permutive Segmentation API
+  description: Cohort-based Segmentation (CCS) — evaluate a user's events into cohorts.
+  humanURL: https://developer.permutive.com/api/introduction
+  baseURL: https://api.permutive.com
+  tags:
+  - Segmentation
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-segmentation-api-openapi.yml
+- aid: permutive:permutive-taxonomy-api
+  name: Permutive Taxonomy API
+  description: Manage second-party data imports and their segment taxonomy.
+  humanURL: https://developer.permutive.com/api/introduction
+  baseURL: https://api.permutive.com
+  tags:
+  - Taxonomy
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-taxonomy-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DeveloperPortal
+  url: https://developer.permutive.com/
+- type: Documentation
+  url: https://developer.permutive.com/
+- type: APIReference
+  url: https://developer.permutive.com/api/introduction
+- type: GettingStarted
+  url: https://developer.permutive.com/introduction
+- type: Authentication
+  url: authentication/permutive-authentication.yml
+- type: Blog
+  url: https://permutive.com/resources?category=blog
+- type: GitHubOrganization
+  url: https://github.com/permutive-engineering
+- type: Support
+  url: https://support.permutive.com/
+- type: TermsOfService
+  url: https://permutive.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://permutive.com/privacy
+- type: StatusPage
+  url: https://status.permutive.com/
+- type: TrustCenter
+  url: security/permutive-trust-center.yml
+- type: MCPServer
+  url: mcp/permutive-mcp.yml
+- type: Packages
+  url: packages/permutive-packages.yml
+- type: SDKs
+  url: packages/permutive-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Conventions
+  url: conventions/permutive-conventions.yml
+- type: ErrorCatalog
+  url: errors/permutive-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/permutive-lifecycle.yml
+- type: DataModel
+  url: data-model/permutive-data-model.yml
+- type: Conformance
+  url: conformance/permutive-conformance.yml
+- type: LLMsTxt
+  url: llms/permutive-llms.txt
+- type: AgenticAccess
+  url: agentic-access/permutive-agentic-access.yml
+- type: DomainSecurity
+  url: security/permutive-domain-security.yml
 - type: Website
   url: https://permutive.com/
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 0
+  pass: local-v1

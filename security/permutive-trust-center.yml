@@ -1,0 +1,15 @@
+generated: '2026-07-20'
+method: searched
+source: https://trust.permutive.com/
+notes: >-
+  Permutive operates a public Trust Center at trust.permutive.com (verified live,
+  HTTP 200, page title "Permutive Trust Center"). The certification list is
+  served by a client-side application and could not be machine-read, so no
+  specific certifications are asserted here to avoid fabrication — consult the
+  Trust Center directly for the current SOC 2 / ISO posture.
+url: https://trust.permutive.com/
+certifications: []
+evidence:
+  - source: https://trust.permutive.com/
+    kind: trust-center
+    detail: 'HTTP 200, title "Permutive Trust Center"'

@@ -1,0 +1,24 @@
+{
+  "provider": "permutive",
+  "sources": [
+    "permutive-cohorts-api-openapi.yml",
+    "permutive-contextual-api-openapi.yml",
+    "permutive-events-api-openapi.yml",
+    "permutive-identity-api-openapi.yml",
+    "permutive-segmentation-api-openapi.yml",
+    "permutive-taxonomy-api-openapi.yml"
+  ],
+  "outputs": [
+    "permutive-cohorts-api-openapi.yml",
+    "permutive-contextual-api-openapi.yml",
+    "permutive-events-api-openapi.yml",
+    "permutive-identity-api-openapi.yml",
+    "permutive-segmentation-api-openapi.yml",
+    "permutive-taxonomy-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

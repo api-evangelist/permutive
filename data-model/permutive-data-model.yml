@@ -1,0 +1,55 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/permutive-openapi.yml
+docs: https://developer.permutive.com/concepts/overview
+notes: >-
+  Entity-relationship graph derived from the Permutive API operations and object
+  references. Core domains: identity (user), behavioural events, audience
+  cohorts, and second-party data imports with their segment taxonomy.
+entities:
+  - name: User
+    description: A Permutive user identity, addressable by user_id and aliases.
+    id_field: user_id
+  - name: Event
+    description: A behavioural event tracked against a user.
+    id_field: null
+  - name: Alias
+    description: An external identity associated with a Permutive user.
+    id_field: id
+  - name: Cohort
+    description: An audience definition built from a cohort query, owned by a workspace.
+    id_field: id
+  - name: Import
+    description: A second-party data import that carries a segment taxonomy.
+    id_field: importId
+  - name: Segment
+    description: A segment within an import, addressable by public ID or code.
+    id_field: id
+  - name: Workspace
+    description: The tenant boundary that owns cohorts, imports and API keys.
+    id_field: null
+relationships:
+  - from: Event
+    to: User
+    type: belongs_to
+    via: user_id
+  - from: Alias
+    to: User
+    type: belongs_to
+    via: user_id
+  - from: User
+    to: Alias
+    type: has_many
+    via: aliases
+  - from: Cohort
+    to: Workspace
+    type: belongs_to
+    via: workspace
+  - from: Segment
+    to: Import
+    type: belongs_to
+    via: import_id
+  - from: Import
+    to: Segment
+    type: has_many
+    via: segments
