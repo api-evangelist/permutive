@@ -112,6 +112,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/permutive-openapi-overlay.yaml
 - type: DeveloperPortal
   url: https://developer.permutive.com/
 - type: Documentation
