@@ -1,26 +1,30 @@
 aid: permutive
 name: Permutive
 description: >-
-  Permutive is an agentic data collaboration and activation platform for premium
-  publishers, advertisers and agencies. Its platform spans a Data Management
-  Platform, a Data Clean Room for privacy-safe collaboration with 150+ premium
-  publishers, AI-curated audiences, and the Halo agentic suite that scales direct
-  buying. The developer platform exposes REST APIs for event tracking, identity,
-  audience cohort management, contextual segmentation and second-party data
-  imports, plus web, mobile and CTV SDKs and an official Model Context Protocol
-  (MCP) server that makes audience intelligence available to AI agents.
+  Permutive is a predictive data collaboration and activation platform for
+  premium publishers, advertisers and agencies. Its platform spans a Data
+  Management Platform, a Data Clean Room for privacy-safe collaboration with
+  150+ premium publishers, AI-curated audiences, and the Halo agentic suite that
+  scales direct buying. The developer platform exposes six REST APIs — Events,
+  Identity, Contextual, Custom Cohort Segmentation, Cohorts and Taxonomy — plus
+  web, mobile and CTV SDKs, an anonymous documentation Model Context Protocol
+  server, and an invitation-only audience-intelligence MCP server that makes
+  cohort discovery, reach measurement and audience comparison available to AI
+  agents. Authentication is a workspace-scoped API key; every call is bounded by
+  the workspace that owns the key.
 accessModel:
-  pricing: unknown
-  onboarding: self-serve
+  pricing: enterprise
+  onboarding: sales-gated
   trial: false
   try_now: false
   public: false
-  label: Self-serve signup
-  confidence: medium
+  label: Contact sales
+  confidence: high
   source:
-  - authentication
-  generated: '2026-07-22'
-  method: derived
+  - plans/permutive-plans-pricing.yml
+  - https://permutive.com/request-a-demo
+  generated: '2026-08-13'
+  method: searched
 image: https://mintcdn.com/permutive/zX9G7jjpccuZZlEf/logo/permutive-logo-light.svg
 url: https://raw.githubusercontent.com/api-evangelist/permutive/refs/heads/main/apis.yml
 x-type: company
@@ -30,10 +34,10 @@ x-backed-by:
 - softbank-vision-fund
 - y-combinator
 x-tier: profiled
-x-tier-reason: enriched-from-developer-docs
+x-tier-reason: provider-published-openapi-and-mcp
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-08-13'
 tags:
 - Company
 - Publishing
@@ -45,127 +49,254 @@ tags:
 - Data Management Platform
 - Contextual
 - Identity
+- Segmentation
+- Agents
 apis:
 - aid: permutive:permutive-cohorts-api
   name: Permutive Cohorts API
-  description: Create, read, update and delete audience cohorts.
-  humanURL: https://developer.permutive.com/api/introduction
-  baseURL: https://api.permutive.com
+  description: >-
+    Programmatic create, read, update and delete of audience cohorts in a
+    Permutive workspace. Cohort behaviour is defined by a JSON query language;
+    cohorts carry a UUID id, a short workspace-scoped integer code, tags, state,
+    a real-time or offline segment type and a live audience size. Requires a
+    private API key; access defaults to read-only.
+  humanURL: https://docs.permutive.com/api/cohorts/introduction
+  baseURL: https://api.permutive.app/cohorts-api
   tags:
   - Cohorts
+  - Audience
   properties:
   - type: OpenAPI
     url: openapi/permutive-cohorts-api-openapi.yml
+  - type: Overlay
+    url: overlays/permutive-cohorts-api-overlay.yaml
+  - type: AgentSkill
+    name: Manage Permutive audience cohorts
+    url: skills/permutive-manage-cohorts.md
 - aid: permutive:permutive-contextual-api
   name: Permutive Contextual API
-  description: Retrieve contextual cohort targeting values for ad-server integration.
-  humanURL: https://developer.permutive.com/api/introduction
-  baseURL: https://api.permutive.com
+  description: >-
+    Retrieve contextual cohort targeting values for a page URL without
+    processing any user data, for ad-server integration. Returns cohort codes,
+    per-destination activation mappings and content classifications (categories,
+    keywords, entities, sentiment, emotion, concepts) against IAB 2.0/2.2/3.0 or
+    custom taxonomies. Safe to call for unconsented users.
+  humanURL: https://docs.permutive.com/api/contextual/introduction
+  baseURL: https://api.permutive.com/ctx/v1
   tags:
   - Contextual
+  - Advertising
   properties:
   - type: OpenAPI
     url: openapi/permutive-contextual-api-openapi.yml
 - aid: permutive:permutive-events-api
   name: Permutive Events API
-  description: Track first-party behavioural events into Permutive.
-  humanURL: https://developer.permutive.com/api/introduction
-  baseURL: https://api.permutive.com
+  description: >-
+    Track first-party behavioural events into Permutive for downstream
+    segmentation, insights and data-lake routing. Events are validated against
+    the event schema defined in the workspace; Permutive generates the event id
+    and may enrich the event before persisting it.
+  humanURL: https://docs.permutive.com/api/events/introduction
+  baseURL: https://api.permutive.app/v2.0
   tags:
   - Events
+  - Data Collection
   properties:
   - type: OpenAPI
     url: openapi/permutive-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/permutive-events-api-overlay.yaml
+  - type: AgentSkill
+    name: Track events and identify Permutive users
+    url: skills/permutive-track-and-identify.md
 - aid: permutive:permutive-identity-api
   name: Permutive Identity API
-  description: Create user IDs and associate identities with a Permutive user.
-  humanURL: https://developer.permutive.com/api/introduction
-  baseURL: https://api.permutive.com
+  description: >-
+    Mint a first-party Permutive user ID, associate external identities with it
+    (email hashes, ID5, LiveRamp RampID, UID2) as prioritised aliases, and read
+    the resolved identity set back. Publisher-scoped by design — the Permutive
+    ID does not track users across domains or devices on its own.
+  humanURL: https://docs.permutive.com/api/identity/introduction
+  baseURL: https://api.permutive.app/v2.0
   tags:
   - Identity
+  - Resolution
   properties:
   - type: OpenAPI
     url: openapi/permutive-identity-api-openapi.yml
+  - type: Overlay
+    url: overlays/permutive-identity-api-overlay.yaml
 - aid: permutive:permutive-segmentation-api
   name: Permutive Segmentation API
-  description: Cohort-based Segmentation (CCS) — evaluate a user's events into cohorts.
-  humanURL: https://developer.permutive.com/api/introduction
-  baseURL: https://api.permutive.com
+  description: >-
+    Custom Cohort Segmentation (CCS) — evaluate a batch of up to ten events for
+    a user against the workspace's cohort definitions and return the cohorts
+    they belong to plus per-destination activation values. Two modes: stateful,
+    where Permutive persists segmentation state, and stateless, where the caller
+    round-trips the state blob. For server-side, CTV and SDK-less deployments.
+  humanURL: https://docs.permutive.com/api/ccs/introduction
+  baseURL: https://api.permutive.app
   tags:
   - Segmentation
+  - Real Time
   properties:
   - type: OpenAPI
     url: openapi/permutive-segmentation-api-openapi.yml
+  - type: Overlay
+    url: overlays/permutive-segmentation-api-overlay.yaml
+  - type: AgentSkill
+    name: Segment users without a Permutive SDK
+    url: skills/permutive-segment-without-an-sdk.md
 - aid: permutive:permutive-taxonomy-api
   name: Permutive Taxonomy API
-  description: Manage second-party data imports and their segment taxonomy.
-  humanURL: https://developer.permutive.com/api/introduction
-  baseURL: https://api.permutive.com
+  description: >-
+    Manage second- and third-party data imports and the segment taxonomy inside
+    them — the mapping of partner segment codes to names, descriptions,
+    categories and CPM. Supports single-segment addressing by UUID or by partner
+    code, batch operations up to 5,000 per request, and is the only paged
+    surface on the platform.
+  humanURL: https://docs.permutive.com/api/taxonomy/introduction
+  baseURL: https://api.permutive.app/audience-api/v1
   tags:
   - Taxonomy
+  - Data Collaboration
   properties:
   - type: OpenAPI
     url: openapi/permutive-taxonomy-api-openapi.yml
+  - type: Overlay
+    url: overlays/permutive-taxonomy-api-overlay.yaml
+  - type: AgentSkill
+    name: Manage Permutive import segment taxonomy
+    url: skills/permutive-manage-import-taxonomy.md
+- aid: permutive:permutive-mcp
+  name: Permutive MCP Server
+  description: >-
+    Permutive's Model Context Protocol surface. A live, anonymous documentation
+    MCP server at https://docs.permutive.com/mcp (search, virtual-filesystem
+    query, feedback), plus an invitation-only audience-intelligence MCP server
+    exposing ten read-only tools over workspaces, Google Ad Manager campaigns,
+    cohorts and audience analysis (measure, compare, extend).
+  humanURL: https://docs.permutive.com/api/mcp/introduction
+  baseURL: https://docs.permutive.com/mcp
+  tags:
+  - MCP
+  - Agents
+  - Audience
+  properties:
+  - type: MCPServer
+    url: mcp/permutive-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/permutive-tool-crosswalk.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
-- type: Overlay
-  url: overlays/permutive-openapi-overlay.yaml
+- type: Website
+  url: https://permutive.com/
 - type: DeveloperPortal
-  url: https://developer.permutive.com/
+  url: https://docs.permutive.com/
 - type: Documentation
-  url: https://developer.permutive.com/
+  url: https://docs.permutive.com/
 - type: APIReference
-  url: https://developer.permutive.com/api/introduction
+  url: https://docs.permutive.com/api/introduction
 - type: GettingStarted
-  url: https://developer.permutive.com/introduction
-- type: Authentication
-  url: authentication/permutive-authentication.yml
+  url: https://docs.permutive.com/introduction
+- type: Quickstart
+  url: https://docs.permutive.com/implementation-overview
 - type: Blog
-  url: https://permutive.com/resources?category=blog
+  url: https://permutive.com/blog
 - type: GitHubOrganization
   url: https://github.com/permutive-engineering
 - type: Support
   url: https://support.permutive.com/
+- type: Login
+  url: https://dash.permutive.com/
 - type: TermsOfService
   url: https://permutive.com/terms-of-service
 - type: PrivacyPolicy
   url: https://permutive.com/privacy
 - type: StatusPage
   url: https://status.permutive.com/
+- type: Security
+  url: https://docs.permutive.com/governance/security
+- type: Compliance
+  url: https://trust.permutive.com/
 - type: TrustCenter
   url: security/permutive-trust-center.yml
-- type: MCPServer
-  url: mcp/permutive-mcp.yml
-- type: Packages
-  url: packages/permutive-packages.yml
-- type: SDKs
-  url: packages/permutive-packages.yml
-- type: AgentSkill
-  url: skills/_index.yml
+- type: VulnerabilityDisclosure
+  url: security/permutive-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/permutive-domain-security.yml
+- type: Authentication
+  url: authentication/permutive-authentication.yml
 - type: Conventions
   url: conventions/permutive-conventions.yml
 - type: ErrorCatalog
   url: errors/permutive-problem-types.yml
 - type: Lifecycle
   url: lifecycle/permutive-lifecycle.yml
+- type: ChangeLog
+  url: changelog/permutive-changelog.yml
 - type: DataModel
   url: data-model/permutive-data-model.yml
 - type: Conformance
   url: conformance/permutive-conformance.yml
+- type: RateLimits
+  url: rate-limits/permutive-rate-limits.yml
+- type: Plans
+  url: plans/permutive-plans-pricing.yml
+- type: Webhooks
+  url: asyncapi/permutive-webhooks.yml
+- type: Packages
+  url: packages/permutive-packages.yml
+- type: SDKs
+  url: packages/permutive-packages.yml
+- type: MCPServer
+  url: mcp/permutive-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/permutive-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/permutive-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: WellKnown
+  url: well-known/permutive-well-known.yml
 - type: LLMsTxt
   url: llms/permutive-llms.txt
 - type: AgenticAccess
   url: agentic-access/permutive-agentic-access.yml
-- type: DomainSecurity
-  url: security/permutive-domain-security.yml
-- type: Website
-  url: https://permutive.com/
+- type: Overlay
+  url: overlays/permutive-cohorts-api-overlay.yaml
+x-artifacts-without-pointers:
+  note: >-
+    These artifacts exist on disk but deliberately carry NO common[] pointer,
+    because each documents an ABSENCE. A pointer asserts the provider serves the
+    surface; wiring one here would score a gap as a presence.
+  files:
+  - {file: sandbox/permutive-sandbox.yml, withheld_type: Sandbox,
+     reason: 'Permutive publishes no sandbox, no test environment and no test credentials.'}
+  withheld_also:
+  - {type: SecurityTxt, reason: 'No RFC 9116 security.txt is served on any Permutive host.'}
+  - {type: Deprecation, reason: 'No deprecation policy and no Sunset/Deprecation header support.'}
+  - {type: Idempotency, reason: 'No idempotency key on any write operation.'}
+  - {type: AsyncAPI, reason: 'No AsyncAPI document published. The webhook contract is captured under Webhooks instead.'}
+  - {type: Pricing, reason: 'No pricing page exists; permutive.com/pricing returns 404.'}
+  - {type: CLI, reason: 'Permutive ships no first-party CLI.'}
+  - {type: Roadmap, reason: 'No public roadmap published.'}
+  - {type: Postman, reason: 'No public Permutive Postman workspace or collection found.'}
 x-enrichment:
-  date: '2026-07-20'
+  date: '2026-08-13'
   status: enriched
-  artifacts_added: 0
+  artifacts_added: 26
+  artifacts_updated: 21
   pass: local-v1
+  headline: >-
+    Found five REAL Permutive-published OpenAPI documents (22 operations) that
+    are not served at any public URL — they are mounted inside the virtual
+    filesystem of Permutive's own documentation MCP server at
+    docs.permutive.com/mcp. Also found a live A2A agent card, a
+    provider-published Agent Skill, and the real API base host
+    (api.permutive.app), which corrected the auth model, base URLs, error
+    envelope and every skill in this repo.
