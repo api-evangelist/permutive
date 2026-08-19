@@ -1,116 +1,365 @@
 openapi: 3.1.0
 info:
-  title: Permutive Cohorts Events API
-  version: '2.0'
-  description: Permutive is an agentic data collaboration and activation platform for premium publishers, advertisers and agencies. This OpenAPI description was DERIVED by API Evangelist from Permutive's public developer documentation (https://developer.permutive.com/) — the operation set, paths, HTTP methods, titles and descriptions are taken verbatim from the published API reference; request/response schemas are lightly modeled where the docs do not publish a machine-readable spec. It is a discovery aid, not the authoritative Permutive contract.
-  contact:
-    name: Permutive Developer Support
-    url: https://developer.permutive.com/
-  x-apievangelist-generated: '2026-07-20'
-  x-apievangelist-method: derived
-  x-apievangelist-source: https://developer.permutive.com/
+  title: Events API
+  version: v2
 servers:
-- url: https://api.permutive.com
-  description: Permutive API host
-security:
-- ApiKeyAuth: []
-tags:
-- name: Events
-  description: Track first-party behavioural events into Permutive.
+- url: https://api.permutive.app/v2.0
 paths:
   /events:
     post:
       tags:
-      - Events
-      operationId: trackEvent
+      - v2.0
       summary: Track an event
-      description: Creates a new event for a user, persisting the event in Permutive for downstream segmentation and activation.
+      description: This endpoint creates a new event for a user, persisting the event in Permutive for
+        downstream consumption, such as for segmentation, insights, or routing to a data lake. It validates
+        the event against the schema defined in your workspace, and generates an event ID for the event
+        and optionally enriches the event with geo, ISP, and contextual data.
+      operationId: createEvent
+      parameters:
+      - name: enrich
+        in: query
+        description: This boolean parameter determines whether to enrich the event with geo, ISP, and
+          natural language processing data. By default, this is set to `true`.
+        required: false
+        schema:
+          type: boolean
+      - name: sdkp
+        in: query
+        description: "This boolean parameter is used to describe whether the event originated from a Permutive\
+          \ SDK on a client's device, where `true` denotes the event was from an SDK and `false` denotes\
+          \ an out-of-SDK event.\n\n By default, this parameter is set to `true`. If you are interacting\
+          \ with this endpoint directly, rather than through a Permutive SDK, please set this parameter\
+          \ to `false`."
+        required: false
+        schema:
+          type: boolean
       requestBody:
-        required: true
+        description: "You must provide **either** a `user_id` **or** a non-empty list `aliases` of prioritized\
+          \ aliases to specify the user that the event belongs to.\n\n If a `user_id` is provided, it\
+          \ will be used directly to identify the user, ignoring any aliases provided. If only aliases\
+          \ are provided and none match, a new user ID is generated and the aliases are synced to it."
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Event'
+              $ref: '#/components/schemas/PostEvent'
+            examples:
+              User ID request:
+                summary: User ID request
+                description: A request to create an event for a user with a user ID.
+                value:
+                  name: Pageview
+                  user_id: 2008c38f-dece-4570-976d-87593ed001c3
+                  view_id: a55a9c8b-4a0b-4fe7-99a9-170624850501
+                  session_id: 1d145310-1338-4ff7-96dd-e6128f54cbe5
+                  properties:
+                    my_string: hello, world!
+                    my_number: 42
+                    my_boolean: true
+                    my_object:
+                      inner_property_string: nested value
+                      inner_property_integer: 69
+              Aliases request:
+                summary: Aliases request
+                description: A request to create an event for a user with aliases.
+                value:
+                  name: Pageview
+                  aliases:
+                  - priority: 0
+                    tag: email_sha256
+                    id: user@example.com
+                  - priority: 1
+                    tag: some-third-party-id-provider
+                    id: '1234567890'
+                  view_id: a55a9c8b-4a0b-4fe7-99a9-170624850501
+                  session_id: 1d145310-1338-4ff7-96dd-e6128f54cbe5
+                  properties:
+                    my_string: hello, world!
+                    my_number: 42
+                    my_boolean: true
+                    my_object:
+                      inner_property_string: nested value
+                      inner_property_integer: 69
+        required: true
       responses:
-        '200':
-          $ref: '#/components/responses/OK'
+        '201':
+          description: Event created successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/EventResponse'
+                - $ref: '#/components/schemas/EventUnenrichedResponse'
+              examples:
+                Enriched:
+                  summary: Full response when enrich=true
+                  value:
+                    name: Pageview
+                    user_id: 2008c38f-dece-4570-976d-87593ed001c3
+                    time: '2026-01-01T12:00:00.000Z'
+                    view_id: a55a9c8b-4a0b-4fe7-99a9-170624850501
+                    session_id: 1d145310-1338-4ff7-96dd-e6128f54cbe5
+                    properties:
+                      my_string: hello, world!
+                      my_number: 42
+                      my_boolean: true
+                      my_object:
+                        inner_property_string: nested value
+                        inner_property_integer: 69
+                Non-enriched:
+                  summary: Minimal response when enrich=false
+                  value:
+                    user_id: 2008c38f-dece-4570-976d-87593ed001c3
+                    time: '2026-01-01T12:00:00.000Z'
         '400':
-          $ref: '#/components/responses/BadRequest'
+          description: 'Bad request: malformed body or missing required parameters'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+              examples:
+                Invalid parameters:
+                  summary: Invalid parameters
+                  value:
+                    request_id: 550e8400-e29b-41d4-a716-446655440000
+                    error:
+                      status: BadRequest
+                      code: 1000
+                      message: The values of one or more parameters are invalid.
+                      docs: https://docs.permutive.com/api/errors
+                Missing request body:
+                  summary: Missing request body
+                  value:
+                    request_id: 550e8400-e29b-41d4-a716-446655440000
+                    error:
+                      status: BadRequest
+                      code: 1003
+                      message: A request body was expected but not found.
+                      docs: https://docs.permutive.com/api/errors
         '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
+          description: 'Unauthorized request: invalid or missing API key'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+              examples:
+                Invalid API key:
+                  summary: Invalid API key
+                  value:
+                    request_id: 550e8400-e29b-41d4-a716-446655440000
+                    error:
+                      status: Unauthorized
+                      code: 2000
+                      message: The API key provided is invalid.
+                      docs: https://docs.permutive.com/api/errors
+                Missing authentication:
+                  summary: Missing authentication
+                  value:
+                    request_id: 550e8400-e29b-41d4-a716-446655440000
+                    error:
+                      status: Unauthorized
+                      code: 2004
+                      message: The resource requires authentication, which was not supplied with the request.
+                      docs: https://docs.permutive.com/api/errors
         '500':
-          $ref: '#/components/responses/ServerError'
+          description: 'Internal server error: unexpected error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+              example:
+                request_id: 550e8400-e29b-41d4-a716-446655440000
+                error:
+                  status: InternalServerError
+                  code: 5000
+                  message: An error of unspecified nature was encountered while processing your request.
+                    Feel free to get in touch with us at support@permutive.com referencing the Request
+                    ID.
+                  docs: https://docs.permutive.com/api/errors
+      security:
+      - Header: []
+      - Parameter: []
 components:
-  responses:
-    Forbidden:
-      description: The API key does not have access to this resource or operation.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    TooManyRequests:
-      description: Rate limit exceeded.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    OK:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    ServerError:
-      description: An unexpected error occurred on Permutive's side.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   schemas:
-    Problem:
+    HttpErrorResponse:
+      title: HttpErrorResponse
       type: object
-      description: Error payload.
+      required:
+      - request_id
+      - error
       properties:
-        type:
-          type: string
-        title:
-          type: string
-        status:
-          type: integer
-        detail:
-          type: string
-    Event:
+        request_id:
+          $ref: '#/components/schemas/RequestId'
+        error:
+          type: object
+          description: Details of the error that occurred.
+          required:
+          - status
+          - code
+          - message
+          - docs
+          properties:
+            status:
+              type: string
+              enum:
+              - BadRequest
+              - Unauthorized
+              - NotFound
+              - Conflict
+              - Gone
+              - InternalServerError
+              - Forbidden
+              description: The type of error that occurred.
+            code:
+              type: integer
+              format: int32
+              description: A numeric code that identifies the error.
+            message:
+              type: string
+              description: A human-readable message describing the error.
+            docs:
+              type: string
+              format: uri
+              description: A URL to the documentation for the error.
+            cause:
+              type: string
+              description: A human-readable message describing additional details of the error.
+    PrioritizedAlias:
+      title: PrioritizedAlias
       type: object
+      required:
+      - priority
+      - tag
+      - id
+      properties:
+        priority:
+          type: integer
+          format: int32
+          description: The priority of the alias, where `0` is the highest priority.
+        tag:
+          type: string
+          description: The tag is a string used to identify the type of alias, e.g. `email_sha256` or
+            `myInternalID`.
+        id:
+          type: string
+          description: The identifier for the alias, e.g. `user@example.com` or `1234567890`.
+    RequestId:
+      title: RequestId
+      type: string
+      format: uuid
+      description: A unique identifier for the request that caused the error.
+    PostEvent:
+      title: PostEvent
+      type: object
+      required:
+      - name
       properties:
         user_id:
           type: string
+          format: uuid
+          description: "The Permutive user ID of the user that the event belongs to.\n\n If you do not\
+            \ provide a user ID, you must provide a non-empty list of aliases in the `aliases` field."
+        aliases:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrioritizedAlias'
+          minItems: 1
+          description: "A non-empty list of prioritized aliases that the user is associated with. If you\
+            \ do not provide a list of aliases, you must provide a user ID in the `user_id` field.\n\n\
+            \ Prioritized aliases allow customers to express which identifiers they consider most reliable\
+            \ or authoritative for resolving user identities.\n\n When multiple aliases are provided,\
+            \ priorities are used to determine the order in which aliases are attempted for resolution\
+            \ to a Permutive user ID, where priority `0` has the highest priority."
         name:
           type: string
+          description: The name of the event collection this event belongs to. The name is case-insensitive
+            and must only contain characters in `[a-zA-Z0-9_]`.
+        view_id:
+          type: string
+          format: uuid
+          description: The identifier for the view in which the event is taking place. This is used to
+            group events within a single page or screen view.
+        session_id:
+          type: string
+          format: uuid
+          description: The identifier for the session in which the event is taking place. This is used
+            to group events within a user session.
+        segments:
+          type: array
+          items:
+            type: integer
+          description: The list of segment codes that the user belonged to at the time of the event.
+        cohorts:
+          type: array
+          items:
+            type: string
+          description: The list of cohort IDs that the user belonged to at the time of the event.
         properties:
           type: object
+          title: JSON
+          description: The properties that belong to this event. These properties must adhere to the specific
+            schema configured for this event collection.
+    EventResponse:
+      title: Event response (regular)
+      type: object
+      required:
+      - user_id
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          description: The Permutive user ID of the user that the tracked event belongs to.
+        name:
+          type: string
+          description: The name of the event collection the tracked event belongs to. The name is case-insensitive
+            and must only contain characters in `[a-zA-Z0-9_]`.
         time:
           type: string
           format: date-time
+          description: The ISO 8601 timestamp of the event.
+        view_id:
+          type: string
+          format: uuid
+          description: The identifier for the view in which the tracked event took place.
+        session_id:
+          type: string
+          format: uuid
+          description: The identifier for the session in which the tracked event took place.
+        segments:
+          type: array
+          items:
+            type: integer
+          description: The list of segment codes that the user belonged to at the time the event was tracked.
+        cohorts:
+          type: array
+          items:
+            type: string
+          description: The list of cohort IDs that the user belonged to at the time the event was tracked.
+        properties:
+          type: object
+          title: JSON
+          description: The properties that belong to the tracked event. These properties adhere to the
+            specific schema configured for this event collection.
+    EventUnenrichedResponse:
+      title: Event response (unenriched)
+      type: object
       required:
-      - name
+      - user_id
+      - time
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          description: The Permutive user ID of the user that the tracked event belongs to.
+        time:
+          type: string
+          format: date-time
+          description: The ISO 8601 timestamp of the event.
   securitySchemes:
-    ApiKeyAuth:
-      type: http
-      scheme: bearer
-      description: Permutive workspace API key supplied as a bearer token. See https://developer.permutive.com/api/authentication for the exact header and key-provisioning details.
+    Header:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    Parameter:
+      type: apiKey
+      name: k
+      in: query

@@ -1,0 +1,1405 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Cohorts API",
+    "version": "1",
+    "description": "Programmatically view and maintain cohort definitions"
+  },
+  "servers": [
+    {
+      "url": "https://api.permutive.app/cohorts-api"
+    }
+  ],
+  "paths": {
+    "/v2/cohorts": {
+      "get": {
+        "tags": [
+          "v2"
+        ],
+        "summary": "Retrieve all cohorts",
+        "description": "By default this endpoint returns all cohorts belonging to the workspace to which the supplied API key belongs, plus any cohorts inherited from parent workspaces in the organization hierarchy. If the API key has the required access level, it is also possible to return segments belonging to child workspaces below the requesting workspace in the organization hierarchy.\n\nThe queries defining the behaviour of the cohorts are not returned from this endpoint. To retrieve the query of a given cohort, use the 'Retrieve individual cohort' endpoint.",
+        "operationId": "getV2Cohorts",
+        "parameters": [
+          {
+            "name": "include-child-workspaces",
+            "in": "query",
+            "description": "Whether to return cohorts belonging to workspaces below the requesting workspace in the organization hierarchy. Defaults to false if not specified.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of cohorts in summary form (excluding query)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SegmentSummaryApiV2WithAudience"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "38470a62-9837-4c86-bbf3-45dd6d52dd83",
+                    "code": 12345,
+                    "name": "Example Segment A",
+                    "description": "This segment is an example for documentation purposes",
+                    "tags": [
+                      "tag_a",
+                      "tag_b"
+                    ],
+                    "state": "Enabled",
+                    "workspace_id": "0bd63f73-6b67-4766-8c86-fa1d2cf87194",
+                    "segment_type": "real_time",
+                    "created_at": "2022-09-22T15:44:29.513211710Z",
+                    "last_updated_at": "2022-09-22T15:44:29.513214670Z"
+                  },
+                  {
+                    "id": "be1e0886-4a52-442f-89e5-6bf0ff652ac7",
+                    "code": 23456,
+                    "name": "Example Segment B",
+                    "description": "This is a second segment for documentation purposes",
+                    "tags": [],
+                    "state": "Enabled",
+                    "workspace_id": "0bd63f73-6b67-4766-8c86-fa1d2cf87194",
+                    "segment_type": "real_time",
+                    "live_audience_size": 10000,
+                    "created_at": "2022-09-22T15:44:29.513246606Z",
+                    "last_updated_at": "2022-09-22T15:44:29.513246784Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    "status_code": 400,
+                    "status": "Bad Request",
+                    "code": 1002,
+                    "message": "The provided request body was not structured as expected.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7235#section-3.1",
+                    "status_code": 401,
+                    "status": "Unauthorized",
+                    "code": 2005,
+                    "message": "The supplied authentication is invalid.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+                    "status_code": 403,
+                    "status": "Forbidden",
+                    "code": 2001,
+                    "message": "The API key provided does not provide access to the request operation or resource.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                    "status_code": 404,
+                    "status": "Not Found",
+                    "code": 3000,
+                    "message": "The requested resource does not exist.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    "status_code": 409,
+                    "status": "Conflict",
+                    "code": 4000,
+                    "message": "A resource with this identifier already exists.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                    "status_code": 500,
+                    "status": "Internal Server Error",
+                    "code": 5000,
+                    "message": "An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "v2"
+        ],
+        "summary": "Create cohort",
+        "description": "This endpoint allows the creation of a new cohort. The query definition is provided using the Cohort API JSON query definition format.\n\nThe cohort will belong to the workspace which owns the provided API key.",
+        "operationId": "postV2Cohorts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSegmentV2"
+              },
+              "example": {
+                "name": "Example Segment A",
+                "description": "This segment is an example for documentation purposes",
+                "query": {
+                  "event": "Pageview",
+                  "frequency": {
+                    "greater_than_or_equal_to": 2
+                  },
+                  "where": {
+                    "property": "properties.client.url",
+                    "condition": {
+                      "contains": "football"
+                    }
+                  },
+                  "during": {
+                    "the_last": {
+                      "value": 30,
+                      "unit": "days"
+                    }
+                  }
+                },
+                "tags": [
+                  "tag_a",
+                  "tag_b"
+                ],
+                "segment_type": "real_time"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Cohort in full (including query)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SegmentQueryApiV2"
+                },
+                "example": {
+                  "id": "38470a62-9837-4c86-bbf3-45dd6d52dd83",
+                  "code": 12345,
+                  "name": "Example Segment A",
+                  "description": "This segment is an example for documentation purposes",
+                  "query": {
+                    "event": "Pageview",
+                    "frequency": {
+                      "greater_than_or_equal_to": 2
+                    },
+                    "where": {
+                      "property": "properties.client.url",
+                      "condition": {
+                        "contains": "football"
+                      }
+                    },
+                    "during": {
+                      "the_last": {
+                        "value": 30,
+                        "unit": "days"
+                      }
+                    }
+                  },
+                  "tags": [
+                    "tag_a",
+                    "tag_b"
+                  ],
+                  "state": "Enabled",
+                  "segment_type": "real_time",
+                  "created_at": "2022-09-22T15:44:29.518935935Z",
+                  "last_updated_at": "2022-09-22T15:44:29.518937018Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    "status_code": 400,
+                    "status": "Bad Request",
+                    "code": 1002,
+                    "message": "The provided request body was not structured as expected.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7235#section-3.1",
+                    "status_code": 401,
+                    "status": "Unauthorized",
+                    "code": 2005,
+                    "message": "The supplied authentication is invalid.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+                    "status_code": 403,
+                    "status": "Forbidden",
+                    "code": 2001,
+                    "message": "The API key provided does not provide access to the request operation or resource.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                    "status_code": 404,
+                    "status": "Not Found",
+                    "code": 3000,
+                    "message": "The requested resource does not exist.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    "status_code": 409,
+                    "status": "Conflict",
+                    "code": 4000,
+                    "message": "A resource with this identifier already exists.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                    "status_code": 500,
+                    "status": "Internal Server Error",
+                    "code": 5000,
+                    "message": "An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v2/cohorts/{cohortId}": {
+      "get": {
+        "tags": [
+          "v2"
+        ],
+        "summary": "Retrieve individual cohort",
+        "description": "This endpoint returns details of a single cohort belonging either to the workspace that owns the requesting API key, or to a parent workspace if the requesting workspace inherits the cohort from that workspace.\n\nIf the requested cohort is not a lookalike-based cohort, the response will include the query definition.",
+        "operationId": "getV2CohortsCohortid",
+        "parameters": [
+          {
+            "name": "cohortId",
+            "in": "path",
+            "description": "Cohort UUID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "38470a62-9837-4c86-bbf3-45dd6d52dd83"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cohort in full (including query)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SegmentDetailApiV2WithAudience"
+                },
+                "example": {
+                  "id": "38470a62-9837-4c86-bbf3-45dd6d52dd83",
+                  "code": 12345,
+                  "name": "Example Segment A",
+                  "description": "This segment is an example for documentation purposes",
+                  "query": {
+                    "event": "Pageview",
+                    "frequency": {
+                      "greater_than_or_equal_to": 2
+                    },
+                    "where": {
+                      "property": "properties.client.url",
+                      "condition": {
+                        "contains": "football"
+                      }
+                    },
+                    "during": {
+                      "the_last": {
+                        "value": 30,
+                        "unit": "days"
+                      }
+                    }
+                  },
+                  "tags": [
+                    "tag_a",
+                    "tag_b"
+                  ],
+                  "state": "Enabled",
+                  "segment_type": "real_time",
+                  "live_audience_size": 10000,
+                  "created_at": "2022-09-22T15:44:29.518393971Z",
+                  "last_updated_at": "2022-09-22T15:44:29.518395049Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    "status_code": 400,
+                    "status": "Bad Request",
+                    "code": 1002,
+                    "message": "The provided request body was not structured as expected.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7235#section-3.1",
+                    "status_code": 401,
+                    "status": "Unauthorized",
+                    "code": 2005,
+                    "message": "The supplied authentication is invalid.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+                    "status_code": 403,
+                    "status": "Forbidden",
+                    "code": 2001,
+                    "message": "The API key provided does not provide access to the request operation or resource.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                    "status_code": 404,
+                    "status": "Not Found",
+                    "code": 3000,
+                    "message": "The requested resource does not exist.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    "status_code": 409,
+                    "status": "Conflict",
+                    "code": 4000,
+                    "message": "A resource with this identifier already exists.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                    "status_code": 500,
+                    "status": "Internal Server Error",
+                    "code": 5000,
+                    "message": "An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "v2"
+        ],
+        "summary": "Delete cohort",
+        "description": "This endpoint allows deleting an existing cohort. Depending on the access level of the provided API key, it can delete cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be deleted via the Cohort API.",
+        "operationId": "deleteV2CohortsCohortid",
+        "parameters": [
+          {
+            "name": "cohortId",
+            "in": "path",
+            "description": "Cohort UUID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "38470a62-9837-4c86-bbf3-45dd6d52dd83"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    "status_code": 400,
+                    "status": "Bad Request",
+                    "code": 1002,
+                    "message": "The provided request body was not structured as expected.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7235#section-3.1",
+                    "status_code": 401,
+                    "status": "Unauthorized",
+                    "code": 2005,
+                    "message": "The supplied authentication is invalid.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+                    "status_code": 403,
+                    "status": "Forbidden",
+                    "code": 2001,
+                    "message": "The API key provided does not provide access to the request operation or resource.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                    "status_code": 404,
+                    "status": "Not Found",
+                    "code": 3000,
+                    "message": "The requested resource does not exist.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    "status_code": 409,
+                    "status": "Conflict",
+                    "code": 4000,
+                    "message": "A resource with this identifier already exists.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                    "status_code": 500,
+                    "status": "Internal Server Error",
+                    "code": 5000,
+                    "message": "An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "v2"
+        ],
+        "summary": "Update cohort",
+        "description": "This endpoint allows updating an existing cohort. Depending on the access level of the provided API key, it can update cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be updated via the Cohort API.\n\nAny top level fields for which no value is provided in the request body will remain unchanged. Optional fields (currently only `description`) can be deleted by explicitly specifying `null` as the value.",
+        "operationId": "patchV2CohortsCohortid",
+        "parameters": [
+          {
+            "name": "cohortId",
+            "in": "path",
+            "description": "Cohort UUID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "38470a62-9837-4c86-bbf3-45dd6d52dd83"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSegmentV2"
+              },
+              "examples": {
+                "update all fields": {
+                  "value": {
+                    "name": "New Segment Name",
+                    "description": "New Segment Description",
+                    "query": {
+                      "event": "Pageview",
+                      "frequency": {
+                        "greater_than_or_equal_to": 2
+                      },
+                      "where": {
+                        "property": "properties.client.url",
+                        "condition": {
+                          "contains": "football"
+                        }
+                      },
+                      "during": {
+                        "the_last": {
+                          "value": 30,
+                          "unit": "days"
+                        }
+                      }
+                    },
+                    "tags": [
+                      "tag_d",
+                      "tag_e"
+                    ]
+                  }
+                },
+                "update a single field": {
+                  "value": {
+                    "name": "New Segment Name"
+                  }
+                },
+                "delete the cohort description": {
+                  "value": {
+                    "description": null
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Cohort in full (including query)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SegmentQueryApiV2"
+                },
+                "example": {
+                  "id": "38470a62-9837-4c86-bbf3-45dd6d52dd83",
+                  "code": 12345,
+                  "name": "Example Segment A",
+                  "description": "This segment is an example for documentation purposes",
+                  "query": {
+                    "event": "Pageview",
+                    "frequency": {
+                      "greater_than_or_equal_to": 2
+                    },
+                    "where": {
+                      "property": "properties.client.url",
+                      "condition": {
+                        "contains": "football"
+                      }
+                    },
+                    "during": {
+                      "the_last": {
+                        "value": 30,
+                        "unit": "days"
+                      }
+                    }
+                  },
+                  "tags": [
+                    "tag_a",
+                    "tag_b"
+                  ],
+                  "state": "Enabled",
+                  "segment_type": "real_time",
+                  "created_at": "2022-09-22T15:44:29.518935935Z",
+                  "last_updated_at": "2022-09-22T15:44:29.518937018Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    "status_code": 400,
+                    "status": "Bad Request",
+                    "code": 1002,
+                    "message": "The provided request body was not structured as expected.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7235#section-3.1",
+                    "status_code": 401,
+                    "status": "Unauthorized",
+                    "code": 2005,
+                    "message": "The supplied authentication is invalid.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+                    "status_code": 403,
+                    "status": "Forbidden",
+                    "code": 2001,
+                    "message": "The API key provided does not provide access to the request operation or resource.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                    "status_code": 404,
+                    "status": "Not Found",
+                    "code": 3000,
+                    "message": "The requested resource does not exist.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    "status_code": 409,
+                    "status": "Conflict",
+                    "code": 4000,
+                    "message": "A resource with this identifier already exists.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "b887517b-99a2-4ae0-bc32-93d1fb13d1b7",
+                  "error": {
+                    "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                    "status_code": 500,
+                    "status": "Internal Server Error",
+                    "code": 5000,
+                    "message": "An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.",
+                    "docs": "https://developer.permutive.com/reference#errors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HttpErrorResponse": {
+        "required": [
+          "requestId",
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "error": {
+            "$ref": "#/components/schemas/HttpError"
+          }
+        }
+      },
+      "HttpError": {
+        "required": [
+          "status",
+          "code",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/HttpStatus"
+          },
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "cause": {
+            "type": "string"
+          }
+        }
+      },
+      "HttpStatus": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "SegmentSummaryApiV2WithAudience": {
+        "required": [
+          "id",
+          "code",
+          "name",
+          "state",
+          "workspaceId",
+          "segmentType",
+          "createdAt",
+          "lastUpdatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "Enabled",
+              "Disabled"
+            ]
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "segmentType": {
+            "$ref": "#/components/schemas/SegmentType"
+          },
+          "liveAudienceSize": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SegmentType": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/Offline"
+          },
+          {
+            "$ref": "#/components/schemas/RealTime"
+          }
+        ]
+      },
+      "Offline": {
+        "type": "object"
+      },
+      "RealTime": {
+        "type": "object"
+      },
+      "SegmentDetailApiV2WithAudience": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SegmentLookalikeApiWithAudience"
+          },
+          {
+            "$ref": "#/components/schemas/SegmentQueryApiV2WithAudience"
+          }
+        ]
+      },
+      "SegmentLookalikeApiWithAudience": {
+        "required": [
+          "id",
+          "code",
+          "name",
+          "state",
+          "segmentType",
+          "createdAt",
+          "lastUpdatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "Enabled",
+              "Disabled"
+            ]
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "segmentType": {
+            "$ref": "#/components/schemas/SegmentType"
+          },
+          "liveAudienceSize": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SegmentQueryApiV2WithAudience": {
+        "required": [
+          "id",
+          "code",
+          "name",
+          "query",
+          "state",
+          "segmentType",
+          "createdAt",
+          "lastUpdatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "query": {
+            "$ref": "#/components/schemas/Json"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "Enabled",
+              "Disabled"
+            ]
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "segmentType": {
+            "$ref": "#/components/schemas/SegmentType"
+          },
+          "liveAudienceSize": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Json": {},
+      "CreateSegmentV2": {
+        "required": [
+          "name",
+          "query"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "query": {
+            "$ref": "#/components/schemas/Json"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "segmentType": {
+            "$ref": "#/components/schemas/SegmentType"
+          }
+        }
+      },
+      "SegmentQueryApiV2": {
+        "required": [
+          "id",
+          "code",
+          "name",
+          "query",
+          "state",
+          "segmentType",
+          "createdAt",
+          "lastUpdatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "query": {
+            "$ref": "#/components/schemas/Json"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "Enabled",
+              "Disabled"
+            ]
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "segmentType": {
+            "$ref": "#/components/schemas/SegmentType"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UpdateSegmentV2": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "$ref": "#/components/schemas/UpdateOrDelete_String"
+          },
+          "query": {
+            "$ref": "#/components/schemas/Json"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "Enabled",
+              "Disabled"
+            ]
+          }
+        }
+      },
+      "UpdateOrDelete_String": {
+        "type": "string",
+        "nullable": true
+      }
+    },
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "name": "k",
+        "in": "query"
+      }
+    }
+  }
+}

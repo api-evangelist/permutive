@@ -1,0 +1,127 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.permutive.com/guides/signals/cohorts/contextual/custom-classifications-via-webhook
+spec_type: null
+asyncapi_published: false
+notes: >-
+  Permutive publishes NO AsyncAPI document and ships no outbound event or
+  streaming API in the usual sense — there is no subscribe-to-events surface, no
+  message broker binding and no event catalogue for consumers. What it does
+  publish, in full, is ONE webhook contract, and it runs in the opposite
+  direction to the usual pattern: Permutive is the CALLER and the customer is
+  the SERVER. Permutive POSTs to an HTTPS endpoint you configure in the
+  dashboard, and your endpoint must answer with classification or taxonomy data.
+  That is a real, fully specified webhook surface with request and response
+  schemas, so it is captured here as a webhook catalogue. It is deliberately
+  NOT rendered as an AsyncAPI document — Permutive has not published one, and
+  authoring one would assert a contract Permutive does not maintain.
+  Separately, Permutive's data CONNECTIVITY layer routes collected events out
+  to customer-owned destinations (BigQuery, Snowflake, S3, GCS) via configured
+  routing rather than via a public event API; those are covered in the docs
+  under /products/connectivity and are not webhooks.
+
+direction: outbound-from-permutive
+webhook_count: 2
+
+webhooks:
+- name: classify
+  title: Classifications request
+  direction: 'Permutive → customer endpoint'
+  method: POST
+  endpoint: customer-configured HTTPS URL (Contextual › Catalog › Webhook (Custom) provider)
+  trigger: 'Sent each time Permutive needs to classify a URL.'
+  request_payload:
+    type: object
+    example: {type: classify, url: 'http://example.com'}
+    fields:
+    - {name: type, type: string, value: classify}
+    - {name: url, type: string, description: 'The URL to classify.'}
+  expected_response:
+    content_type: application/json
+    example:
+      classifications:
+      - {value: '201', type: categories, confidence: 0.72, taxonomy: 'iab_2.0'}
+    fields:
+    - {name: classifications, type: 'array of objects', required: true,
+       description: 'List containing all classifications for the current URL.'}
+    - {name: 'classifications[].value', type: string, required: true,
+       description: 'The classification value. For type `categories` on a standard taxonomy this must exactly match the IAB category ID.'}
+    - {name: 'classifications[].type', type: string, required: true,
+       enum: [categories, keywords, entities, sentiment, emotion, concepts]}
+    - {name: 'classifications[].confidence', type: number, required: false,
+       range: '0..1', description: 'Include if you have a confidence rating.'}
+    - {name: 'classifications[].taxonomy', type: string, required: 'only for categories',
+       description: 'Must match iab_2.0, iab_2.2 or iab_3.0 when a standard taxonomy is selected, otherwise the ID of your custom taxonomy.'}
+- name: taxonomies
+  title: Taxonomy request
+  direction: 'Permutive → customer endpoint'
+  method: POST
+  endpoint: same customer-configured HTTPS URL
+  trigger: >-
+    Sent when Permutive encounters a `taxonomy` value in a classification
+    response that does not match a standard taxonomy.
+  request_payload:
+    type: object
+    example: {type: taxonomies}
+  expected_response:
+    content_type: application/json
+    shape: 'array of taxonomy objects; return [] if you use no custom taxonomies'
+    example:
+    - id: my_custom_taxonomy
+      name: My Custom Taxonomy
+      url: 'http://example.com'
+      values:
+      - {id: '10', name: Books, parent: null}
+      - {id: '123', name: Comic Books, parent: '10'}
+    fields:
+    - {name: id, type: string, required: true,
+       description: 'Unique identifier; must match the `taxonomy` value returned for categories.'}
+    - {name: name, type: string, required: true, description: 'Display name of your taxonomy.'}
+    - {name: url, type: string, required: false, description: 'Optional URL with more information.'}
+    - {name: values, type: 'array of objects', required: true}
+    - {name: 'values[].id', type: string, required: true,
+       description: 'Must match the `value` you return for categories.'}
+    - {name: 'values[].name', type: string, required: true}
+    - {name: 'values[].parent', type: string, required: false,
+       description: 'The id of the parent category, for sub-categories.'}
+
+security:
+  authentication: none-documented
+  signing: none-documented
+  gap: >-
+    Permutive documents no signature, shared secret, mTLS or IP allowlist for
+    these calls, and no authentication header. A customer endpoint has no
+    published way to verify that an inbound classification request actually
+    came from Permutive. That is a real gap on a surface that must be
+    "publicly reachable" by Permutive's own requirement.
+
+enablement:
+  self_serve: false
+  note: >-
+    The Webhook (Custom) provider must be enabled for the workspace by a
+    Permutive Customer Success Manager before it appears in the dashboard.
+  configuration: 'Permutive Dashboard → Contextual → Catalog → Webhook (Custom)'
+  settings:
+  - {name: Endpoint, description: 'The publicly reachable HTTPS URL Permutive will call.'}
+  - {name: Standard Taxonomies, description: 'Which of IAB 2.0, IAB 2.2, IAB 3.0 your endpoint may return.'}
+  - {name: Selective Classifications Threshold, description: 'Restricts classification calls to high-traffic URLs, to manage quota.'}
+
+related_surfaces:
+  data_routing:
+    note: >-
+      Not webhooks. Permutive routes collected event data to customer-owned
+      warehouses on a configured schedule/stream.
+    destinations: [BigQuery, Snowflake, 'AWS S3 (batch and streaming)', 'Google Cloud Storage']
+    docs: https://docs.permutive.com/products/connectivity/routing
+  realtime_api_clients:
+    note: >-
+      @permutive-engineering/realtime-api-client wraps a Permutive Realtime API.
+      No public specification or endpoint documentation for that API was found
+      on the developer site.
+    packages: packages/permutive-packages.yml
+
+evidence:
+- {url: 'https://docs.permutive.com/guides/signals/cohorts/contextual/custom-classifications-via-webhook',
+   status: 200, fetched: '2026-08-13'}
+- {url: 'https://docs.permutive.com/llms.txt', status: 200,
+   note: 'Full documentation index enumerated; no AsyncAPI document and no event-catalogue page present.'}

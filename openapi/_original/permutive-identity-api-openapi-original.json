@@ -1,0 +1,507 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Identity API",
+    "version": "v2"
+  },
+  "servers": [
+    {
+      "url": "https://api.permutive.app/v2.0"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "v2.0"
+        ],
+        "summary": "Create a user ID",
+        "description": "This endpoint generates a new user ID that can be used to identify a user within Permutive.\n\n When you're not using an SDK, and you're interacting with this endpoint directly, it is your responsibility to store a user's ID. This endpoint responds with a Permtive user ID that can be used to identify a user within Permutive, to be stored by the client.",
+        "operationId": "createUserId",
+        "responses": {
+          "200": {
+            "description": "New user ID created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewUserId"
+                },
+                "example": {
+                  "id": "2008c38f-dece-4570-976d-87593ed001c3"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request: invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "examples": {
+                  "Invalid API key": {
+                    "summary": "Invalid API key",
+                    "value": {
+                      "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                      "error": {
+                        "status": "Unauthorized",
+                        "code": 2000,
+                        "message": "The API key provided is invalid.",
+                        "docs": "https://docs.permutive.com/api/errors"
+                      }
+                    }
+                  },
+                  "Missing authentication": {
+                    "summary": "Missing authentication",
+                    "value": {
+                      "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                      "error": {
+                        "status": "Unauthorized",
+                        "code": 2004,
+                        "message": "The resource requires authentication, which was not supplied with the request.",
+                        "docs": "https://docs.permutive.com/api/errors"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error: unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                  "error": {
+                    "status": "InternalServerError",
+                    "code": 5000,
+                    "message": "An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.",
+                    "docs": "https://docs.permutive.com/api/errors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Header": []
+          },
+          {
+            "Parameter": []
+          }
+        ]
+      }
+    },
+    "/identify": {
+      "post": {
+        "tags": [
+          "v2.0"
+        ],
+        "summary": "Identify a user",
+        "description": "Associate one or more identities with a Permutive user, allowing you to identify users in multiple ways.",
+        "operationId": "identifyUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentifyUser"
+              },
+              "example": {
+                "user_id": "2008c38f-dece-4570-976d-87593ed001c3",
+                "aliases": [
+                  {
+                    "priority": 0,
+                    "tag": "email_sha256",
+                    "id": "user@example.com"
+                  },
+                  {
+                    "priority": 1,
+                    "tag": "some-third-party-id-provider",
+                    "id": "1234567890"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resolved identity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResolvedIdentity"
+                },
+                "example": {
+                  "user_id": "2008c38f-dece-4570-976d-87593ed001c3"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request: invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "examples": {
+                  "Invalid API key": {
+                    "summary": "Invalid API key",
+                    "value": {
+                      "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                      "error": {
+                        "status": "Unauthorized",
+                        "code": 2000,
+                        "message": "The API key provided is invalid.",
+                        "docs": "https://docs.permutive.com/api/errors"
+                      }
+                    }
+                  },
+                  "Missing authentication": {
+                    "summary": "Missing authentication",
+                    "value": {
+                      "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                      "error": {
+                        "status": "Unauthorized",
+                        "code": 2004,
+                        "message": "The resource requires authentication, which was not supplied with the request.",
+                        "docs": "https://docs.permutive.com/api/errors"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error: unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                  "error": {
+                    "status": "InternalServerError",
+                    "code": 5000,
+                    "message": "An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.",
+                    "docs": "https://docs.permutive.com/api/errors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Header": []
+          },
+          {
+            "Parameter": []
+          }
+        ]
+      }
+    },
+    "/users/{userId}/aliases": {
+      "get": {
+        "tags": [
+          "v2.0"
+        ],
+        "summary": "Retrieve user identities",
+        "description": "Retrieves all identities available for a given user.",
+        "operationId": "getIdentities",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "The Permutive user ID of the user to retrieve identities for.",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "2008c38f-dece-4570-976d-87593ed001c3"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of resolved identities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdentityResponse"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "user@example.com",
+                    "tag": "email",
+                    "permutive_id": "2008c38f-dece-4570-976d-87593ed001c3"
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request: invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "examples": {
+                  "Invalid API key": {
+                    "summary": "Invalid API key",
+                    "value": {
+                      "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                      "error": {
+                        "status": "Unauthorized",
+                        "code": 2000,
+                        "message": "The API key provided is invalid.",
+                        "docs": "https://docs.permutive.com/api/errors"
+                      }
+                    }
+                  },
+                  "Missing authentication": {
+                    "summary": "Missing authentication",
+                    "value": {
+                      "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                      "error": {
+                        "status": "Unauthorized",
+                        "code": 2004,
+                        "message": "The resource requires authentication, which was not supplied with the request.",
+                        "docs": "https://docs.permutive.com/api/errors"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden request: insufficient API key permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                  "error": {
+                    "status": "Unauthorized",
+                    "code": 2001,
+                    "message": "The API key provided does not provide access to the request operation or resource.",
+                    "docs": "https://docs.permutive.com/api/errors"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error: unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpErrorResponse"
+                },
+                "example": {
+                  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+                  "error": {
+                    "status": "InternalServerError",
+                    "code": 5000,
+                    "message": "An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.",
+                    "docs": "https://docs.permutive.com/api/errors"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Header": []
+          },
+          {
+            "Parameter": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HttpErrorResponse": {
+        "title": "HttpErrorResponse",
+        "type": "object",
+        "required": [
+          "request_id",
+          "error"
+        ],
+        "properties": {
+          "request_id": {
+            "$ref": "#/components/schemas/RequestId"
+          },
+          "error": {
+            "type": "object",
+            "description": "Details of the error that occurred.",
+            "required": [
+              "status",
+              "code",
+              "message",
+              "docs"
+            ],
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "BadRequest",
+                  "Unauthorized",
+                  "NotFound",
+                  "Conflict",
+                  "Gone",
+                  "InternalServerError",
+                  "Forbidden"
+                ],
+                "description": "The type of error that occurred."
+              },
+              "code": {
+                "type": "integer",
+                "format": "int32",
+                "description": "A numeric code that identifies the error."
+              },
+              "message": {
+                "type": "string",
+                "description": "A human-readable message describing the error."
+              },
+              "docs": {
+                "type": "string",
+                "format": "uri",
+                "description": "A URL to the documentation for the error."
+              },
+              "cause": {
+                "type": "string",
+                "description": "A human-readable message describing additional details of the error."
+              }
+            }
+          }
+        }
+      },
+      "PrioritizedAlias": {
+        "title": "PrioritizedAlias",
+        "type": "object",
+        "required": [
+          "priority",
+          "tag",
+          "id"
+        ],
+        "properties": {
+          "priority": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The priority of the alias, where `0` is the highest priority."
+          },
+          "tag": {
+            "type": "string",
+            "description": "The tag is a string used to identify the type of alias, e.g. `email_sha256` or `myInternalID`."
+          },
+          "id": {
+            "type": "string",
+            "description": "The identifier for the alias, e.g. `user@example.com` or `1234567890`."
+          }
+        }
+      },
+      "RequestId": {
+        "title": "RequestId",
+        "type": "string",
+        "format": "uuid",
+        "description": "A unique identifier for the request that caused the error."
+      },
+      "NewUserId": {
+        "title": "User ID response",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The newly generated Permutive user ID."
+          }
+        }
+      },
+      "IdentifyUser": {
+        "title": "Identify response",
+        "type": "object",
+        "required": [
+          "user_id",
+          "aliases"
+        ],
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The Permutive user ID currently assigned to the user."
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrioritizedAlias"
+            },
+            "description": "A list of prioritized aliases that the user is associated with. If no aliases are provided, the user ID will be returned."
+          }
+        }
+      },
+      "ResolvedIdentity": {
+        "title": "Resolved identity",
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The resolved user ID."
+          }
+        }
+      },
+      "IdentityResponse": {
+        "title": "Identity response",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The identity value."
+          },
+          "tag": {
+            "type": "string",
+            "description": "The identity tag/type."
+          },
+          "permutive_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The resolved Permutive user ID."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Header": {
+        "type": "apiKey",
+        "name": "X-API-Key",
+        "in": "header"
+      },
+      "Parameter": {
+        "type": "apiKey",
+        "name": "k",
+        "in": "query"
+      }
+    }
+  }
+}

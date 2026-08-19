@@ -1,39 +1,171 @@
-generated: '2026-07-20'
-method: derived
-source: openapi/permutive-openapi.yml
-docs: https://developer.permutive.com/api/requests-and-responses
+generated: '2026-08-13'
+method: searched
+source: https://docs.permutive.com/api/requests-and-responses
+docs:
+  requests_and_responses: https://docs.permutive.com/api/requests-and-responses
+  authentication: https://docs.permutive.com/api/authentication
+  versioning: https://docs.permutive.com/api/versioning
+  errors: https://docs.permutive.com/api/errors
 notes: >-
-  Cross-cutting request/response semantics for the Permutive API, derived from
-  the public developer documentation and the derived OpenAPI. Idempotency is not
-  documented as a first-party contract, so no Idempotency pointer is emitted.
+  Cross-cutting request/response semantics for the Permutive API, read from
+  Permutive's own developer documentation and cross-checked against the five
+  OpenAPI documents Permutive publishes. This supersedes the 2026-07-20 file,
+  which was derived from an API Evangelist-authored spec and got the auth style
+  (bearer, wrong), the base URL (api.permutive.com, superseded) and the error
+  envelope (RFC 9457-ish, wrong) all incorrect.
+  IDEMPOTENCY IS NOT SUPPORTED. Permutive documents no idempotency key, no
+  request-replay contract and no safe-retry semantics on any write operation,
+  and none of the five specs declares an Idempotency-Key parameter. No
+  Idempotency pointer is emitted.
+
+base_url:
+  canonical: https://api.permutive.app/
+  legacy: https://api.permutive.com
+  legacy_note: >-
+    Permutive's own words: "Customers who have been with Permutive longer may
+    have deployments with a base URL of https://api.permutive.com. Permutive
+    continues to support this address but we recommend and ask that new
+    deployments use the .app base URL."
+  per_service:
+  - {api: Events, server: 'https://api.permutive.app/v2.0'}
+  - {api: Identity, server: 'https://api.permutive.app/v2.0'}
+  - {api: Segmentation (CCS), server: 'https://api.permutive.app'}
+  - {api: Cohorts, server: 'https://api.permutive.app/cohorts-api'}
+  - {api: Taxonomy, server: 'https://api.permutive.app/audience-api/v1'}
+  - {api: Contextual, server: 'https://api.permutive.com/ctx/v1',
+     note: 'The contextual reference still documents the .com host.'}
+
 authentication:
   style: api-key
-  transport: bearer-token
+  transport: [header, query]
+  header: X-API-Key
+  query_param: k
+  key_format: UUID v4
+  key_grades: [public, private]
   scope: workspace
-  docs: https://developer.permutive.com/api/authentication
+  reference: authentication/permutive-authentication.yml
+
+content_types:
+  request: application/json
+  response: application/json
+  note: All data exchanged is JSON, including errors.
+
+field_types:
+  resource_ids: UUID v4
+  user_ids: UUID v4
+  session_and_view_ids: UUID v4
+  timestamps: ISO 8601
+
 pagination:
-  style: cursor
-  request_params: [cursor]
+  style: opaque-token
+  documented: partial
+  request_params: [pagination_token]
+  response_fields: [pagination.nextToken, pagination.totalCount, elements]
   applies_to:
-    - GET /imports/{importId}/segments
-  docs: https://developer.permutive.com/api/taxonomy/get-segments-for-import
+  - 'GET /imports/{importId}/segments (Taxonomy API) — operationId getImportsImportidSegments'
+  example_token: 'MTIzNA=='
+  note: >-
+    Only the Taxonomy API's segment listing is paged. Omit `pagination_token`
+    to get the first page; follow `pagination.nextToken` for subsequent pages.
+    GET /v2/cohorts returns the full cohort set with no paging parameters at
+    all, which is a real scaling ceiling for large workspaces. The 2026-07-20
+    profile recorded the parameter as `cursor`; the published spec names it
+    `pagination_token`.
+
 batching:
   supported: true
-  notes: >-
-    Segment taxonomy supports batch operations (PATCH /imports/{importId}/segments)
-    with a maximum of 5,000 operations per request; operation order is not
-    guaranteed.
+  limits:
+  - {surface: 'CCS API (/ccs/v1/segmentation, /ccs/v1/segmentation/stateless)', max: 10,
+     unit: events per request,
+     note: 'Permutive: "Each request can include up to 10 events. For larger batches, split your events across multiple requests."'}
+  - {surface: 'Taxonomy API (PATCH /imports/{importId}/segments)', max: 5000,
+     unit: operations per request,
+     note: 'Batch segment update. Operation order is not guaranteed.'}
+
+idempotency:
+  supported: false
+  header: null
+  evidence: >-
+    No idempotency key is documented on any endpoint and no
+    Idempotency-Key parameter appears in any of the five published OpenAPI
+    documents. Retrying a POST /events or POST /v2/cohorts is not safe by
+    contract.
+
 versioning:
-  style: uri-path
-  examples: [/v2/cohorts, /ccs/v1/segmentation, /ctx/v1/segment]
-  docs: https://developer.permutive.com/api/versioning
+  scheme: uri-path
+  current: '2.0'
+  policy: semver
+  policy_statement: >-
+    "Versions that have the same MAJOR number are backwards compatible. For
+    instance, v2.0 and v2.1 are guaranteed to be backwards compatible, but v2.1
+    adds new features and/or routes. Versions v2.x and v3.x are not guaranteed
+    to be backwards compatible."
+  examples: ['/v2.0/events', '/v2.0/users', '/cohorts-api/v2/cohorts', '/audience-api/v1/imports',
+    '/ccs/v1/segmentation', '/ctx/v1/segment']
+  inconsistency: >-
+    The version segment does not sit at a consistent position across services:
+    Events and Identity carry it in the base path (/v2.0), Cohorts and CCS
+    carry it after a service prefix, and Taxonomy carries it in the base path
+    (/audience-api/v1). Permutive's own rule — "the version is specified in the
+    URL at the leftmost (highest) scope of the path" — holds only for Events
+    and Identity.
+  docs: https://docs.permutive.com/api/versioning
+
 error_envelope:
-  format: problem-json-like
+  format: custom-json
+  rfc9457: false
+  shape:
+    request_id: 'UUID v4 correlation id, guaranteed on every error'
+    error.status: 'HTTP reason phrase, e.g. "Unauthorized"'
+    error.code: 'Numeric Permutive error subcode, e.g. 2000'
+    error.message: 'Human-readable message'
+    error.cause: 'Optional additional cause'
+    error.docs: 'URL to the error reference for this subcode'
+  guarantees: >-
+    "Every field is guaranteed, other than `cause` which is optional."
   reference: errors/permutive-problem-types.yml
-  docs: https://developer.permutive.com/api/errors
+  docs: https://docs.permutive.com/api/errors
+
+request_tracing:
+  correlation_field: request_id
+  location: error response body
+  note: >-
+    Permutive asks you to quote `request_id` when contacting support about an
+    API error. There is no documented request-id RESPONSE HEADER on successful
+    calls, so a client cannot correlate a 2xx.
+
 rate_limiting:
   documented: false
+  reference: rate-limits/permutive-rate-limits.yml
+  note: >-
+    Rate limits exist but are per-workspace and disclosed only through a
+    Permutive representative. No limit values, no response headers and no 429
+    semantics are published. The Contextual API's own error table does not even
+    list 429.
+
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: partial
+  note: >-
+    Cohorts carry `description` and `tags`; import segments carry name,
+    description and code. There is no generic customer-defined `metadata` bag.
+
+consent:
+  server_side_gate: false
+  note: >-
+    A cross-cutting semantic specific to this domain. Permutive documents that
+    the CCS API "processes all events it receives; there is no server-side
+    consent gate" — enforcing consent is the caller's responsibility. The
+    Contextual API is safe to call for all users because it evaluates content,
+    not behaviour.
+  docs: https://docs.permutive.com/governance/consent
+
 cross_links:
   authentication: authentication/permutive-authentication.yml
   errors: errors/permutive-problem-types.yml
   lifecycle: lifecycle/permutive-lifecycle.yml
+  rate_limits: rate-limits/permutive-rate-limits.yml
+  conformance: conformance/permutive-conformance.yml

@@ -1,0 +1,349 @@
+{
+  "item": [
+    {
+      "id": "d767f936-213a-4796-8b00-3a609520ad85",
+      "name": "v2.0",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "094fc80d-65c4-49ba-ba02-e49cf0415646",
+          "name": "Track an event",
+          "request": {
+            "name": "Track an event",
+            "description": {
+              "content": "This endpoint creates a new event for a user, persisting the event in Permutive for downstream consumption, such as for segmentation, insights, or routing to a data lake. It validates the event against the schema defined in your workspace, and generates an event ID for the event and optionally enriches the event with geo, ISP, and contextual data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "enrich",
+                  "value": "<boolean>",
+                  "description": "This boolean parameter determines whether to enrich the event with geo, ISP, and natural language processing data. By default, this is set to `true`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sdkp",
+                  "value": "<boolean>",
+                  "description": "This boolean parameter is used to describe whether the event originated from a Permutive SDK on a client's device, where `true` denotes the event was from an SDK and `false` denotes an out-of-SDK event.\n\n By default, this parameter is set to `true`. If you are interacting with this endpoint directly, rather than through a Permutive SDK, please set this parameter to `false`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"user_id\": \"<uuid>\",\n  \"aliases\": [\n    {\n      \"priority\": \"<integer>\",\n      \"tag\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  ],\n  \"view_id\": \"<uuid>\",\n  \"session_id\": \"<uuid>\",\n  \"segments\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"cohorts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"properties\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "317c4963-d4b2-4e1c-9a9b-7b06f3f52e61",
+              "name": "Event created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "enrich",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sdkp",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Pageview\",\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n  \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n  \"properties\": {\n    \"my_string\": \"hello, world!\",\n    \"my_number\": 42,\n    \"my_boolean\": true,\n    \"my_object\": {\n      \"inner_property_string\": \"nested value\",\n      \"inner_property_integer\": 69\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Pageview\",\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"time\": \"2026-01-01T12:00:00.000Z\",\n  \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n  \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n  \"properties\": {\n    \"my_string\": \"hello, world!\",\n    \"my_number\": 42,\n    \"my_boolean\": true,\n    \"my_object\": {\n      \"inner_property_string\": \"nested value\",\n      \"inner_property_integer\": 69\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74f3e7a9-77e2-4b19-8f71-ad6428a1b016",
+              "name": "Bad request: malformed body or missing required parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "enrich",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sdkp",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Pageview\",\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n  \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n  \"properties\": {\n    \"my_string\": \"hello, world!\",\n    \"my_number\": 42,\n    \"my_boolean\": true,\n    \"my_object\": {\n      \"inner_property_string\": \"nested value\",\n      \"inner_property_integer\": 69\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"error\": {\n    \"status\": \"BadRequest\",\n    \"code\": 1000,\n    \"message\": \"The values of one or more parameters are invalid.\",\n    \"docs\": \"https://docs.permutive.com/api/errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4a8785d-156a-4966-946c-6034545498ab",
+              "name": "Unauthorized request: invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "enrich",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sdkp",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Pageview\",\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n  \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n  \"properties\": {\n    \"my_string\": \"hello, world!\",\n    \"my_number\": 42,\n    \"my_boolean\": true,\n    \"my_object\": {\n      \"inner_property_string\": \"nested value\",\n      \"inner_property_integer\": 69\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"error\": {\n    \"status\": \"Unauthorized\",\n    \"code\": 2000,\n    \"message\": \"The API key provided is invalid.\",\n    \"docs\": \"https://docs.permutive.com/api/errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f675cbad-6ce0-41bb-a12a-cd6af5eb113b",
+              "name": "Internal server error: unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "enrich",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sdkp",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Pageview\",\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n  \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n  \"properties\": {\n    \"my_string\": \"hello, world!\",\n    \"my_number\": 42,\n    \"my_boolean\": true,\n    \"my_object\": {\n      \"inner_property_string\": \"nested value\",\n      \"inner_property_integer\": 69\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"error\": {\n    \"status\": \"InternalServerError\",\n    \"code\": 5000,\n    \"message\": \"An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.\",\n    \"docs\": \"https://docs.permutive.com/api/errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.permutive.app/v2.0",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fead8c33-1cd9-4134-b083-f33714d404fe",
+    "name": "Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

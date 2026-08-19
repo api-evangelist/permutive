@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Custom Cohort Segmentation API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API version 1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Segment user based on provided events and pre-existing state",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.permutive.app/ccs/v1/segmentation",
+            "params": [
+              {
+                "name": "activations",
+                "value": "",
+                "type": "query",
+                "description": "Return a list of activated cohorts in the response"
+              },
+              {
+                "name": "synchronous-validation",
+                "value": "",
+                "type": "query",
+                "description": "Validate provided event(s) against their schema before proceeding with segmentation.\n\nBy default validation is performed asynchronously after segmentation has been performed and the response has been returned. This can make it difficult to debug issues with invalid events.\n\nIt is recommended to use this option only during development and debugging, as validation can be expensive and slow."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "k",
+              "value": "{{k}}",
+              "placement": "query"
+            }
+          },
+          "docs": "This endpoint accepts a list of events for a given user and combines them with any pre-existing state for the user to determine the full list of cohorts of which they are a member. State is also persisted, to be applied to subsequent requests for the same user.\n\nEvents provided to this endpoint are published to the Permutive Events API, meaning that they will be reflected in other areas of Permutive, for example Insights.\n"
+        },
+        {
+          "info": {
+            "name": "Segment user based on provided events and state only",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.permutive.app/ccs/v1/segmentation/stateless",
+            "params": [
+              {
+                "name": "synchronous-validation",
+                "value": "",
+                "type": "query",
+                "description": "Validate provided event(s) against their schema before proceeding with segmentation.\n\nBy default validation is performed asynchronously after segmentation has been performed and the response has been returned. This can make it difficult to debug issues with invalid events.\n\nIt is recommended to use this option only during development and debugging, as validation can be expensive and slow."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "k",
+              "value": "{{k}}",
+              "placement": "query"
+            }
+          },
+          "docs": "This endpoint accepts a list of events for a given user and optionally some pre-existing state for the user. It uses these to determine the full list of cohorts of which they are a member, and returns these along with the updated state for the user. State is not persisted, so will not be used in the next request unless it is passed back in as part of that request.\n\nIt is likely that this endpoint is more performant than the stateful segmentation endpoint, since it does not need to read state for"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

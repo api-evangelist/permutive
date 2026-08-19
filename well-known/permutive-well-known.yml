@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: probed
+notes: >-
+  /.well-known/ discovery probed anonymously across every Permutive host in
+  apis.yml plus every OpenAPI servers[] host. Two hosts answer with REAL
+  documents: permutive.com (the WordPress marketing site) serves RFC 8414
+  OAuth authorization-server metadata and RFC 9728 protected-resource metadata
+  for a WordPress-plugin MCP OAuth server, and docs.permutive.com serves an A2A
+  agent card, an MCP descriptor and a provider-published Agent Skill.
+  IMPORTANT — two hosts are SPA catch-alls that answer HTTP 200 with an HTML
+  shell for EVERY /.well-known/* path (developer.permutive.com, which 301s to
+  docs.permutive.com, and trust.permutive.com, the Vanta-hosted trust centre).
+  Those 200s are recorded below as `html_shell: true` and are treated as
+  MISSES, not as served documents.
+hosts:
+- host: https://permutive.com
+  role: marketing site (WordPress)
+  documents:
+  - {path: /.well-known/oauth-authorization-server, status: 200, content_type: application/json,
+     file: permutive-oauth-authorization-server.json, spec: RFC 8414}
+  - {path: /.well-known/oauth-protected-resource, status: 200, content_type: application/json,
+     file: permutive-oauth-protected-resource.json, spec: RFC 9728}
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://docs.permutive.com
+  role: developer documentation (Mintlify)
+  documents:
+  - {path: /.well-known/agent-card.json, status: 200, content_type: application/json,
+     file: ../a2a/permutive-agent-card.json, spec: A2A 1.0.0}
+  - {path: /.well-known/mcp.json, status: 200, content_type: application/json,
+     file: permutive-mcp.json}
+  - {path: /.well-known/agent-skills/permutive/skill.md, status: 200, content_type: text/markdown,
+     file: ../skills/permutive-provider-published-skill.md}
+  - {path: /.well-known/security.txt, status: 404}
+- host: https://api.permutive.com
+  role: legacy API host
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://developer.permutive.com
+  role: retired docs hostname — 301 redirects to docs.permutive.com
+  html_shell: true
+  documents:
+  - {path: /.well-known/security.txt, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/openid-configuration, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/oauth-authorization-server, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/oauth-protected-resource, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/api-catalog, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/ai-plugin.json, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/agent-card.json, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/agent.json, status: 200, html_shell: true, counted: false}
+- host: https://trust.permutive.com
+  role: Vanta-hosted trust centre
+  html_shell: true
+  documents:
+  - {path: /.well-known/security.txt, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/agent-card.json, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/agent.json, status: 200, html_shell: true, counted: false}
+  - {path: /.well-known/api-catalog, status: 200, html_shell: true, counted: false}
+findings:
+  real_documents: 5
+  security_txt_served: false
+  oauth_metadata:
+    issuer: https://permutive.com
+    authorization_endpoint: https://permutive.com/oauth/authorize
+    token_endpoint: https://permutive.com/oauth/token
+    revocation_endpoint: https://permutive.com/oauth/revoke
+    grant_types: [authorization_code, refresh_token]
+    code_challenge_methods: [S256]
+    scopes: [mcp]
+    protected_resource: https://permutive.com/wp-json/mcp/mcp-oauth-server
+    note: >-
+      This OAuth surface belongs to an MCP plugin on Permutive's WordPress
+      marketing site, NOT to the Permutive product API (which authenticates with
+      workspace API keys) and NOT to the audience-intelligence MCP server. It is
+      recorded because the documents are genuinely served and machine-readable,
+      but it must not be read as the Permutive API authorization server.
+x-evidence:
+  checked: '2026-08-13'

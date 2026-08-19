@@ -1,0 +1,134 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/permutive-mcp.yml + openapi/*.yml
+notes: >-
+  Binds each Permutive MCP tool to the OpenAPI operation(s) that back it. The
+  headline finding is a genuine surface DIVERGENCE, not a gap to paper over:
+  Permutive's audience-intelligence MCP server is an analytics surface
+  (measure, compare, extend, search-by-natural-language) and almost none of it
+  is reachable through the published REST APIs. Only the cohort-listing and
+  cohort-detail tools have REST equivalents. Conversely the entire write side
+  of the REST platform — create/update/delete cohorts, track events, identify
+  users, manage import taxonomies — has no MCP tool at all, which is consistent
+  with Permutive stating the MCP tools are read-only.
+  Input schemas for the audience MCP tools could not be introspected (the
+  server is invitation-only), so bindings are by name and published semantics
+  and `confidence` is set honestly.
+
+surfaces:
+  openapi:
+    files:
+    - openapi/permutive-cohorts-api-openapi.yml
+    - openapi/permutive-taxonomy-api-openapi.yml
+    - openapi/permutive-identity-api-openapi.yml
+    - openapi/permutive-events-api-openapi.yml
+    - openapi/permutive-segmentation-api-openapi.yml
+    - openapi/permutive-contextual-api-openapi.yml
+    provenance: >-
+      Five of the six are Permutive-published OpenAPI documents recovered from
+      the documentation MCP server's virtual filesystem; the contextual spec is
+      API Evangelist-derived from the published reference.
+    gated: false
+  graphql:
+    present: false
+  mcp:
+  - {name: permutive-docs, url: 'https://docs.permutive.com/mcp', gated: false, tools_list: probed}
+  - {name: permutive-audience-intelligence, url: null, gated: true,
+     tools_list: 'not introspectable — invitation-only alpha', reference: 'https://docs.permutive.com/api/mcp/tools'}
+
+crosswalk:
+- tool: list_cohorts
+  server: permutive-audience-intelligence
+  category: cohorts
+  rest: [getV2Cohorts]
+  binding: rest
+  confidence: medium
+  note: >-
+    Both list the cohorts visible to the caller. The MCP tool adds filtering
+    (type, state, tags, subject entity, user-count range), ordering and paging
+    plus a 30-day unique-user estimate that GET /v2/cohorts does not return, and
+    it spans multiple workspaces where the REST operation is scoped to the
+    API key's workspace (plus inherited/child workspaces via
+    include-child-workspaces).
+- tool: get_cohort_detail
+  server: permutive-audience-intelligence
+  category: cohorts
+  rest: [getV2CohortsCohortid]
+  binding: rest
+  confidence: medium
+  note: >-
+    The REST operation returns a single cohort including its query definition;
+    the MCP tool returns metadata for MULTIPLE cohorts at once (name, type,
+    state, tags, subject entity, description, creation time, owning workspace,
+    workspace availability) and does not return the query. Fan-out mapping.
+- tool: search_cohorts
+  server: permutive-audience-intelligence
+  category: cohorts
+  rest: [getV2Cohorts]
+  binding: rest
+  confidence: low
+  note: >-
+    Natural-language cohort search. There is no REST search operation; the
+    closest published primitive is retrieving all cohorts and filtering
+    client-side, which is not the same capability. Recorded as a weak binding
+    rather than mcp_only because the underlying corpus is the same cohort set.
+- tool: search_permutive
+  server: permutive-docs
+  category: documentation
+  rest: []
+  binding: none
+  confidence: high
+  note: Documentation search. No API operation backs it and none should.
+- tool: query_docs_filesystem_permutive
+  server: permutive-docs
+  category: documentation
+  rest: []
+  binding: none
+  confidence: high
+- tool: submit_feedback
+  server: permutive-docs
+  category: documentation
+  rest: []
+  binding: none
+  confidence: high
+
+mcp_only:
+- {tool: get_orgs_and_workspaces, reason: 'No public REST operation exposes the organization/workspace hierarchy. Workspace scope is implicit in the API key.'}
+- {tool: get_workspace_details, reason: 'Workspace metadata, publisher domains, cohort tags and reach breakdowns are not exposed by any published REST operation.'}
+- {tool: get_campaign, reason: 'Google Ad Manager campaign delivery. Permutive reads GAM via the GAM reporting API; there is no Permutive REST endpoint for campaigns.'}
+- {tool: list_campaigns, reason: 'Same as get_campaign — GAM campaign inventory has no REST equivalent.'}
+- {tool: measure_audiences, reason: 'Audience reach measurement (users, page views) is an analytics capability with no REST operation.'}
+- {tool: compare_audience, reason: 'Overlap / index / net-new analysis has no REST operation.'}
+- {tool: find_audience_extensions, reason: 'Correlation-based cohort discovery has no REST operation.'}
+
+rest_only:
+- capability: Cohort authoring
+  operations: [postV2Cohorts, patchV2CohortsCohortid, deleteV2CohortsCohortid]
+  reason: The MCP tools are read-only by design; cohort creation, mutation and deletion are REST-only.
+- capability: Event collection
+  operations: [createEvent]
+  reason: Real-time event ingestion is a data-plane operation, not an agent tool.
+- capability: Identity resolution
+  operations: [createUserId, identifyUser, getIdentities]
+  reason: Identity write/read has no MCP tool.
+- capability: Real-time segmentation
+  operations: [postCcsV1Segmentation, postCcsV1SegmentationStateless]
+  reason: Per-request user segmentation is a data-plane operation.
+- capability: Second-party taxonomy management
+  operations: [getImports, getImportsImportid, getImportsImportidSegments, postImportsImportidSegments,
+    patchImportsImportidSegments, getImportsImportidSegmentsSegmentid, patchImportsImportidSegmentsSegmentid,
+    deleteImportsImportidSegmentsSegmentid, getImportsImportidSegmentsCodeSegmentcode,
+    patchImportsImportidSegmentsCodeSegmentcode, deleteImportsImportidSegmentsCodeSegmentcode]
+  reason: The entire Taxonomy API is REST-only; no MCP tool touches imports or segments.
+- capability: Contextual targeting
+  operations: [getContextualSegments]
+  reason: Contextual cohort retrieval for ad servers is a data-plane operation with no MCP tool.
+
+coverage:
+  tools_named: 13
+  tools_bound_to_rest: 3
+  tools_mcp_only: 7
+  tools_documentation_only: 3
+  rest_operations_total: 23
+  rest_operations_with_a_tool: 2
+  rest_operations_without_a_tool: 21

@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Permutive Taxonomy API
+  version: 1.0.0
+extends: openapi/permutive-taxonomy-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-source: https://docs.permutive.com/api/introduction
+    x-apievangelist-provenance: Permutive-published OpenAPI, recovered 2026-08-13 from the Permutive documentation
+      MCP server virtual filesystem (/openapi/api/taxonomy/openapi.json). Not served over HTTP at any
+      public URL.
+    x-apievangelist-review: https://apis.io/permutive
+    x-apievangelist-product: Connectivity
+    x-apievangelist-agent-card: https://docs.permutive.com/.well-known/agent-card.json
+    x-apievangelist-mcp: https://docs.permutive.com/mcp
+    x-apievangelist-note: The only paged surface on the platform (pagination_token / pagination.nextToken
+      on GET /imports/{importId}/segments).
+    x-apievangelist-observed-gaps:
+    - components.securitySchemes is EMPTY, but the documentation requires a private API key on every request.
+    - 400 responses are text/plain, diverging from the JSON error envelope documented at /api/errors.
+    - The error envelope is spelled requestId here and request_id in the Events/Identity/CCS specs.
+    - All non-400 failures collapse into a single `default` response over a 23-variant union with no discriminator.
+    x-apievangelist-artifacts:
+      authentication: authentication/permutive-authentication.yml
+      conventions: conventions/permutive-conventions.yml
+      errors: errors/permutive-problem-types.yml
+      lifecycle: lifecycle/permutive-lifecycle.yml
+      rate_limits: rate-limits/permutive-rate-limits.yml
+      data_model: data-model/permutive-data-model.yml

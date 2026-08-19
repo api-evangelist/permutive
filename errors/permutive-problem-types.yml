@@ -1,34 +1,154 @@
-generated: '2026-07-20'
-method: derived
-format: rfc9457
-source: openapi/permutive-openapi.yml
-docs: https://developer.permutive.com/api/errors
+generated: '2026-08-13'
+method: searched
+source: https://docs.permutive.com/api/errors
+docs: https://docs.permutive.com/api/errors
+derived_from:
+- openapi/permutive-cohorts-api-openapi.yml
+- openapi/permutive-taxonomy-api-openapi.yml
+- openapi/permutive-identity-api-openapi.yml
+- openapi/permutive-events-api-openapi.yml
+- openapi/permutive-segmentation-api-openapi.yml
+format: custom-json
+rfc9457: false
 notes: >-
-  Problem types derived from the standard HTTP error responses modeled across
-  the Permutive API operations. Titles/remediation are generic HTTP semantics;
-  see the Permutive error reference for product-specific detail.
+  CORRECTION to the 2026-07-20 file, which recorded format `rfc9457`. Permutive
+  does not use RFC 9457 Problem Details. It publishes its own error envelope,
+  reproduced verbatim below from the errors reference, and the five
+  Permutive-published OpenAPI documents confirm it: every 4xx/5xx returns
+  application/json shaped as {request_id, error{status, code, message, cause?,
+  docs}} — except the Taxonomy API, which returns text/plain for its 400s.
+  Permutive states it "defines an error subcode and human-readable messages for
+  every type of error that can occur", but the subcode REGISTRY itself is not
+  published: the only subcode that appears anywhere in the public docs is 2000,
+  and the `docs` URLs the API returns point at developer.permutive.com/docs/
+  errors/{status}/{code}, a host that now 301s to docs.permutive.com where no
+  such page exists. That is the single biggest error-semantics gap on this API
+  and it is recorded here rather than filled in with invented codes.
+
+envelope:
+  content_type: application/json
+  example: |
+    HTTP/1.1 401 Unauthorized
+    {
+      "request_id": "e2cef6f6-296d-4044-b362-73fb2bce4a72",
+      "error": {
+        "status": "Unauthorized",
+        "code": 2000,
+        "message": "The API key provided is invalid.",
+        "cause": "This key does not exist.",
+        "docs": "https://developer.permutive.com/docs/errors/401/2000"
+      }
+    }
+  fields:
+  - {name: request_id, type: string, format: uuid, required: true,
+     description: 'Correlation id for the request. Quote this when contacting Permutive support.'}
+  - {name: error.status, type: string, required: true, description: 'HTTP reason phrase.'}
+  - {name: error.code, type: integer, required: true, description: 'Permutive error subcode.'}
+  - {name: error.message, type: string, required: true, description: 'Human-readable message.'}
+  - {name: error.cause, type: string, required: false, description: 'Optional additional cause. The only optional field.'}
+  - {name: error.docs, type: string, format: uri, required: true,
+     description: 'Link to the reference page for this subcode.'}
+
+status_codes:
+- {status: 200, title: OK, description: 'Everything worked as expected and the request succeeded.'}
+- {status: 400, title: Bad Request,
+   description: 'The request could not be understood by the server, usually due to malformed syntax such as a missing required parameter.',
+   remediation: 'Validate the request body against the operation schema; for POST /events, validate against the event schema defined in your workspace.'}
+- {status: 401, title: Unauthorized,
+   description: 'The client has not provided a valid Authentication HTTP header.',
+   remediation: 'Check the X-API-Key header (or `k` query parameter) carries a valid UUID v4 key for the target workspace.'}
+- {status: 403, title: Forbidden,
+   description: 'The client has provided a valid Authentication header, but it does not have permission to access this resource.',
+   remediation: 'The key is likely a public key on a private-key endpoint, or lacks the access level for the workspace. Private-key access levels are arranged with technical-services@permutive.com.'}
+- {status: 404, title: Not Found, description: 'The requested resource cannot be found or does not exist.'}
+- {status: 409, title: Conflict, description: 'Cohort state conflict.',
+   note: 'Declared only by the Cohorts API.'}
+- {status: 500, title: Internal Server Error, description: "The server encountered an error while processing your request and failed. Something went wrong on Permutive's end."}
+- {status: 502, title: Bad Gateway, description: "Server-side failure. Documented alongside 500."}
+- {status: 503, title: Service Unavailable, description: "Server-side failure. Documented alongside 500."}
+- {status: 504, title: Gateway Timeout, description: "Server-side failure. Documented alongside 500."}
+
+subcodes:
+  published_registry: false
+  registry_url: null
+  known:
+  - {code: 2000, status: 401, message: 'The API key provided is invalid.',
+     cause: 'This key does not exist.', source: 'https://docs.permutive.com/api/errors'}
+  gap: >-
+    Permutive guarantees a subcode on every error but publishes no subcode
+    list. A client cannot branch on error.code because it cannot enumerate the
+    values, and the per-code `docs` links returned in live responses resolve to
+    a retired documentation path.
+
+error_types:
+  source: openapi/permutive-taxonomy-api-openapi.yml#/components/schemas/HttpError
+  note: >-
+    The Taxonomy API spec is the only Permutive document that enumerates error
+    TYPES. Its `HttpError` schema is a oneOf over 23 named variants — the
+    closest thing Permutive publishes to an error registry. Each variant
+    carries an optional `c` (cause string) and `d` (JSON detail object). This
+    is a discriminated union without a discriminator property, so a client
+    cannot tell the variants apart from the wire format alone.
+    Note also that this spec spells the envelope in camelCase (`requestId`)
+    while the errors reference documents snake_case (`request_id`) — an
+    unreconciled divergence between Permutive's own two sources.
+  types:
+  - {name: AuthorizationMissing, class: auth, likely_status: 401}
+  - {name: AuthorizationFailed, class: auth, likely_status: 403}
+  - {name: AuthorizationFailedForAPIKey, class: auth, likely_status: 403}
+  - {name: AuthorizationFailedForUser, class: auth, likely_status: 403}
+  - {name: InvalidAPIKey, class: auth, likely_status: 401}
+  - {name: InsufficientAPIKey, class: auth, likely_status: 403}
+  - {name: MissingHeader, class: request, likely_status: 400}
+  - {name: InvalidHeader, class: request, likely_status: 400}
+  - {name: MissingParameters, class: request, likely_status: 400}
+  - {name: InvalidParameters, class: request, likely_status: 400}
+  - {name: MissingRequestBody, class: request, likely_status: 400}
+  - {name: InvalidRequestBody, class: request, likely_status: 400}
+  - {name: ValidationError, class: request, likely_status: 400}
+  - {name: BadEncoding, class: request, likely_status: 400}
+  - {name: MissingOrigin, class: request, likely_status: 400}
+  - {name: BadOrigin, class: request, likely_status: 400}
+  - {name: SchemeNotSupported, class: request, likely_status: 400}
+  - {name: DoesNotExist, class: resource, likely_status: 404}
+  - {name: AlreadyExists, class: resource, likely_status: 409}
+  - {name: RouteDeprecated, class: lifecycle, likely_status: 410,
+     note: 'Permutive models route deprecation as a runtime error type. See lifecycle/.'}
+  - {name: VerbNotImplemented, class: routing, likely_status: 405}
+  - {name: UnspecifiedInternalError, class: server, likely_status: 500}
+  - {name: UnknownError, class: server,
+     note: 'Carries explicit `s` (HttpStatus), `co` (numeric code) and `m` (message) fields — the escape hatch.'}
+  status_mapping_caveat: >-
+    `likely_status` is API Evangelist's reading of each variant's name, not a
+    Permutive statement. The spec binds no variant to a status code; only
+    UnknownError carries a status field. Do not treat these as authoritative.
+
 problems:
-  - status: 400
-    title: Bad Request
-    detail: The request was malformed or failed validation.
-    remediation: Check the request body and parameters against the API reference.
-  - status: 401
-    title: Unauthorized
-    detail: Missing or invalid API key.
-    remediation: Supply a valid workspace API key as a bearer token.
-  - status: 403
-    title: Forbidden
-    detail: The API key does not have access to this resource or operation.
-    remediation: Use a key whose workspace owns the resource, or request elevated access.
-  - status: 404
-    title: Not Found
-    detail: The requested resource does not exist.
-    remediation: Verify the cohort, import or segment identifier.
-  - status: 429
-    title: Too Many Requests
-    detail: Rate limit exceeded.
-    remediation: Back off and retry; batch where the API supports it.
-  - status: 500
-    title: Internal Server Error
-    detail: An unexpected error occurred on Permutive's side.
-    remediation: Retry with backoff; contact support if the error persists.
+- {status: 400, title: Bad request, media_type: application/json,
+   source_operation: 'openapi/permutive-cohorts-api-openapi.yml#getV2Cohorts, postV2Cohorts, getV2CohortsCohortid, patchV2CohortsCohortid, deleteV2CohortsCohortid'}
+- {status: 401, title: Unauthorized, media_type: application/json,
+   source_operation: 'openapi/permutive-cohorts-api-openapi.yml#* , permutive-events-api#createEvent, permutive-identity-api#*, permutive-segmentation-api#*'}
+- {status: 403, title: Forbidden, media_type: application/json,
+   source_operation: 'openapi/permutive-cohorts-api-openapi.yml#*, permutive-identity-api#getIdentities, permutive-segmentation-api#*',
+   note: 'Identity: "Forbidden request: insufficient API key permissions".'}
+- {status: 404, title: Not found, media_type: application/json,
+   source_operation: 'openapi/permutive-cohorts-api-openapi.yml#*'}
+- {status: 409, title: Conflict, media_type: application/json,
+   source_operation: 'openapi/permutive-cohorts-api-openapi.yml#*'}
+- {status: 400, title: 'Invalid value for: path parameter / body / query parameter',
+   media_type: text/plain,
+   source_operation: 'openapi/permutive-taxonomy-api-openapi.yml#*',
+   note: 'Divergence: the Taxonomy API returns text/plain validation strings on 400, not the JSON error envelope. Its `default` response is application/json.'}
+- {status: 500, title: Internal server error, media_type: application/json,
+   source_operation: 'all Permutive specs'}
+
+divergences:
+- 'Taxonomy API 400s are text/plain, not the documented JSON envelope.'
+- 'Taxonomy API models all non-200 outcomes other than 400 as a single `default` response rather than enumerating statuses.'
+- 'No 429 is declared by ANY Permutive spec, and the Contextual API error table omits it, despite rate limits existing per workspace.'
+- 'The Contextual API documents only 200/400/401/500 — no 403, no 404.'
+
+cross_links:
+  conventions: conventions/permutive-conventions.yml
+  authentication: authentication/permutive-authentication.yml
+  rate_limits: rate-limits/permutive-rate-limits.yml

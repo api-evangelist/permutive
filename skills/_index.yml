@@ -1,16 +1,49 @@
-generated: '2026-07-20'
-method: generated
-source: openapi/permutive-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: >-
+  Permutive publishes its own Agent Skill at
+  https://docs.permutive.com/.well-known/agent-skills/permutive/skill.md — saved
+  verbatim below. The four API Evangelist skills are generated and are grounded
+  in Permutive's five published OpenAPI documents; every operationId in them was
+  grepped out of the spec it names.
+notes: >-
+  All four generated skills were REWRITTEN on 2026-08-13. The 2026-07-20 set was
+  grounded in an API Evangelist-authored OpenAPI and named operationIds
+  (createCohort, getCohorts, trackEvent, identifyUser, retrieveIdentities …), an
+  auth scheme (bearer) and a base URL (api.permutive.com) that do not exist on
+  the real API. Following them would have produced 401s and 404s.
 skills:
-  - file: permutive-manage-cohorts.md
-    name: Manage Permutive audience cohorts
-    api: openapi/permutive-openapi.yml
-    operations: [createCohort, getCohorts, getCohort, updateCohort, deleteCohort]
-  - file: permutive-track-and-identify.md
-    name: Track events and identify Permutive users
-    api: openapi/permutive-openapi.yml
-    operations: [createUserId, trackEvent, identifyUser, retrieveIdentities]
-  - file: permutive-manage-import-taxonomy.md
-    name: Manage Permutive import segment taxonomy
-    api: openapi/permutive-openapi.yml
-    operations: [getImports, retrieveImport, getSegmentsForImport, getSegmentById, getSegmentByCode, createSegment, updateSegmentById, updateSegmentByCode, batchUpdateSegments, deleteSegmentById, deleteSegmentByCode]
+- file: permutive-provider-published-skill.md
+  name: Permutive
+  method: searched
+  official: true
+  source: https://docs.permutive.com/.well-known/agent-skills/permutive/skill.md
+  discovered_via: a2a/permutive-agent-card.json (skills[0].url)
+  description: >-
+    Permutive's own packaged Agent Skill, saved verbatim. Covers deploying
+    SDKs, building cohorts, managing identity, tracking events and integrating
+    with ad platforms and data warehouses.
+- file: permutive-manage-cohorts.md
+  name: Manage Permutive audience cohorts
+  method: generated
+  api: openapi/permutive-cohorts-api-openapi.yml
+  operations: [getV2Cohorts, postV2Cohorts, getV2CohortsCohortid, patchV2CohortsCohortid,
+    deleteV2CohortsCohortid]
+- file: permutive-track-and-identify.md
+  name: Track events and identify Permutive users
+  method: generated
+  api: [openapi/permutive-events-api-openapi.yml, openapi/permutive-identity-api-openapi.yml]
+  operations: [createUserId, identifyUser, getIdentities, createEvent]
+- file: permutive-manage-import-taxonomy.md
+  name: Manage Permutive import segment taxonomy
+  method: generated
+  api: openapi/permutive-taxonomy-api-openapi.yml
+  operations: [getImports, getImportsImportid, getImportsImportidSegments, postImportsImportidSegments,
+    patchImportsImportidSegments, getImportsImportidSegmentsSegmentid, patchImportsImportidSegmentsSegmentid,
+    deleteImportsImportidSegmentsSegmentid, getImportsImportidSegmentsCodeSegmentcode,
+    patchImportsImportidSegmentsCodeSegmentcode, deleteImportsImportidSegmentsCodeSegmentcode]
+- file: permutive-segment-without-an-sdk.md
+  name: Segment users without a Permutive SDK
+  method: generated
+  api: [openapi/permutive-segmentation-api-openapi.yml, openapi/permutive-contextual-api-openapi.yml]
+  operations: [postCcsV1Segmentation, postCcsV1SegmentationStateless, getContextualSegments]

@@ -1,0 +1,2109 @@
+{
+  "item": [
+    {
+      "id": "3ec7b602-37b6-40fa-a7dd-b42ed5667b72",
+      "name": "v2",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "716856f1-0876-4419-8830-0f02a11b3b3e",
+          "name": "Retrieve all cohorts",
+          "request": {
+            "name": "Retrieve all cohorts",
+            "description": {
+              "content": "By default this endpoint returns all cohorts belonging to the workspace to which the supplied API key belongs, plus any cohorts inherited from parent workspaces in the organization hierarchy. If the API key has the required access level, it is also possible to return segments belonging to child workspaces below the requesting workspace in the organization hierarchy.\n\nThe queries defining the behaviour of the cohorts are not returned from this endpoint. To retrieve the query of a given cohort, use the 'Retrieve individual cohort' endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cohorts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include-child-workspaces",
+                  "value": "<boolean>",
+                  "description": "Whether to return cohorts belonging to workspaces below the requesting workspace in the organization hierarchy. Defaults to false if not specified."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "k"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "29d4aa4b-9e9a-4c53-81ee-101a2ec34132",
+              "name": "List of cohorts in summary form (excluding query)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include-child-workspaces",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"38470a62-9837-4c86-bbf3-45dd6d52dd83\",\n    \"code\": 12345,\n    \"name\": \"Example Segment A\",\n    \"description\": \"This segment is an example for documentation purposes\",\n    \"tags\": [\n      \"tag_a\",\n      \"tag_b\"\n    ],\n    \"state\": \"Enabled\",\n    \"workspace_id\": \"0bd63f73-6b67-4766-8c86-fa1d2cf87194\",\n    \"segment_type\": \"real_time\",\n    \"created_at\": \"2022-09-22T15:44:29.513211710Z\",\n    \"last_updated_at\": \"2022-09-22T15:44:29.513214670Z\"\n  },\n  {\n    \"id\": \"be1e0886-4a52-442f-89e5-6bf0ff652ac7\",\n    \"code\": 23456,\n    \"name\": \"Example Segment B\",\n    \"description\": \"This is a second segment for documentation purposes\",\n    \"tags\": [],\n    \"state\": \"Enabled\",\n    \"workspace_id\": \"0bd63f73-6b67-4766-8c86-fa1d2cf87194\",\n    \"segment_type\": \"real_time\",\n    \"live_audience_size\": 10000,\n    \"created_at\": \"2022-09-22T15:44:29.513246606Z\",\n    \"last_updated_at\": \"2022-09-22T15:44:29.513246784Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec681b3c-d7b1-4360-8bbd-f2aab5326076",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include-child-workspaces",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"status_code\": 400,\n    \"status\": \"Bad Request\",\n    \"code\": 1002,\n    \"message\": \"The provided request body was not structured as expected.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b309461-92df-4067-972d-afa55c7566fe",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include-child-workspaces",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7235#section-3.1\",\n    \"status_code\": 401,\n    \"status\": \"Unauthorized\",\n    \"code\": 2005,\n    \"message\": \"The supplied authentication is invalid.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5347c88d-c879-4cf8-956c-d708aab7e0c0",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include-child-workspaces",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.3\",\n    \"status_code\": 403,\n    \"status\": \"Forbidden\",\n    \"code\": 2001,\n    \"message\": \"The API key provided does not provide access to the request operation or resource.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83364eab-dc1f-4a23-ab2c-ad6c373b4009",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include-child-workspaces",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"status_code\": 404,\n    \"status\": \"Not Found\",\n    \"code\": 3000,\n    \"message\": \"The requested resource does not exist.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea572882-ff55-4e70-93eb-32634d627fb2",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include-child-workspaces",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.8\",\n    \"status_code\": 409,\n    \"status\": \"Conflict\",\n    \"code\": 4000,\n    \"message\": \"A resource with this identifier already exists.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fae67ac1-e879-4527-91f8-daa62d621d45",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include-child-workspaces",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.6.1\",\n    \"status_code\": 500,\n    \"status\": \"Internal Server Error\",\n    \"code\": 5000,\n    \"message\": \"An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1bd5f581-f96f-4825-8d2a-356cfa447160",
+          "name": "Create cohort",
+          "request": {
+            "name": "Create cohort",
+            "description": {
+              "content": "This endpoint allows the creation of a new cohort. The query definition is provided using the Cohort API JSON query definition format.\n\nThe cohort will belong to the workspace which owns the provided API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cohorts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "k"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"query\": {},\n  \"description\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"segmentType\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "130dbde3-7659-4a61-afbc-ab753546f28a",
+              "name": "Cohort in full (including query)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"segment_type\": \"real_time\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"38470a62-9837-4c86-bbf3-45dd6d52dd83\",\n  \"code\": 12345,\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"state\": \"Enabled\",\n  \"segment_type\": \"real_time\",\n  \"created_at\": \"2022-09-22T15:44:29.518935935Z\",\n  \"last_updated_at\": \"2022-09-22T15:44:29.518937018Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "723a2789-3f7d-4906-ae7a-f5f2704f889e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"segment_type\": \"real_time\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"status_code\": 400,\n    \"status\": \"Bad Request\",\n    \"code\": 1002,\n    \"message\": \"The provided request body was not structured as expected.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ed7906b-2371-44a8-9868-a2265c75012d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"segment_type\": \"real_time\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7235#section-3.1\",\n    \"status_code\": 401,\n    \"status\": \"Unauthorized\",\n    \"code\": 2005,\n    \"message\": \"The supplied authentication is invalid.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4492849a-6b6c-4b77-b331-83f94325a88c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"segment_type\": \"real_time\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.3\",\n    \"status_code\": 403,\n    \"status\": \"Forbidden\",\n    \"code\": 2001,\n    \"message\": \"The API key provided does not provide access to the request operation or resource.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "350d632a-a784-4988-8382-df1dd02098be",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"segment_type\": \"real_time\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"status_code\": 404,\n    \"status\": \"Not Found\",\n    \"code\": 3000,\n    \"message\": \"The requested resource does not exist.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c35cd38b-a99c-4685-8aeb-01da0f56a8f1",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"segment_type\": \"real_time\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.8\",\n    \"status_code\": 409,\n    \"status\": \"Conflict\",\n    \"code\": 4000,\n    \"message\": \"A resource with this identifier already exists.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "103fcd1e-8090-4e43-96e0-c5a6da43341d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"segment_type\": \"real_time\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.6.1\",\n    \"status_code\": 500,\n    \"status\": \"Internal Server Error\",\n    \"code\": 5000,\n    \"message\": \"An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e04d92a-26b4-4dde-9fdf-ccefffb3d873",
+          "name": "Retrieve individual cohort",
+          "request": {
+            "name": "Retrieve individual cohort",
+            "description": {
+              "content": "This endpoint returns details of a single cohort belonging either to the workspace that owns the requesting API key, or to a parent workspace if the requesting workspace inherits the cohort from that workspace.\n\nIf the requested cohort is not a lookalike-based cohort, the response will include the query definition.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cohorts",
+                ":cohortId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cohortId",
+                  "description": "(Required) Cohort UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "k"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d6b56719-c1cc-4dc3-88cf-73f1047314c3",
+              "name": "Cohort in full (including query)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"38470a62-9837-4c86-bbf3-45dd6d52dd83\",\n  \"code\": 12345,\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"state\": \"Enabled\",\n  \"segment_type\": \"real_time\",\n  \"live_audience_size\": 10000,\n  \"created_at\": \"2022-09-22T15:44:29.518393971Z\",\n  \"last_updated_at\": \"2022-09-22T15:44:29.518395049Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbbdec68-5f37-47b8-bd02-ae3d352f191e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"status_code\": 400,\n    \"status\": \"Bad Request\",\n    \"code\": 1002,\n    \"message\": \"The provided request body was not structured as expected.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6628777d-e488-4a9a-b559-cd8aa4757777",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7235#section-3.1\",\n    \"status_code\": 401,\n    \"status\": \"Unauthorized\",\n    \"code\": 2005,\n    \"message\": \"The supplied authentication is invalid.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49f491c8-bf45-4bf7-8ca0-a4baa0218569",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.3\",\n    \"status_code\": 403,\n    \"status\": \"Forbidden\",\n    \"code\": 2001,\n    \"message\": \"The API key provided does not provide access to the request operation or resource.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb8a925b-99c1-4a72-80fc-e2a4305e1f55",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"status_code\": 404,\n    \"status\": \"Not Found\",\n    \"code\": 3000,\n    \"message\": \"The requested resource does not exist.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "513b55ce-2f6a-4763-8b12-ee86f8a2a237",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.8\",\n    \"status_code\": 409,\n    \"status\": \"Conflict\",\n    \"code\": 4000,\n    \"message\": \"A resource with this identifier already exists.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99489d92-ef37-43e3-ad3a-745a6e811fe0",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.6.1\",\n    \"status_code\": 500,\n    \"status\": \"Internal Server Error\",\n    \"code\": 5000,\n    \"message\": \"An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f90b1ae9-349e-4df7-aa1a-d397497a9589",
+          "name": "Delete cohort",
+          "request": {
+            "name": "Delete cohort",
+            "description": {
+              "content": "This endpoint allows deleting an existing cohort. Depending on the access level of the provided API key, it can delete cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be deleted via the Cohort API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cohorts",
+                ":cohortId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cohortId",
+                  "description": "(Required) Cohort UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "k"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "82eb147a-8627-49a3-a372-871be3f4e6a9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "276dc8ef-575e-47b5-8cd8-6cd2c1c6c9cb",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"status_code\": 400,\n    \"status\": \"Bad Request\",\n    \"code\": 1002,\n    \"message\": \"The provided request body was not structured as expected.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f73fdc2-c018-4ccc-b211-25f0462b2c0e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7235#section-3.1\",\n    \"status_code\": 401,\n    \"status\": \"Unauthorized\",\n    \"code\": 2005,\n    \"message\": \"The supplied authentication is invalid.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "366fb322-2de2-473c-959a-70e0b335492f",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.3\",\n    \"status_code\": 403,\n    \"status\": \"Forbidden\",\n    \"code\": 2001,\n    \"message\": \"The API key provided does not provide access to the request operation or resource.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "414e6bcc-cd12-4dc5-9c9c-b1f9e0f9160a",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"status_code\": 404,\n    \"status\": \"Not Found\",\n    \"code\": 3000,\n    \"message\": \"The requested resource does not exist.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff6badbd-ff42-4c02-87b3-d4c1c570adea",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.8\",\n    \"status_code\": 409,\n    \"status\": \"Conflict\",\n    \"code\": 4000,\n    \"message\": \"A resource with this identifier already exists.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb3076fa-4167-40c2-828c-7baedeb41f94",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.6.1\",\n    \"status_code\": 500,\n    \"status\": \"Internal Server Error\",\n    \"code\": 5000,\n    \"message\": \"An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04692a9f-ea68-40b4-ab5d-2ae140f3b1f6",
+          "name": "Update cohort",
+          "request": {
+            "name": "Update cohort",
+            "description": {
+              "content": "This endpoint allows updating an existing cohort. Depending on the access level of the provided API key, it can update cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be updated via the Cohort API.\n\nAny top level fields for which no value is provided in the request body will remain unchanged. Optional fields (currently only `description`) can be deleted by explicitly specifying `null` as the value.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cohorts",
+                ":cohortId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cohortId",
+                  "description": "(Required) Cohort UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "k"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"query\": {},\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"state\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1da80030-e86d-4dd9-884c-51aa903553d3",
+              "name": "Cohort in full (including query)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Segment Name\",\n  \"description\": \"New Segment Description\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_d\",\n    \"tag_e\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"38470a62-9837-4c86-bbf3-45dd6d52dd83\",\n  \"code\": 12345,\n  \"name\": \"Example Segment A\",\n  \"description\": \"This segment is an example for documentation purposes\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_a\",\n    \"tag_b\"\n  ],\n  \"state\": \"Enabled\",\n  \"segment_type\": \"real_time\",\n  \"created_at\": \"2022-09-22T15:44:29.518935935Z\",\n  \"last_updated_at\": \"2022-09-22T15:44:29.518937018Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b43bfefa-863b-4eae-ab3a-4e51d24b78eb",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Segment Name\",\n  \"description\": \"New Segment Description\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_d\",\n    \"tag_e\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"status_code\": 400,\n    \"status\": \"Bad Request\",\n    \"code\": 1002,\n    \"message\": \"The provided request body was not structured as expected.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71d2f90a-0169-45dd-b55e-00ffdfb41c14",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Segment Name\",\n  \"description\": \"New Segment Description\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_d\",\n    \"tag_e\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7235#section-3.1\",\n    \"status_code\": 401,\n    \"status\": \"Unauthorized\",\n    \"code\": 2005,\n    \"message\": \"The supplied authentication is invalid.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69a138cb-3b12-4d22-988d-287d7ef4a099",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Segment Name\",\n  \"description\": \"New Segment Description\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_d\",\n    \"tag_e\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.3\",\n    \"status_code\": 403,\n    \"status\": \"Forbidden\",\n    \"code\": 2001,\n    \"message\": \"The API key provided does not provide access to the request operation or resource.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30104c6e-41a5-4da7-8c7f-9b1587fb9d29",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Segment Name\",\n  \"description\": \"New Segment Description\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_d\",\n    \"tag_e\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"status_code\": 404,\n    \"status\": \"Not Found\",\n    \"code\": 3000,\n    \"message\": \"The requested resource does not exist.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd3733d0-71de-42a0-82dc-5eb27553637a",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Segment Name\",\n  \"description\": \"New Segment Description\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_d\",\n    \"tag_e\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.8\",\n    \"status_code\": 409,\n    \"status\": \"Conflict\",\n    \"code\": 4000,\n    \"message\": \"A resource with this identifier already exists.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d986cdd6-288e-433d-b928-00d3072c70f1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cohorts",
+                    ":cohortId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cohortId",
+                      "description": "(Required) Cohort UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Segment Name\",\n  \"description\": \"New Segment Description\",\n  \"query\": {\n    \"event\": \"Pageview\",\n    \"frequency\": {\n      \"greater_than_or_equal_to\": 2\n    },\n    \"where\": {\n      \"property\": \"properties.client.url\",\n      \"condition\": {\n        \"contains\": \"football\"\n      }\n    },\n    \"during\": {\n      \"the_last\": {\n        \"value\": 30,\n        \"unit\": \"days\"\n      }\n    }\n  },\n  \"tags\": [\n    \"tag_d\",\n    \"tag_e\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"b887517b-99a2-4ae0-bc32-93d1fb13d1b7\",\n  \"error\": {\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.6.1\",\n    \"status_code\": 500,\n    \"status\": \"Internal Server Error\",\n    \"code\": 5000,\n    \"message\": \"An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.\",\n    \"docs\": \"https://developer.permutive.com/reference#errors\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.permutive.app/cohorts-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c6b9c046-8091-43db-a921-a3e3bcacffa0",
+    "name": "Cohorts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Programmatically view and maintain cohort definitions",
+      "type": "text/plain"
+    }
+  }
+}

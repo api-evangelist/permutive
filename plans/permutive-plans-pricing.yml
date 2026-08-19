@@ -1,0 +1,40 @@
+generated: '2026-08-13'
+method: searched
+source: https://permutive.com/
+notes: >-
+  Permutive publishes NO pricing. There is no pricing page, no plan tiers, no
+  quotas and no published overage terms anywhere on permutive.com or
+  docs.permutive.com. The commercial route is a sales conversation:
+  permutive.com/request-a-demo. This is consistent with the product — an
+  enterprise data-collaboration platform sold to premium publishers,
+  advertisers and agencies — but it means an agent or a buyer cannot price the
+  platform, or even bound it, without contacting a human.
+  Recorded as an explicit zero rather than an omitted file.
+plan_count: 0
+plans: []
+pricing_model: enterprise-contact-sales
+public_pricing: false
+free_tier: false
+trial: false
+self_serve_signup: false
+signup_note: >-
+  dash.permutive.com is a customer LOGIN, not a self-serve signup. There is no
+  public route to provisioning an API key without an account, so the API keys
+  documented at dash.permutive.com/settings/keys are reachable only to existing
+  customers.
+sales_route:
+  demo_request: https://permutive.com/request-a-demo
+  contact: https://permutive.com/
+commercial_signals:
+  cpm_field: >-
+    The Taxonomy API's Segment schema carries a `cpm` (double) field, so
+    Permutive models per-segment pricing for second-party data inside the
+    product — but that is a customer's own segment pricing, not Permutive's.
+    source: openapi/permutive-taxonomy-api-openapi.yml
+evidence:
+- {url: 'https://permutive.com/pricing', status: 404}
+- {url: 'https://permutive.com/page-sitemap.xml', status: 200,
+   note: 'Full page sitemap enumerated; contains no pricing or plans page.'}
+- {url: 'https://permutive.com/request-a-demo', status: 200}
+- {url: 'https://dash.permutive.com/', status: 200, note: 'Login application.'}
+checked: '2026-08-13'

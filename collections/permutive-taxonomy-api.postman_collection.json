@@ -1,0 +1,2276 @@
+{
+  "item": [
+    {
+      "id": "0ea76615-5e5f-46d8-b7be-a13d8aa9bf03",
+      "name": "v1",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "909cebb8-3b60-4fda-ab93-4d9e437297ae",
+          "name": "Get all 2nd party data imports",
+          "request": {
+            "name": "Get all 2nd party data imports",
+            "description": {},
+            "url": {
+              "path": [
+                "imports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa3247fc-b61d-4c13-8fce-0bb5c350d7a3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"ef832310-b808-44f4-86bc-947be1cd37c7\",\n      \"name\": \"Data Provider Name\",\n      \"code\": \"data_provider_name\",\n      \"relation\": \"3rd\",\n      \"identifiers\": [\n        \"appnexus\"\n      ],\n      \"inheritance\": {\n        \"workspace_id\": \"5de2731c-8dcf-4e12-a815-e58b481bd8ac\",\n        \"relation\": \"ancestor\"\n      },\n      \"source\": {\n        \"id\": \"f93e5c65-7b2e-4c38-b721-3beb93e4f877\",\n        \"state\": {\n          \"type\": \"active\"\n        },\n        \"type\": \"live_ramp_3p\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71351c13-4439-42dc-9a7b-f97b012771a8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48722d0c-d306-425e-9565-bdd96cb19916",
+          "name": "Retrieves an import",
+          "request": {
+            "name": "Retrieves an import",
+            "description": {},
+            "url": {
+              "path": [
+                "imports",
+                ":importId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c7ffff11-6057-4cea-9134-53e0388bb80f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ef832310-b808-44f4-86bc-947be1cd37c7\",\n  \"name\": \"Data Provider Name\",\n  \"code\": \"data_provider_name\",\n  \"relation\": \"3rd\",\n  \"identifiers\": [\n    \"appnexus\"\n  ],\n  \"inheritance\": {\n    \"workspace_id\": \"5de2731c-8dcf-4e12-a815-e58b481bd8ac\",\n    \"relation\": \"ancestor\"\n  },\n  \"source\": {\n    \"id\": \"f93e5c65-7b2e-4c38-b721-3beb93e4f877\",\n    \"state\": {\n      \"type\": \"active\"\n    },\n    \"type\": \"live_ramp_3p\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8aba35bb-6c01-4c9b-8455-7eac3e18dc70",
+              "name": "Invalid value for: path parameter importId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1b4b15ed-558b-4d5b-8999-633d816968d9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3067ec92-3ab2-433d-8198-ba998f47851f",
+          "name": "Get all segments for an import.",
+          "request": {
+            "name": "Get all segments for an import.",
+            "description": {
+              "content": "Retrieves all segments for an import. This is a paginated endpoint and takes an optional pagination token as a query parameter. If no token is provided then it retrieves the first page of results.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pagination_token",
+                  "value": "<string>",
+                  "description": "Pagination Token"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3dbee248-59db-45b6-998f-1de7c7668c8e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pagination_token",
+                      "value": "MTIzNA=="
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"elements\": [\n    {\n      \"id\": \"1b890475-1482-496d-bcfd-6b2f5564b249\",\n      \"code\": \"1234\",\n      \"name\": \"Segment Name\",\n      \"import_id\": \"9f87bd3e-32eb-4d15-8e85-17fb275fa809\",\n      \"description\": \"segment description\",\n      \"cpm\": 2,\n      \"categories\": [\n        \"category_1\"\n      ],\n      \"updated_at\": \"2023-04-12T11:27:00.716632Z\"\n    }\n  ],\n  \"pagination\": {\n    \"next_token\": \"MTIzNA==\",\n    \"total_count\": 5\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e5849e5-b9a6-44f9-8f6a-28bf0cda1b94",
+              "name": "Invalid value for: path parameter importId, Invalid value for: query parameter pagination_token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pagination_token",
+                      "value": "MTIzNA=="
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "971b579b-f22d-4f36-b833-e49b65d9ed9d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pagination_token",
+                      "value": "MTIzNA=="
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "905c6723-1483-47ab-8aac-8ab035a85cc5",
+          "name": "Creates a segment for an import.",
+          "request": {
+            "name": "Creates a segment for an import.",
+            "description": {},
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"code\": \"<string>\",\n  \"description\": \"<string>\",\n  \"cpm\": \"<double>\",\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c002687e-9727-49d6-a22c-d065fd05787b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"code\": \"1234\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"c41b798c-3811-b3f7-86d4-27467d0aaa95\",\n  \"code\": \"string\",\n  \"name\": \"string\",\n  \"importId\": \"773218d8-3382-7677-f8ee-683ac000b3b3\",\n  \"updatedAt\": \"2010-07-07T10:09:42.833Z\",\n  \"description\": \"string\",\n  \"cpm\": 3793.4848200583583,\n  \"categories\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f649f81f-0630-4208-b93a-598d3a30397c",
+              "name": "Invalid value for: path parameter importId, Invalid value for: body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"code\": \"1234\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5d68e59b-5ecb-4b46-8366-9e14eb501a46",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"code\": \"1234\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6491324-6dc9-4cb7-b6db-89bc47019d8e",
+          "name": "Batch update operations.",
+          "request": {
+            "name": "Batch update operations.",
+            "description": {
+              "content": "Note that operation order is not guaranteed. No more than 5,000 operations can be contained in a batch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"operations\": {\n    \"head\": {\n      \"data\": {\n        \"name\": \"<string>\",\n        \"code\": \"<string>\",\n        \"description\": \"<string>\",\n        \"cpm\": \"<double>\",\n        \"categories\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    \"tail\": [\n      {\n        \"data\": {\n          \"name\": \"<string>\",\n          \"code\": \"<string>\",\n          \"description\": \"<string>\",\n          \"cpm\": \"<double>\",\n          \"categories\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      {\n        \"data\": {\n          \"name\": \"<string>\",\n          \"code\": \"<string>\",\n          \"description\": \"<string>\",\n          \"cpm\": \"<double>\",\n          \"categories\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e3a9c498-6878-4676-86e3-07de84eb03ba",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"data\": {\n        \"name\": \"segment\",\n        \"code\": \"1234\",\n        \"description\": \"segment description\",\n        \"cpm\": 2,\n        \"categories\": [\n          \"category1\"\n        ]\n      },\n      \"operation\": \"Create\"\n    },\n    {\n      \"code\": \"12345\",\n      \"operation\": \"Delete\"\n    },\n    {\n      \"code\": \"1234\",\n      \"data\": {\n        \"name\": \"segment\",\n        \"description\": \"segment description\",\n        \"cpm\": 2,\n        \"categories\": [\n          \"category1\"\n        ]\n      },\n      \"operation\": \"Update\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"1b890475-1482-496d-bcfd-6b2f5564b249\",\n      \"code\": \"1234\",\n      \"name\": \"Segment Name\",\n      \"import_id\": \"9f87bd3e-32eb-4d15-8e85-17fb275fa809\",\n      \"description\": \"segment description\",\n      \"cpm\": 2,\n      \"categories\": [\n        \"category_1\"\n      ],\n      \"updated_at\": \"2023-04-12T11:27:00.716632Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3dd64144-c9dc-4b79-baa4-45bb17653dde",
+              "name": "Invalid value for: path parameter importId, Invalid value for: body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"data\": {\n        \"name\": \"segment\",\n        \"code\": \"1234\",\n        \"description\": \"segment description\",\n        \"cpm\": 2,\n        \"categories\": [\n          \"category1\"\n        ]\n      },\n      \"operation\": \"Create\"\n    },\n    {\n      \"code\": \"12345\",\n      \"operation\": \"Delete\"\n    },\n    {\n      \"code\": \"1234\",\n      \"data\": {\n        \"name\": \"segment\",\n        \"description\": \"segment description\",\n        \"cpm\": 2,\n        \"categories\": [\n          \"category1\"\n        ]\n      },\n      \"operation\": \"Update\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2d55215f-48ca-4af8-a0dc-0e7d678a731d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"data\": {\n        \"name\": \"segment\",\n        \"code\": \"1234\",\n        \"description\": \"segment description\",\n        \"cpm\": 2,\n        \"categories\": [\n          \"category1\"\n        ]\n      },\n      \"operation\": \"Create\"\n    },\n    {\n      \"code\": \"12345\",\n      \"operation\": \"Delete\"\n    },\n    {\n      \"code\": \"1234\",\n      \"data\": {\n        \"name\": \"segment\",\n        \"description\": \"segment description\",\n        \"cpm\": 2,\n        \"categories\": [\n          \"category1\"\n        ]\n      },\n      \"operation\": \"Update\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "075785ce-3b5f-4ca0-9b32-85f9eb2fa498",
+          "name": "Retrieves a single segment by its public ID for an import.",
+          "request": {
+            "name": "Retrieves a single segment by its public ID for an import.",
+            "description": {
+              "content": "Retrieves a single segment for a given import. The segment is identified by its globally unique public ID (UUID)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments",
+                ":segmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "segmentId",
+                  "description": "(Required) Segment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "704aa17f-9d9e-4a59-a6ae-049b9811ce6d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1b890475-1482-496d-bcfd-6b2f5564b249\",\n  \"code\": \"1234\",\n  \"name\": \"Segment Name\",\n  \"import_id\": \"9f87bd3e-32eb-4d15-8e85-17fb275fa809\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category_1\"\n  ],\n  \"updated_at\": \"2023-04-12T11:27:00.716632Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "335507b2-dd00-446e-a912-0b81074d3fed",
+              "name": "Invalid value for: path parameter importId, Invalid value for: path parameter segmentId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7f3a6fb7-7e47-4c02-a264-13ffe87356a1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a93b9d54-79d9-407c-83c1-4e45f794297c",
+          "name": "Deletes a segment by its code for an import",
+          "request": {
+            "name": "Deletes a segment by its code for an import",
+            "description": {
+              "content": "Deletes a segment for an import. The segment is identified by its code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments",
+                ":segmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "segmentId",
+                  "description": "(Required) Segment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb5f227b-c785-4457-a717-b31993ef4bc6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1b890475-1482-496d-bcfd-6b2f5564b249\",\n  \"code\": \"1234\",\n  \"name\": \"Segment Name\",\n  \"import_id\": \"9f87bd3e-32eb-4d15-8e85-17fb275fa809\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category_1\"\n  ],\n  \"updated_at\": \"2023-04-12T11:27:00.716632Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bc9e891-0bb5-4772-8569-7a21f9aec664",
+              "name": "Invalid value for: path parameter importId, Invalid value for: path parameter segmentId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1295fb00-3271-4293-971e-5482f365cde2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b56c2dcc-e60c-4a3b-8df0-9cc7f94cb94f",
+          "name": "Updates a segment by its public ID for an import",
+          "request": {
+            "name": "Updates a segment by its public ID for an import",
+            "description": {
+              "content": "Updates a segment for an import. The segment is identified by its globally unique public ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments",
+                ":segmentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "segmentId",
+                  "description": "(Required) Segment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"cpm\": \"<double>\",\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4adc531e-84a8-4824-a6ff-b822bcbeb1ec",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1b890475-1482-496d-bcfd-6b2f5564b249\",\n  \"code\": \"1234\",\n  \"name\": \"Segment Name\",\n  \"import_id\": \"9f87bd3e-32eb-4d15-8e85-17fb275fa809\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category_1\"\n  ],\n  \"updated_at\": \"2023-04-12T11:27:00.716632Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f96c5f44-903c-451d-83db-d0bc608073ac",
+              "name": "Invalid value for: path parameter importId, Invalid value for: path parameter segmentId, Invalid value for: body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "758b99d1-00c3-422b-89c8-a5ad77f7a595",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "segmentId",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc7bfd34-7ec3-4ab8-9baf-4463685c3844",
+          "name": "Retrieves a single segment by its code for an import.",
+          "request": {
+            "name": "Retrieves a single segment by its code for an import.",
+            "description": {
+              "content": "Retrieves a single segment for a given import. The segment is identified by its code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments",
+                "code",
+                ":segmentCode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "segmentCode",
+                  "description": "(Required) Segment Code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b454a34e-245c-4731-92d9-3f7f7b077c05",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1b890475-1482-496d-bcfd-6b2f5564b249\",\n  \"code\": \"1234\",\n  \"name\": \"Segment Name\",\n  \"import_id\": \"9f87bd3e-32eb-4d15-8e85-17fb275fa809\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category_1\"\n  ],\n  \"updated_at\": \"2023-04-12T11:27:00.716632Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94822609-dcac-41a0-b9a4-bea1b8d4ebbf",
+              "name": "Invalid value for: path parameter importId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4ef3afcc-ea4c-42c3-b77d-c19338cb1ab6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "268a1236-fd51-4baa-8b79-0a3b4d166c07",
+          "name": "Deletes a segment by its public ID for an import",
+          "request": {
+            "name": "Deletes a segment by its public ID for an import",
+            "description": {
+              "content": "Deletes a segment for an import. The segment is identified by its globally unique public ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments",
+                "code",
+                ":segmentCode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "segmentCode",
+                  "description": "(Required) Segment Code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6f9c68f7-fc7c-4fd2-b7ed-c4c13e8d3442",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1b890475-1482-496d-bcfd-6b2f5564b249\",\n  \"code\": \"1234\",\n  \"name\": \"Segment Name\",\n  \"import_id\": \"9f87bd3e-32eb-4d15-8e85-17fb275fa809\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category_1\"\n  ],\n  \"updated_at\": \"2023-04-12T11:27:00.716632Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0889a2c-3e14-45b9-94dd-9b63ed926e68",
+              "name": "Invalid value for: path parameter importId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae518299-eab8-47b9-8be5-d6e7b7efc7dc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6086e3a1-123f-4877-9575-7900e1eb01d4",
+          "name": "Updates a segment by its code for an import",
+          "request": {
+            "name": "Updates a segment by its code for an import",
+            "description": {
+              "content": "Updates a segment for an import. The segment is identified by its code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "imports",
+                ":importId",
+                "segments",
+                "code",
+                ":segmentCode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "importId",
+                  "description": "(Required) Import ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "segmentCode",
+                  "description": "(Required) Segment Code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"cpm\": \"<double>\",\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "68765d80-63fa-43a3-b842-3a8ba47b9407",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1b890475-1482-496d-bcfd-6b2f5564b249\",\n  \"code\": \"1234\",\n  \"name\": \"Segment Name\",\n  \"import_id\": \"9f87bd3e-32eb-4d15-8e85-17fb275fa809\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category_1\"\n  ],\n  \"updated_at\": \"2023-04-12T11:27:00.716632Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "799cbcda-cba8-47f7-9064-ae79ade9a55d",
+              "name": "Invalid value for: path parameter importId, Invalid value for: body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03b5af03-1e66-4ac4-baef-9e308e1b05ef",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "imports",
+                    ":importId",
+                    "segments",
+                    "code",
+                    ":segmentCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "importId",
+                      "description": "(Required) Import ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentCode",
+                      "description": "(Required) Segment Code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"segment\",\n  \"description\": \"segment description\",\n  \"cpm\": 2,\n  \"categories\": [\n    \"category1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"0c724a57-8a5d-0f12-1eef-1d24550e14da\",\n  \"error\": {\n    \"c\": \"string\",\n    \"d\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.permutive.app/audience-api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "196f9187-8777-4a6a-8932-381377caa86f",
+    "name": "Taxonomy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

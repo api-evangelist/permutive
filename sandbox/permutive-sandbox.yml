@@ -1,0 +1,70 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/verification
+sandbox_published: false
+notes: >-
+  Permutive publishes NO sandbox. There is no test environment, no test-vs-live
+  key separation, no magic test identifiers, no fixtures and no simulator
+  values. Both key grades — public and private — are LIVE keys against a live
+  workspace; the only separation Permutive documents is by exposure risk, not
+  by environment. An integrator's first call writes real events into a real
+  workspace.
+  What Permutive does publish is a set of VERIFICATION tools for checking a
+  deployment after the fact, plus one genuinely useful dry-run affordance: the
+  stateless segmentation endpoint. Those are recorded here so the absence is
+  explained rather than merely asserted. No Sandbox pointer is emitted in
+  apis.yml — a file documenting an absence must not be wired as a presence.
+test_environment: null
+test_credentials: null
+test_keys:
+  separation: none
+  note: >-
+    "Public" and "private" describe where a key may safely be seen, not test
+    versus live. Neither is a test key. There is no key prefix that identifies
+    a mode.
+  source: https://docs.permutive.com/api/authentication
+dry_run_affordances:
+- name: Stateless segmentation
+  operation: postCcsV1SegmentationStateless
+  path: POST /ccs/v1/segmentation/stateless
+  description: >-
+    Segments a user from supplied events and supplied state and returns the
+    updated state WITHOUT persisting anything. Permutive names testing as a use
+    case: "ideal for testing and high-performance scenarios." The closest thing
+    to a dry run on the platform.
+  source: https://docs.permutive.com/api/ccs/introduction
+- name: Synchronous validation
+  parameter: synchronous-validation
+  applies_to: [postCcsV1Segmentation, postCcsV1SegmentationStateless]
+  description: >-
+    Validates events against the workspace event schema BEFORE segmenting, so
+    schema failures surface as an error instead of being discovered
+    asynchronously. Permutive recommends it during development only.
+  source: openapi/permutive-segmentation-api-openapi.yml
+verification_tooling:
+- name: Permutive Chrome Extension
+  description: >-
+    Validates a web deployment by inspecting data collection, schema errors,
+    cohort membership and ad-request targeting in the browser.
+  url: https://docs.permutive.com/sdks/web/javascript-sdk/troubleshooting/chrome-extension
+- name: JavaScript SDK verification guide
+  description: Step-by-step check that a web integration is working.
+  url: https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/verification
+- name: Previewing classifications
+  description: Test how a contextual classification provider — including your own webhook endpoint — classifies content.
+  url: https://docs.permutive.com/guides/signals/cohorts/contextual/previewing-classifications
+- name: Monitoring data ingestion
+  description: Check that events are arriving and resolving to identities.
+  url: https://docs.permutive.com/guides/signals/identity/monitoring-data-ingestion
+gap: >-
+  For an API whose write operations are non-idempotent, whose events are
+  validated against workspace-specific schemas that are not part of the
+  OpenAPI, and whose cohort frequency conditions are directly sensitive to
+  duplicate events, the absence of any test mode is the single riskiest thing
+  about integrating with Permutive.
+evidence:
+- {url: 'https://docs.permutive.com/llms.txt', status: 200,
+   note: 'Full documentation index enumerated; no sandbox, test-environment or test-credentials page exists.'}
+- {url: 'https://docs.permutive.com/api/authentication', status: 200,
+   note: 'Documents public/private key grades only; no test mode.'}
+checked: '2026-08-13'

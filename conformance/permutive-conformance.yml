@@ -1,26 +1,130 @@
-generated: '2026-07-20'
-method: derived
-source: openapi/permutive-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://docs.permutive.com/governance/security
+derived_from: openapi/*.yml
 notes: >-
-  Cross-cutting standards conformance derived from the Permutive API surface.
-  Authentication is workspace API-key (bearer), not OAuth2/OIDC. No published
-  certification program was machine-verified, so no Compliance pointer is
-  emitted from this file (a Trust Center exists — see security/).
+  Cross-cutting standards conformance for Permutive, read from the five
+  Permutive-published OpenAPI documents and from Permutive's own governance
+  pages. Supersedes the 2026-07-20 file, which was derived from an
+  API Evangelist-authored spec and wrongly recorded partial RFC 9457
+  conformance.
 standards:
-  - id: oauth2
-    conforms: false
-    evidence: API uses workspace API key (bearer token), not OAuth2 flows.
-  - id: openid-connect
-    conforms: false
-  - id: rfc9457-problem-details
-    conforms: partial
-    evidence: Error responses modeled as application/problem+json in the derived spec; provider error format not verified verbatim.
-  - id: cursor-pagination
-    conforms: true
-    evidence: Import segment listing uses a cursor query parameter.
-  - id: rest-json
-    conforms: true
-    evidence: JSON request/response over HTTPS with resource-oriented paths.
-  - id: idempotency
-    conforms: false
-    evidence: No documented idempotency-key contract.
+- id: openapi-3
+  conforms: true
+  evidence: >-
+    Permutive publishes five OpenAPI documents (3.0.1 Cohorts, 3.0.3 Taxonomy,
+    3.1.0 Identity, 3.1.0 Events, 3.1.0 Segmentation), all with servers[],
+    operationIds, tagged operations, request/response schemas and examples.
+  note: 'Version drift across the set: three different OpenAPI versions for one platform.'
+- id: oauth2
+  conforms: false
+  evidence: 'The product API authenticates with workspace API keys (X-API-Key header or `k` query parameter). No OAuth2 scheme appears in any spec.'
+  caveat: >-
+    permutive.com serves RFC 8414 OAuth authorization-server metadata, but that
+    belongs to an MCP plugin on the WordPress marketing site, not to the
+    product API. See well-known/permutive-well-known.yml.
+- id: openid-connect
+  conforms: partial
+  evidence: >-
+    OIDC is supported for HUMAN console login to the Permutive platform (SSO via
+    SAML and OpenID Connect with MFA enforced by the customer IdP), per
+    https://docs.permutive.com/governance/security. It is not available for API
+    authentication.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: partial
+  evidence: 'Served at https://permutive.com/.well-known/oauth-authorization-server — for the WordPress MCP plugin only.'
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: partial
+  evidence: 'Served at https://permutive.com/.well-known/oauth-protected-resource — for the WordPress MCP plugin only.'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Permutive publishes a custom error envelope {request_id, error{status, code,
+    message, cause?, docs}} with content-type application/json. No
+    application/problem+json anywhere, no `type`/`title`/`detail`/`instance`
+    members.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: 'No security.txt served on permutive.com, api.permutive.com or docs.permutive.com (all 404).'
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: 'No Sunset or Deprecation header support and no deprecation policy published.'
+- id: rfc9110-rate-limit-headers
+  conforms: false
+  evidence: 'No rate-limit response headers documented; no 429 declared in any spec.'
+- id: model-context-protocol
+  conforms: true
+  evidence: >-
+    A live MCP server at https://docs.permutive.com/mcp answers JSON-RPC 2.0
+    tools/list over HTTP + text/event-stream (probed 2026-08-13, HTTP 200, three
+    tools with inputSchemas). A second, invitation-only MCP server exposes ten
+    audience-intelligence tools.
+- id: a2a-agent-card
+  conforms: partial
+  grade: flavored
+  evidence: >-
+    An A2A agent card is served at
+    https://docs.permutive.com/.well-known/agent-card.json. It passes all three
+    hard structural checks but uses `supportedInterfaces` rather than
+    `additionalInterfaces` and reports protocolVersion "0.3" rather than a full
+    semantic version. See a2a/permutive-a2a.yml.
+- id: llms-txt
+  conforms: true
+  evidence: 'https://docs.permutive.com/llms.txt — 47KB documentation index, HTTP 200, text/plain.'
+- id: agent-skills
+  conforms: true
+  evidence: 'Permutive publishes an Agent Skill at /.well-known/agent-skills/permutive/skill.md.'
+- id: semver
+  conforms: true
+  evidence: 'Documented versioning policy explicitly adopts Semantic Versioning for API major/minor compatibility.'
+- id: rest-json
+  conforms: true
+  evidence: 'Resource-oriented paths, JSON request/response over HTTPS, conventional HTTP status codes.'
+- id: cursor-pagination
+  conforms: partial
+  evidence: 'Only the Taxonomy API pages (pagination_token / pagination.nextToken). The Cohorts API has no paging at all.'
+- id: idempotency
+  conforms: false
+  evidence: 'No idempotency key documented and no Idempotency-Key parameter in any spec.'
+- id: iab-tech-lab-taxonomies
+  conforms: true
+  evidence: >-
+    Contextual classification supports the IAB Content Taxonomy at versions
+    2.0, 2.2 and 3.0 as first-class `taxonomy` values in the Contextual API and
+    the custom-classification webhook contract.
+- id: iab-tcf
+  conforms: unknown
+  evidence: >-
+    Permutive documents consent-by-token and consent-by-default mechanisms for
+    GDPR/ePrivacy but does not name TCF conformance in the public docs.
+- id: soc2-type-ii
+  conforms: true
+  evidence: 'Permutive states it undergoes annual independent SOC 2 Type II audits; attestations available via https://trust.permutive.com.'
+- id: soc3
+  conforms: true
+  evidence: 'Permutive states SOC 3 reports are available publicly.'
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Documented data-processor role governed by DPA, consent mechanisms, and a
+    data-subject-request process with a stated 14-day SLA
+    (datarequest@permutive.com).
+- id: ccpa
+  conforms: true
+  evidence: 'Data subject rights process documented for CCPA alongside GDPR; California privacy rights page published.'
+- id: iso-27001
+  conforms: unknown
+  evidence: 'Not named in the public security page. The Trust Center is client-rendered and could not be machine-read.'
+- id: pci-dss
+  conforms: false
+  evidence: 'Not applicable — Permutive does not process payment card data.'
+- id: hipaa
+  conforms: false
+  evidence: 'Not claimed.'
+
+compliance_program:
+  published: true
+  url: https://trust.permutive.com/
+  documentation: https://docs.permutive.com/governance/security
+  certifications: [SOC 2 Type II, SOC 3]
+  reference: security/permutive-trust-center.yml

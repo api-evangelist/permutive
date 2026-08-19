@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Events API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "v2.0",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Track an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.permutive.app/v2.0/events",
+            "params": [
+              {
+                "name": "enrich",
+                "value": "",
+                "type": "query",
+                "description": "This boolean parameter determines whether to enrich the event with geo, ISP, and natural language processing data. By default, this is set to `true`."
+              },
+              {
+                "name": "sdkp",
+                "value": "",
+                "type": "query",
+                "description": "This boolean parameter is used to describe whether the event originated from a Permutive SDK on a client's device, where `true` denotes the event was from an SDK and `false` denotes an out-of-SDK event.\n\n By default, this parameter is set to `true`. If you are interacting with this endpoint directly, rather than through a Permutive SDK, please set this parameter to `false`."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This endpoint creates a new event for a user, persisting the event in Permutive for downstream consumption, such as for segmentation, insights, or routing to a data lake. It validates the event against the schema defined in your workspace, and generates an event ID for the event and optionally enriches the event with geo, ISP, and contextual data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

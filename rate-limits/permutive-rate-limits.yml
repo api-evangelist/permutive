@@ -1,0 +1,49 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.permutive.com/api/ccs/introduction
+notes: >-
+  An honest zero. Permutive's rate limits are real but are NOT published: both
+  places the docs mention them, they redirect the reader to a human. The CCS
+  API reference says "The CCS API is designed for high-throughput scenarios.
+  Contact your Permutive representative for specific rate limit information for
+  your workspace." The Contextual API reference says "Contact your Customer
+  Success Manager for information about rate limits applicable to your
+  account." A full-text search of the documentation corpus (via Permutive's own
+  documentation MCP server) returns no other API rate-limit statement.
+  No rate-limit RESPONSE HEADERS are documented anywhere, no 429 status is
+  declared in any of the five Permutive-published OpenAPI documents, and the
+  Contextual API's error table does not list 429 at all. An agent therefore has
+  no runtime signal to back off on — it can only discover a limit by hitting it
+  and receiving an undocumented status.
+limit_count: 0
+limits: []
+headers:
+  documented: false
+  request: []
+  response: []
+  retry_after: false
+exhaustion:
+  status_code: undocumented
+  declared_in_specs: false
+  note: 'No 4xx throttling response is declared by any Permutive spec.'
+published_quotas:
+- {scope: 'CCS API request', kind: batch-size, limit: 10, unit: events per request,
+   source: 'https://docs.permutive.com/api/ccs/introduction',
+   note: 'A payload cap, not a rate limit: "Each request can include up to 10 events. For larger batches, split your events across multiple requests."'}
+- {scope: 'Taxonomy API PATCH /imports/{importId}/segments', kind: batch-size, limit: 5000,
+   unit: operations per request,
+   source: 'https://docs.permutive.com/api/taxonomy/batch-update',
+   note: 'Batch operation cap; operation order is not guaranteed.'}
+- {scope: 'Contextual classification', kind: quota, limit: null,
+   unit: classification calls,
+   source: 'https://docs.permutive.com/guides/signals/cohorts/contextual/enabling-classification-providers',
+   note: 'A per-provider classification quota is configurable in the dashboard (Selective Classifications Threshold). Values are account-specific and not published.'}
+evidence:
+- {url: 'https://docs.permutive.com/api/ccs/introduction', status: 200, quote: 'Contact your Permutive representative for specific rate limit information for your workspace.'}
+- {url: 'https://docs.permutive.com/api/contextual/introduction', status: 200, quote: 'Contact your Customer Success Manager for information about rate limits applicable to your account.'}
+- {url: 'https://docs.permutive.com/api/errors', status: 200, note: 'Documented status-code table contains no 429.'}
+recommendation: >-
+  Publishing RateLimit / RateLimit-Policy response headers (RFC 9745 draft
+  shape) and declaring a 429 in the OpenAPI would make Permutive
+  agent-safe to call without changing a single limit value.
+checked: '2026-08-13'

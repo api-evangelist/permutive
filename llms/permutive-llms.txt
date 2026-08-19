@@ -2,281 +2,287 @@
 
 ## Docs
 
-- [Authentication](https://docs.permutive.com/api/authentication.md): Authenticate and access Permutive APIs
-- [Introduction](https://docs.permutive.com/api/ccs/introduction.md): Real-time user segmentation based on events and cohort definitions
-- [Segment User](https://docs.permutive.com/api/ccs/segmentation.md): This endpoint accepts a list of events for a given user and combines them with any pre-existing state for the user to determine the full list of cohorts of which they are a member. State is also persisted, to be applied to subsequent requests for the same user.
-- [Stateless Segmentation](https://docs.permutive.com/api/ccs/segmentation-stateless.md): This endpoint accepts a list of events for a given user and optionally some pre-existing state for the user. It uses these to determine the full list of cohorts of which they are a member, and returns these along with the updated state for the user. State is not persisted, so will not be used in the…
-- [Cohort query format](https://docs.permutive.com/api/cohorts/cohort-query-format.md): How to define the behavior of cohorts
-- [Create a cohort](https://docs.permutive.com/api/cohorts/create-cohort.md): This endpoint allows the creation of a new cohort. The query definition is provided using the Cohort API JSON query definition format.
-- [Delete a cohort](https://docs.permutive.com/api/cohorts/delete-cohort.md): This endpoint allows deleting an existing cohort. Depending on the access level of the provided API key, it can delete cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be deleted via th…
-- [Retrieve individual cohort](https://docs.permutive.com/api/cohorts/get-cohort.md): This endpoint returns details of a single cohort belonging either to the workspace that owns the requesting API key, or to a parent workspace if the requesting workspace inherits the cohort from that workspace.
-- [Retrieve all cohorts](https://docs.permutive.com/api/cohorts/get-cohorts.md): By default this endpoint returns all cohorts belonging to the workspace to which the supplied API key belongs, plus any cohorts inherited from parent workspaces in the organization hierarchy. If the API key has the required access level, it is also possible to return segments belonging to child work…
-- [Introduction](https://docs.permutive.com/api/cohorts/introduction.md): Programmatically manage cohorts
-- [Update a cohort](https://docs.permutive.com/api/cohorts/update-cohort.md): This endpoint allows updating an existing cohort. Depending on the access level of the provided API key, it can update cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be updated via th…
-- [Introduction](https://docs.permutive.com/api/contextual/introduction.md): Retrieve contextual cohort targeting values for ad server integration.
-- [Get Contextual Segments](https://docs.permutive.com/api/contextual/segment.md)
-- [Errors](https://docs.permutive.com/api/errors.md): How errors are represented in API responses
-- [Introduction](https://docs.permutive.com/api/events/introduction.md): Capture behavioral and contextual data
-- [Track an event](https://docs.permutive.com/api/events/track.md): This endpoint creates a new event for a user, persisting the event in Permutive for downstream consumption, such as for segmentation, insights, or routing to a data lake. It validates the event against the schema defined in your workspace, and generates an event ID for the event and optionally enric…
-- [Create a user ID](https://docs.permutive.com/api/identity/create.md): This endpoint generates a new user ID that can be used to identify a user within Permutive.
-- [Identify a user](https://docs.permutive.com/api/identity/identify.md): Associate one or more identities with a Permutive user, allowing you to identify users in multiple ways.
-- [Introduction](https://docs.permutive.com/api/identity/introduction.md): Manage device, user, and household identities
-- [Retrieve identities](https://docs.permutive.com/api/identity/retrieve.md): Retrieves all identities available for a given user.
-- [Introduction](https://docs.permutive.com/api/introduction.md): Learn how to start using Permutive's APIs
-- [Get Cohort Detail](https://docs.permutive.com/api/mcp/get_cohort_detail.md)
-- [Get Organizations And Workspaces](https://docs.permutive.com/api/mcp/get_orgs_and_workspaces.md)
-- [Get Workspace Details](https://docs.permutive.com/api/mcp/get_workspace_details.md)
-- [Introduction](https://docs.permutive.com/api/mcp/introduction.md): Audience intelligence, built for AI agents
-- [List Cohorts](https://docs.permutive.com/api/mcp/list_cohorts.md)
-- [Measure Audiences](https://docs.permutive.com/api/mcp/measure_audiences.md)
-- [Search Cohorts](https://docs.permutive.com/api/mcp/search_cohorts.md)
-- [All Tools](https://docs.permutive.com/api/mcp/tools.md): Tools exposed by the Permutive MCP server
-- [Requests & Responses](https://docs.permutive.com/api/requests-and-responses.md): Sending & receiving calls from the API
-- [Batch update segments](https://docs.permutive.com/api/taxonomy/batch-update.md): Note that operation order is not guaranteed. No more than 5,000 operations can be contained in a batch.
-- [Create a segment for an import](https://docs.permutive.com/api/taxonomy/create-a-segment.md)
-- [Delete a segment by its code](https://docs.permutive.com/api/taxonomy/delete-a-segment-by-code.md): Deletes a segment for an import. The segment is identified by its globally unique public ID.
-- [Delete a segment by its public ID](https://docs.permutive.com/api/taxonomy/delete-a-segment-by-id.md): Deletes a segment for an import. The segment is identified by its code.
-- [Get a segment by its code from an import](https://docs.permutive.com/api/taxonomy/get-a-segment-by-code.md): Retrieves a single segment for a given import. The segment is identified by its code.
-- [Get a segment by its public ID from an import](https://docs.permutive.com/api/taxonomy/get-a-segment-by-id.md): Retrieves a single segment for a given import. The segment is identified by its globally unique public ID (UUID)
-- [Get all imports](https://docs.permutive.com/api/taxonomy/get-imports.md)
-- [Get all segments for an import](https://docs.permutive.com/api/taxonomy/get-segments-for-import.md): Retrieves all segments for an import. This is a paginated endpoint and takes an optional pagination token as a query parameter. If no token is provided then it retrieves the first page of results.
-- [Introduction](https://docs.permutive.com/api/taxonomy/introduction.md): Programmatically manage second-party taxonomies
-- [Retrieve an import](https://docs.permutive.com/api/taxonomy/retrieve-import.md)
-- [Update a segment by its code](https://docs.permutive.com/api/taxonomy/update-a-segment-by-code.md): Updates a segment for an import. The segment is identified by its code.
-- [Update a segment by its public ID](https://docs.permutive.com/api/taxonomy/update-a-segment-by-id.md): Updates a segment for an import. The segment is identified by its globally unique public ID.
-- [Versioning](https://docs.permutive.com/api/versioning.md): Selecting the right version of our APIs
-- [Activations](https://docs.permutive.com/concepts/activations.md): Delivering your audiences to ad platforms for targeting
-- [Cohorts](https://docs.permutive.com/concepts/cohorts.md): Securely activate your audiences at scale
-- [Events](https://docs.permutive.com/concepts/events.md): Capturing your users' first-party behavior
-- [Identity](https://docs.permutive.com/concepts/identity.md): A foundation for accurate audience reporting and connecting auxiliary data
-- [Insights](https://docs.permutive.com/concepts/insights.md): Understand your audience to sell and deliver campaigns
+- [Introduction](https://docs.permutive.com/introduction.md): Learn about Permutive's predictive data collaboration platform
 - [Overview](https://docs.permutive.com/concepts/overview.md): Understand the core concepts in the Permutive platform
 - [Reach](https://docs.permutive.com/concepts/reach.md): Addressing 100% of your audience
+- [Cohorts](https://docs.permutive.com/concepts/cohorts.md): Securely activate your audiences at scale
+- [Activations](https://docs.permutive.com/concepts/activations.md): Delivering your audiences to ad platforms for targeting
+- [Insights](https://docs.permutive.com/concepts/insights.md): Understand your audience to sell and deliver campaigns
+- [Events](https://docs.permutive.com/concepts/events.md): Capturing your users' first-party behavior
+- [Identity](https://docs.permutive.com/concepts/identity.md): A foundation for accurate audience reporting and connecting auxiliary data
 - [SDKs](https://docs.permutive.com/concepts/sdks.md): Capturing, processing, and activating your audiences in real-time
 - [Source/Destination](https://docs.permutive.com/concepts/sources-destinations.md): Connecting data to and from Permutive
 - [Workspaces](https://docs.permutive.com/concepts/workspaces.md): Organizing your deployments across sites and business units in your organization
+- [Implementation](https://docs.permutive.com/implementation-overview.md): A high-level guide to deploying Permutive across your properties
+- [Products](https://docs.permutive.com/products/overview.md): Explore Permutive's suite of products for audience activation, data collaboration, and curation
+- [Events (Audience)](https://docs.permutive.com/products/connectivity/events.md): Capture and manage user behavior data across all touchpoints
+- [Sources (Beta)](https://docs.permutive.com/products/connectivity/sources.md): Set up connections to data warehouses and data lakes and import your data into Permutive
+- [Imports (Audience)](https://docs.permutive.com/products/connectivity/imports.md): Import audience data from external sources like Google Cloud Storage and LiveRamp.
+- [Routing](https://docs.permutive.com/products/connectivity/routing.md): Export first-party event data to data warehouses and cloud storage.
+- [Custom Cohorts](https://docs.permutive.com/products/signals/cohorts/custom.md): Build flexible audience segments based on user behavior and data imports.
+- [Contextual Cohorts](https://docs.permutive.com/products/signals/cohorts/contextual.md): Target ads based on page content without processing user data
+- [Lookalike Cohorts](https://docs.permutive.com/products/signals/cohorts/modeled-lookalike.md): Expand audience reach using real-time lookalike modeling
+- [Classification Cohorts](https://docs.permutive.com/products/signals/cohorts/modeled-classification.md): Reach your non-endemic audience
+- [Standard Cohorts](https://docs.permutive.com/products/signals/cohorts/standard.md): Pre-built standardized audience segments for common targeting needs
+- [Standard Contextual Cohorts](https://docs.permutive.com/products/signals/cohorts/standard-contextual.md): Ready-made contextual audience segments based on standardized taxonomies
+- [Identity Graph](https://docs.permutive.com/products/signals/identity/identity-graph.md): Manage user identity and cross-device recognition
+- [Identity Manager](https://docs.permutive.com/products/signals/identity/identity-manager.md): Activate alternative IDs into the bid stream to maximize programmatic yield.
+- [Identity Insights](https://docs.permutive.com/products/signals/identity/identity-insights.md): Visualize your identity graph and gain insights on the scale and performance of every identifier.
+- [Marketplace](https://docs.permutive.com/products/signals/marketplace.md): Discover and access third-party audience data
+- [Planning](https://docs.permutive.com/products/workflows-insights/planning.md): Create plans to respond to campaign briefs and build targeted audiences with instant insights
+- [Optimization](https://docs.permutive.com/products/workflows-insights/optimization.md): Optimize campaign performance and audience targeting with AI-driven recommendations
+- [Audience Insights](https://docs.permutive.com/products/workflows-insights/insights/audience.md): Understand your audience composition, behavior, and content preferences
+- [Campaign Insights](https://docs.permutive.com/products/workflows-insights/insights/campaign.md): Analyze campaign performance, delivery metrics, and audience engagement for your advertising campaigns
+- [Clean Room](https://docs.permutive.com/products/clean-room.md): Enable secure data collaboration between publishers and advertisers without exposing raw user data
+- [Curation](https://docs.permutive.com/products/curation.md): Package and monetize publisher signals across multi-publisher curated deals
+- [JavaScript SDK](https://docs.permutive.com/sdks/web/javascript-sdk/overview.md): Integrate Permutive into your website for user segmentation, personalization, and ad targeting
+- [Quick Start](https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/quick-start.md): Get up and running with the Permutive JavaScript SDK in minutes
+- [Installation](https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/installation.md): Install the Permutive JavaScript SDK via script tag or tag manager
+- [Initialization](https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/initialization.md): Configure and initialize the Permutive JavaScript SDK
+- [Verification](https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/verification.md): Verify your Permutive JavaScript SDK integration is working correctly
+- [Identity Management](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/identity-management.md): Track users across sessions and devices with the Permutive JavaScript SDK
+- [Event Properties](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/event-properties.md): Structure and validate event data in the Permutive JavaScript SDK
+- [Cohorts and Activations](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/cohorts-and-activations.md): Understanding user segmentation in the Permutive JavaScript SDK
+- [Contextual Data](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/contextual-data.md): Content-based real-time targeting with the Permutive JavaScript SDK
+- [Consent Management](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/consent-management.md): Handle user consent with the Permutive JavaScript SDK
+- [Pageview Tracking](https://docs.permutive.com/sdks/web/javascript-sdk/features/pageview-tracking.md): Track pageviews and user engagement with the Permutive JavaScript SDK
+- [Event Tracking](https://docs.permutive.com/sdks/web/javascript-sdk/features/event-tracking.md): Track custom events with the Permutive JavaScript SDK
+- [Video Tracking](https://docs.permutive.com/sdks/web/javascript-sdk/features/video-tracking.md): Track video content viewing with the Permutive JavaScript SDK using the CTV addon
+- [Real-Time Triggers](https://docs.permutive.com/sdks/web/javascript-sdk/features/real-time-triggers.md): React to cohort changes with trigger(), segment(), segments(), and query()
+- [Integrations](https://docs.permutive.com/sdks/web/javascript-sdk/integrations/overview.md): Connect the JavaScript SDK with ad platforms and header bidding solutions
+- [Common Errors](https://docs.permutive.com/sdks/web/javascript-sdk/troubleshooting/common-errors.md): Troubleshoot common issues with the Permutive JavaScript SDK
+- [Chrome Extension](https://docs.permutive.com/sdks/web/javascript-sdk/troubleshooting/chrome-extension.md): Validate your Permutive deployment by inspecting data collection, schema errors, cohort membership, and ad request targeting
+- [Tag Manager Integration](https://docs.permutive.com/sdks/web/javascript-sdk/guides/tag-managers.md): Deploy the Permutive JavaScript SDK via Google Tag Manager, Tealium, and Adobe Launch
+- [Release notes](https://docs.permutive.com/sdks/web/javascript-sdk/release-notes/index.md)
+- [iOS SDK](https://docs.permutive.com/sdks/mobile/ios/overview.md): Integrate Permutive into your iOS and tvOS applications for user segmentation, personalization, and ad targeting
+- [Quick Start](https://docs.permutive.com/sdks/mobile/ios/getting-started/quick-start.md): Get up and running with the Permutive iOS SDK in minutes
+- [Installation](https://docs.permutive.com/sdks/mobile/ios/getting-started/installation.md): Add the Permutive SDK to your iOS or tvOS project
+- [Initialization](https://docs.permutive.com/sdks/mobile/ios/getting-started/initialization.md): Configure and start the Permutive SDK
+- [Verification](https://docs.permutive.com/sdks/mobile/ios/getting-started/verification.md): Verify your Permutive iOS SDK integration is working correctly
+- [Identity Management](https://docs.permutive.com/sdks/mobile/ios/core-concepts/identity-management.md): Track users across sessions, devices, and platforms with aliases
+- [Event Properties](https://docs.permutive.com/sdks/mobile/ios/core-concepts/event-properties.md): Structure and validate event metadata
+- [Cohorts and Activations](https://docs.permutive.com/sdks/mobile/ios/core-concepts/cohorts-and-activations.md): Understanding user segmentation and platform-specific targeting
+- [Contextual Data](https://docs.permutive.com/sdks/mobile/ios/core-concepts/contextual-data.md): Real-time content-based segmentation for privacy-friendly targeting
+- [Page Tracking](https://docs.permutive.com/sdks/mobile/ios/features/page-tracking.md): Track page views and user engagement with PageTracker
+- [Event Tracking](https://docs.permutive.com/sdks/mobile/ios/features/event-tracking.md): Track custom events directly with the Permutive SDK
+- [Video Tracking](https://docs.permutive.com/sdks/mobile/ios/features/video-tracking.md): Track video playback, engagement, and completion metrics
+- [Video Ad Tracking](https://docs.permutive.com/sdks/mobile/ios/features/video-ad-tracking.md): Emit standard video ad events from iOS / tvOS using Permutive.shared.track()
+- [Triggers Provider](https://docs.permutive.com/sdks/mobile/ios/features/triggers-provider.md): React to cohort changes and user identity updates in real-time
+- [Integrations](https://docs.permutive.com/sdks/mobile/ios/integrations/overview.md): Connect the iOS SDK with ad platforms and tracking providers
+- [IDFA Provider](https://docs.permutive.com/sdks/mobile/ios/integrations/idfa-provider.md): Apple advertising identifier integration and privacy considerations
+- [Common Issues](https://docs.permutive.com/sdks/mobile/ios/troubleshooting/common-errors.md): Solutions to common Permutive iOS SDK problems
+- [Migration Guide: v2.6.x](https://docs.permutive.com/sdks/mobile/ios/guides/migration/v2-6.md): Upgrade to Permutive iOS SDK v2.6.x and opt into config-driven automatic ID collection
+- [Release Notes](https://docs.permutive.com/sdks/mobile/ios/release-notes/index.md): iOS SDK updates and announcements
+- [Android SDK](https://docs.permutive.com/sdks/mobile/android/overview.md): Integrate Permutive into your Android application for user segmentation, personalization, and ad targeting
+- [Quick Start Guide](https://docs.permutive.com/sdks/mobile/android/getting-started/quick-start.md): Get up and running with the Permutive Android SDK in minutes
+- [Installation](https://docs.permutive.com/sdks/mobile/android/getting-started/installation.md): Install the Permutive Android SDK and optional add-ons
+- [SDK Initialization](https://docs.permutive.com/sdks/mobile/android/getting-started/initialization.md): Initialize the Permutive SDK in your Android application
+- [Verifying Your Integration](https://docs.permutive.com/sdks/mobile/android/getting-started/verification.md): Verify your Permutive Android SDK integration is working correctly
+- [Identity Management](https://docs.permutive.com/sdks/mobile/android/core-concepts/identity-management.md): Track users across sessions, devices, and platforms with aliases
+- [Event Properties](https://docs.permutive.com/sdks/mobile/android/core-concepts/event-properties.md): Add structured, typed data to your events
+- [Cohorts and Activations](https://docs.permutive.com/sdks/mobile/android/core-concepts/cohorts-and-activations.md): Understanding user segmentation and platform-specific targeting
+- [Contextual Data](https://docs.permutive.com/sdks/mobile/android/core-concepts/contextual-data.md): Real-time content-based segmentation for privacy-friendly targeting
+- [Page Tracking](https://docs.permutive.com/sdks/mobile/android/features/page-tracking.md): Track pages and screens with automatic engagement metrics
+- [Event Tracking](https://docs.permutive.com/sdks/mobile/android/features/event-tracking.md): Track standalone events not associated with pages
+- [Video Tracking](https://docs.permutive.com/sdks/mobile/android/features/video-tracking.md): Track video playback, engagement, and completion metrics
+- [Video Ad Tracking](https://docs.permutive.com/sdks/mobile/android/features/video-ad-tracking.md): Track video advertisements, clicks, and completions
+- [Triggers Provider](https://docs.permutive.com/sdks/mobile/android/features/triggers-provider.md): React to real-time cohort membership changes
+- [Integrations](https://docs.permutive.com/sdks/mobile/android/integrations/overview.md): Connect the Android SDK with ad platforms and tracking providers
+- [AAID Provider](https://docs.permutive.com/sdks/mobile/android/integrations/aaid-provider.md): Automatically identify users by Android Advertising ID
+- [Troubleshooting](https://docs.permutive.com/sdks/mobile/android/troubleshooting/common-errors.md): Solutions to common issues when integrating the Permutive Android SDK
+- [Migration Guide: v1.9.x to v1.10.x](https://docs.permutive.com/sdks/mobile/android/guides/migration/v1-9-to-v1-10.md): Upgrade from Permutive Android SDK v1.9.x to v1.10.x
+- [Migration Guide: v1.12.x](https://docs.permutive.com/sdks/mobile/android/guides/migration/v1-12.md): Upgrade to Permutive Android SDK v1.12.x and opt into config-driven automatic ID collection
+- [Release Notes](https://docs.permutive.com/sdks/mobile/android/release-notes/index.md): Android SDK updates and announcements
+- [React Native](https://docs.permutive.com/sdks/mobile/react-native.md): Use Permutive native Android and iOS SDKs from within your React Native application
+- [Connected TV Overview](https://docs.permutive.com/sdks/ctv/overview.md): Integrate Permutive across Connected TV platforms for audience targeting and video engagement tracking
+- [Web-Based CTV](https://docs.permutive.com/sdks/ctv/web-ctv.md): Integrate Permutive on Samsung Tizen, LG WebOS, and HbbTV platforms using the JavaScript SDK
+- [tvOS](https://docs.permutive.com/sdks/ctv/tvos.md): Integrate Permutive on tvOS using the iOS SDK
+- [Android TV](https://docs.permutive.com/sdks/ctv/android-tv.md): Integrate Permutive on Android TV and Google TV using the Android SDK
+- [Roku](https://docs.permutive.com/sdks/ctv/roku.md): Integrate Permutive on Roku using the Permutive Roku Client
+- [CTV Video Tracking](https://docs.permutive.com/sdks/ctv/video-tracking.md): Best practices for tracking video events across all CTV platforms
+- [Direct API Deployment](https://docs.permutive.com/sdks/api/overview.md): Deploy Permutive without an SDK using direct API calls for server-side, CTV, and non-O&O environments
+- [Security](https://docs.permutive.com/governance/security.md): Permutive's security practices and assurance program
 - [Consent](https://docs.permutive.com/governance/consent.md): How data controllers can signal user consent to Permutive
 - [Data subject requests](https://docs.permutive.com/governance/data-subject-requests.md): How Permutive complies with individuals' rights regarding personal data processing under the GDPR and other privacy laws
-- [Security](https://docs.permutive.com/governance/security.md): Permutive's security practices and assurance program
-- [Configuring Ad Server Targeting](https://docs.permutive.com/guides/clean-room/configuring-ad-server-targeting.md): How to configure Clean Room targeting in Google Ad Manager or Microsoft Monetize
-- [Configuring Frequency Control](https://docs.permutive.com/guides/clean-room/configuring-frequency-control.md): How to set up frequency caps for Clean Room campaigns
-- [Creating Clean Room Audiences](https://docs.permutive.com/guides/clean-room/creating-clean-room-audiences.md): How to create matched and modeled audiences in the Clean Room
-- [Setting Up Advertiser Connections](https://docs.permutive.com/guides/clean-room/setting-up-advertiser-connections.md): How to connect with advertisers in the Clean Room
-- [Sharing Proposal and Deal Information](https://docs.permutive.com/guides/clean-room/sharing-proposal-and-deal-information.md): How to share GAM proposals and order details with advertisers
-- [Uploading Advertiser Data](https://docs.permutive.com/guides/clean-room/uploading-advertiser-data.md): How to upload first-party data to Clean Room data sources
-- [Creating & Updating Event Schema](https://docs.permutive.com/guides/connectivity/events/create-update-event-schema.md): How to add new events and event properties using your schema Google Sheet
-- [Tracking Off-Site Events with Pixels](https://docs.permutive.com/guides/connectivity/events/tracking-offsite-events.md): Capture conversions, email opens, and ad impressions that happen outside your site, and attribute them to your Permutive users.
-- [Adding Audiences in LiveRamp](https://docs.permutive.com/guides/connectivity/imports/adding-audiences-in-liveramp.md): How to find, request, and distribute audience segments from the LiveRamp Data Marketplace to Permutive
-- [Configuring Taxonomy](https://docs.permutive.com/guides/connectivity/imports/configuring-taxonomy.md): Set up a taxonomy to map segment codes to human-readable names for your imported audience data
-- [Ingesting Second-Party Data via LiveRamp](https://docs.permutive.com/guides/connectivity/imports/ingesting-data-via-liveramp.md): Set up LiveRamp to send advertiser first-party cohorts to Permutive as second-party data
-- [Second-Party Data with Permutive](https://docs.permutive.com/guides/connectivity/imports/second-party-data-overview.md): Understand how to use second-party data in Permutive for audience enrichment and targeting
-- [Setting Up Google BigQuery Routing](https://docs.permutive.com/guides/connectivity/routing/setting-up-bigquery-routing.md): Configure routing to Google BigQuery for near real-time event data streaming
-- [Setting Up AWS S3 Batch Routing](https://docs.permutive.com/guides/connectivity/routing/setting-up-s3-batch-routing.md): Configure scheduled daily exports to Amazon S3 in JSON or Parquet format
-- [Setting Up AWS S3 Streaming Routing](https://docs.permutive.com/guides/connectivity/routing/setting-up-s3-streaming-routing.md): Configure near real-time event streaming to Amazon S3 with Hive-style partitioning
-- [Setting Up Snowflake Routing](https://docs.permutive.com/guides/connectivity/routing/setting-up-snowflake-routing.md): Configure routing to Snowflake using Snowpipe for automated data loading
-- [Actioning Updates to Your Source Schema](https://docs.permutive.com/guides/connectivity/sources/actioning-updates-to-your-source-schema.md): How to apply schema changes from your data warehouse to an existing Permutive import
-- [Connecting to Amazon S3](https://docs.permutive.com/guides/connectivity/sources/connecting-to-amazon-s3.md): How to set up a connection to Amazon S3 to import data into Permutive
-- [Connecting to BigQuery](https://docs.permutive.com/guides/connectivity/sources/connecting-to-bigquery.md): How to set up a connection to Google BigQuery to import data into Permutive
-- [Connecting to Google Cloud Storage](https://docs.permutive.com/guides/connectivity/sources/connecting-to-gcs.md): How to set up a connection to Google Cloud Storage (GCS) to import data into Permutive
-- [Connecting to Snowflake](https://docs.permutive.com/guides/connectivity/sources/connecting-to-snowflake.md): How to set up a connection to Snowflake to import data into Permutive
-- [Creating an Import](https://docs.permutive.com/guides/connectivity/sources/creating-an-import.md): How to create a data import from an active connection in Permutive
-- [Configuring Google Curate](https://docs.permutive.com/guides/curation/configuring-google-curate.md): How to configure Google Ad Manager for Curation to enable cohort signals in Google Curate
-- [Configuring Prebid for Curation](https://docs.permutive.com/guides/curation/configuring-prebid-for-curation.md): How to configure Prebid.js to enable curation signals for SSP curation marketplaces
-- [Managing Cohort Exclusions](https://docs.permutive.com/guides/curation/managing-cohort-exclusions.md): How to control which cohorts participate in Curation using UI toggles and exclusion tags
-- [Pageview Comparisons FAQ](https://docs.permutive.com/guides/insights/pageview-comparisons.md): Understanding how Permutive pageviews compare to Google Analytics
-- [Guides](https://docs.permutive.com/guides/introduction.md): Step-by-step instructions to help you get the most out of Permutive
-- [Building Audiences](https://docs.permutive.com/guides/planning/building-audiences.md): Combine cohorts with boolean logic to build targeted audiences within plans
-- [Creating a Plan](https://docs.permutive.com/guides/planning/creating-a-plan.md): Learn how to create and edit plans for campaign opportunities
-- [Sharing Plans](https://docs.permutive.com/guides/planning/sharing-plans.md): Share plans with colleagues via unique URLs
-- [Using Plan Insights](https://docs.permutive.com/guides/planning/using-plan-insights.md): Analyze audience reach, overlap, and composition with Plan Insights
-- [GAM API Usage](https://docs.permutive.com/guides/platform-guides/gam-api-usage.md): How Permutive uses the Google Ad Manager reporting API for campaign optimization and insights
-- [Creating Contextual Cohorts](https://docs.permutive.com/guides/signals/cohorts/contextual/creating-contextual-cohorts.md): How to build audience segments based on page content in Permutive
-- [Custom Classifications via Webhook](https://docs.permutive.com/guides/signals/cohorts/contextual/custom-classifications-via-webhook.md): How to bring your own content classification data into Permutive using the Webhook (Custom) provider
-- [Activating Contextual Cohorts in Google Ad Manager](https://docs.permutive.com/guides/signals/cohorts/contextual/deploying-to-google-ad-manager.md): How to activate Permutive contextual cohorts in Google Ad Manager for privacy-safe ad targeting
-- [Enabling Classification Providers](https://docs.permutive.com/guides/signals/cohorts/contextual/enabling-classification-providers.md): How to enable and configure content classification providers for Contextual Cohorts
-- [Previewing Classifications](https://docs.permutive.com/guides/signals/cohorts/contextual/previewing-classifications.md): How to preview content classifications before building Contextual Cohorts
-- [Using Keyword Explorer](https://docs.permutive.com/guides/signals/cohorts/contextual/using-keyword-explorer.md): How to use AI-powered keyword recommendations for building interest-based cohorts
-- [Bulk Activating Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/bulk-activating-cohorts.md): How to request bulk activation of 30 or more cohorts
-- [Creating Custom Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/creating-custom-cohorts.md): How to build audience segments using the Cohort Builder
-- [Creating User Group Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/creating-user-group-cohorts.md): How to create cohorts that target groups of users (households) rather than individuals
-- [Deleting Custom Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/deleting-custom-cohorts.md): How to remove Custom Cohorts from your project
-- [Editing Custom Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/editing-custom-cohorts.md): How to modify existing Custom Cohort rules and settings
-- [Exporting Custom Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/exporting-custom-cohorts.md): How to export a report of all Custom Cohorts in your project
-- [Targeting Users by ISP](https://docs.permutive.com/guides/signals/cohorts/custom/targeting-users-by-isp.md): How to create cohorts that target users based on Internet Service Provider
-- [Using Audience Imports in Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/using-audience-imports.md): How to create Custom Cohorts using external user lists and segments
-- [Creating Lookalike Cohorts](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/creating-lookalike-cohorts.md): Learn how to use your trained model to create and activate lookalike cohorts.
-- [Creating a Lookalike Model](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/creating-lookalike-model.md): Learn how to set up a new lookalike model to expand your audience reach.
-- [Deleting a Model](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/deleting-lookalike-model.md): Learn how to safely remove a lookalike model and understand the impact on associated cohorts.
-- [Editing a Seed Segment](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/editing-lookalike-seed.md): Learn how to update the underlying seed for your lookalike model.
-- [Using Include/Exclude Segments](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/lookalike-advanced-filtering.md): Learn how to use advanced filtering to refine your lookalike model training.
-- [Validating Model Weights](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/validating-model-weights.md): Learn how to interpret model weights to ensure your lookalike model is accurate.
-- [Creating Classification Cohorts](https://docs.permutive.com/guides/signals/cohorts/modeled/creating-classification-cohorts.md): How to create Classification Cohorts from a trained model
-- [Creating Classification Models](https://docs.permutive.com/guides/signals/cohorts/modeled/creating-classification-models.md): How to create a Classification Model from partner or first-party data
-- [Viewing Classification Cohorts](https://docs.permutive.com/guides/signals/cohorts/modeled/viewing-classification-cohorts.md): How to view and manage your Classification Models and Cohorts
-- [Activating Standard Contextual Cohorts](https://docs.permutive.com/guides/signals/cohorts/standard-contextual/activating-standard-contextual-cohorts.md): How to activate Standard Contextual Cohorts to ad servers and SSPs
-- [Enabling Standard Contextual Cohorts](https://docs.permutive.com/guides/signals/cohorts/standard-contextual/enabling-standard-contextual-cohorts.md): How to enable content classification providers to generate Standard Contextual Cohorts
-- [Setting Up Google PPS](https://docs.permutive.com/guides/signals/cohorts/standard-contextual/setting-up-google-pps.md): How to generate PPS mapping files and upload to Google Ad Manager
-- [Configuring Standard Cohorts](https://docs.permutive.com/guides/signals/cohorts/standard/configuring-standard-cohorts.md): How to manage which Standard Cohorts are active and included in ad requests
-- [Accessing Identity Insights](https://docs.permutive.com/guides/signals/identity/accessing-identity-insights.md): How to access Identity Insights in the Permutive dashboard and navigate the three main tabs
-- [Adding Identities via Identify Endpoint](https://docs.permutive.com/guides/signals/identity/adding-identities-via-identify.md): How to implement the /identify endpoint across Web, iOS, Android, and API platforms, including priority configuration
-- [Analyzing Domain Overlap](https://docs.permutive.com/guides/signals/identity/analyzing-domain-overlap.md): How to interpret domain overlap metrics and assess cross-domain user stitching effectiveness
-- [Configuring Identifiers](https://docs.permutive.com/guides/signals/identity/configuring-identifiers.md): How to add, view, and manage identifiers in the Identity Graph dashboard, including custom identifier setup
-- [Importing User Group Memberships](https://docs.permutive.com/guides/signals/identity/importing-user-group-memberships.md): How to set up Connectivity imports for user group memberships, including data format requirements and configuration
-- [Importing User Identity](https://docs.permutive.com/guides/signals/identity/importing-user-identity.md): How to set up Connectivity imports for user identity data, including data format requirements and configuration
-- [Monitoring Data Ingestion](https://docs.permutive.com/guides/signals/identity/monitoring-data-ingestion.md): How to use the Ingestion tab to monitor daily data collection, identify drops in ingestion, and troubleshoot data collection issues
-- [Understanding ID Resolution Privacy Considerations](https://docs.permutive.com/guides/signals/identity/understanding-id-resolution-privacy.md): Evaluate the trade-offs between improved audience reach and privacy when enabling identifiers for identity resolution
-- [Understanding Identity Overlap](https://docs.permutive.com/guides/signals/identity/understanding-identity-overlap.md): How to interpret the Slicer tab pivot table, including how to read overlap percentages and identify relationships between identifiers
-- [Viewing Identifier Details](https://docs.permutive.com/guides/signals/identity/viewing-identifier-details.md): How to access and interpret the Identifier Details page, including metrics analysis and usage visualization
-- [Implementation](https://docs.permutive.com/implementation-overview.md): A high-level guide to deploying Permutive across your properties
-- [AdsWizz](https://docs.permutive.com/integrations/advertising/ad-servers/adswizz.md): Integrate with AdsWizz for audio advertising and cohort activation.
-- [Catalog](https://docs.permutive.com/integrations/advertising/ad-servers/catalog.md): Browse our comprehensive catalog of ecosystem integrations.
-- [Equativ](https://docs.permutive.com/integrations/advertising/ad-servers/equativ.md): Integrate with Equativ for ad server and SSP functionality.
-- [FreeWheel](https://docs.permutive.com/integrations/advertising/ad-servers/freewheel.md): Integrate with FreeWheel for targeting and campaign optimization
-- [Google Ad Manager](https://docs.permutive.com/integrations/advertising/ad-servers/google-ad-manager.md): Integrate with Google Ad Manager for targeting and campaign optimization
-- [Nativo](https://docs.permutive.com/integrations/advertising/ad-servers/nativo.md): Integrate with Nativo for targeting and campaign optimization
-- [Microsoft Monetize](https://docs.permutive.com/integrations/advertising/ad-servers/xandr.md): Integrate with Microsoft Monetize (Ad Server) for real-time cohort targeting and campaign insights
-- [Amazon Publisher Services (APS)](https://docs.permutive.com/integrations/advertising/bidstream/aps.md): Activate identity signals in Amazon Publisher Services bidstream
-- [Catalog](https://docs.permutive.com/integrations/advertising/bidstream/catalog.md): Browse our comprehensive catalog of bidstream integrations.
-- [Prebid](https://docs.permutive.com/integrations/advertising/bidstream/prebid.md): Integrate with Prebid for targeting and campaign optimization
-- [Adform](https://docs.permutive.com/integrations/advertising/dsps/adform.md): Integrate with Adform DSP for identity-based audience activation
-- [Catalog](https://docs.permutive.com/integrations/advertising/dsps/catalog.md): Browse our comprehensive catalog of ecosystem integrations.
-- [DV360](https://docs.permutive.com/integrations/advertising/dsps/dv360.md): Integrate with DV360 for targeting and campaign optimization
-- [StackAdapt](https://docs.permutive.com/integrations/advertising/dsps/stackadapt.md): Activate your Permutive audiences in StackAdapt for programmatic campaign targeting
-- [The Trade Desk](https://docs.permutive.com/integrations/advertising/dsps/the-trade-desk.md): Integrate with The Trade Desk for targeting and campaign optimization
-- [Catalog](https://docs.permutive.com/integrations/advertising/ssps/catalog.md): Browse our comprehensive catalog of supply-side platform integrations.
-- [Index Exchange](https://docs.permutive.com/integrations/advertising/ssps/index-exchange.md): Integrate with Index Exchange for SSP functionality
-- [Magnite](https://docs.permutive.com/integrations/advertising/ssps/magnite.md): Integrate with Magnite SSP for real-time cohort activation
-- [OpenX](https://docs.permutive.com/integrations/advertising/ssps/openx.md): Integrate with OpenX for targeting and campaign optimization
-- [PubMatic](https://docs.permutive.com/integrations/advertising/ssps/pubmatic.md): Integrate with PubMatic for targeting and campaign optimization
-- [Microsoft Monetize](https://docs.permutive.com/integrations/advertising/ssps/xandr.md): Integrate with Microsoft Monetize (SSP) for targeting and campaign optimization
-- [Catalog](https://docs.permutive.com/integrations/contextual/catalog.md): Browse our comprehensive catalog of ecosystem integrations.
-- [IBM Watson](https://docs.permutive.com/integrations/contextual/ibm-watson.md): Integrate with IBM Watson for contextual data enrichment.
-- [OS Data Solutions](https://docs.permutive.com/integrations/contextual/os-data-solutions.md): Integrate with OS Data Solutions for contextual data enrichment.
-- [Silverbullet 4D](https://docs.permutive.com/integrations/contextual/silverbullet-4d.md): Integrate with Silverbullet 4D for contextual data enrichment.
-- [TextRazor](https://docs.permutive.com/integrations/contextual/text-razor.md): Integrate with TextRazor for contextual data enrichment.
-- [AWS S3](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/aws-s3.md): Export first-party event data to AWS S3 via streaming or batch routing and import audience data for cohort building and activation
-- [Google BigQuery](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/bigquery.md): Stream first-party event data to Google BigQuery via routing and import audience data for cohort building and activation
-- [Catalog](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/catalog.md): Browse our comprehensive catalog of data warehouse integrations.
-- [Google Cloud Storage](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/gcs.md): Import audience data from Google Cloud Storage for cohort building and activation
-- [Snowflake](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/snowflake.md): Stream first-party event data to Snowflake via routing and import audience data for cohort building and activation
+- [Overview](https://docs.permutive.com/integrations/overview.md): Connect with 50+ partners across advertising, marketing, and data platforms
 - [Catalog](https://docs.permutive.com/integrations/identity/catalog.md): Browse our comprehensive catalog of Identity Signal integrations.
 - [ID5](https://docs.permutive.com/integrations/identity/id5.md): Integrate with ID5 for universal identity and programmatic advertising
 - [LiveRamp RampID](https://docs.permutive.com/integrations/identity/rampid.md): Integrate with LiveRamp RampID for authenticated identity and programmatic advertising
 - [UID2 (Unified ID 2.0)](https://docs.permutive.com/integrations/identity/uid2.md): Integrate with UID2 for privacy-safe identity and programmatic advertising
+- [Catalog](https://docs.permutive.com/integrations/contextual/catalog.md): Browse our comprehensive catalog of ecosystem integrations.
+- [IBM Watson](https://docs.permutive.com/integrations/contextual/ibm-watson.md): Integrate with IBM Watson for contextual data enrichment.
+- [Silverbullet 4D](https://docs.permutive.com/integrations/contextual/silverbullet-4d.md): Integrate with Silverbullet 4D for contextual data enrichment.
+- [OS Data Solutions](https://docs.permutive.com/integrations/contextual/os-data-solutions.md): Integrate with OS Data Solutions for contextual data enrichment.
+- [TextRazor](https://docs.permutive.com/integrations/contextual/text-razor.md): Integrate with TextRazor for contextual data enrichment.
+- [Catalog](https://docs.permutive.com/integrations/advertising/ad-servers/catalog.md): Browse our comprehensive catalog of ecosystem integrations.
+- [Google Ad Manager](https://docs.permutive.com/integrations/advertising/ad-servers/google-ad-manager.md): Integrate with Google Ad Manager for targeting and campaign optimization
+- [FreeWheel](https://docs.permutive.com/integrations/advertising/ad-servers/freewheel.md): Integrate with FreeWheel for targeting and campaign optimization
+- [Microsoft Monetize](https://docs.permutive.com/integrations/advertising/ad-servers/xandr.md): Integrate with Microsoft Monetize (Ad Server) for real-time cohort targeting and campaign insights
+- [Equativ](https://docs.permutive.com/integrations/advertising/ad-servers/equativ.md): Integrate with Equativ for ad server and SSP functionality.
+- [Nativo](https://docs.permutive.com/integrations/advertising/ad-servers/nativo.md): Integrate with Nativo for targeting and campaign optimization
+- [AdsWizz](https://docs.permutive.com/integrations/advertising/ad-servers/adswizz.md): Integrate with AdsWizz for audio advertising and cohort activation.
+- [Catalog](https://docs.permutive.com/integrations/advertising/bidstream/catalog.md): Browse our comprehensive catalog of bidstream integrations.
+- [Prebid](https://docs.permutive.com/integrations/advertising/bidstream/prebid.md): Integrate with Prebid for targeting and campaign optimization
+- [Amazon Publisher Services (APS)](https://docs.permutive.com/integrations/advertising/bidstream/aps.md): Activate identity signals in Amazon Publisher Services bidstream
+- [Catalog](https://docs.permutive.com/integrations/advertising/ssps/catalog.md): Browse our comprehensive catalog of supply-side platform integrations.
+- [Magnite](https://docs.permutive.com/integrations/advertising/ssps/magnite.md): Integrate with Magnite SSP for real-time cohort activation
+- [Microsoft Monetize](https://docs.permutive.com/integrations/advertising/ssps/xandr.md): Integrate with Microsoft Monetize (SSP) for targeting and campaign optimization
+- [PubMatic](https://docs.permutive.com/integrations/advertising/ssps/pubmatic.md): Integrate with PubMatic for targeting and campaign optimization
+- [OpenX](https://docs.permutive.com/integrations/advertising/ssps/openx.md): Integrate with OpenX for targeting and campaign optimization
+- [Index Exchange](https://docs.permutive.com/integrations/advertising/ssps/index-exchange.md): Integrate with Index Exchange for SSP functionality
+- [Catalog](https://docs.permutive.com/integrations/advertising/dsps/catalog.md): Browse our comprehensive catalog of ecosystem integrations.
+- [Adform](https://docs.permutive.com/integrations/advertising/dsps/adform.md): Integrate with Adform DSP for identity-based audience activation
+- [The Trade Desk](https://docs.permutive.com/integrations/advertising/dsps/the-trade-desk.md): Integrate with The Trade Desk for targeting and campaign optimization
+- [DV360](https://docs.permutive.com/integrations/advertising/dsps/dv360.md): Integrate with DV360 for targeting and campaign optimization
+- [StackAdapt](https://docs.permutive.com/integrations/advertising/dsps/stackadapt.md): Activate your Permutive audiences in StackAdapt for programmatic campaign targeting
 - [Catalog](https://docs.permutive.com/integrations/marketing/cdps/catalog.md): Browse our comprehensive catalog of customer data platform integrations.
 - [mParticle](https://docs.permutive.com/integrations/marketing/cdps/mparticle.md): Integrate with mParticle for customer data platform functionality
-- [Adestra](https://docs.permutive.com/integrations/marketing/esps/adestra.md): Integrate with Adestra for email service provider functionality
 - [Catalog](https://docs.permutive.com/integrations/marketing/esps/catalog.md): Browse our comprehensive catalog of email service provider integrations.
-- [Sailthru](https://docs.permutive.com/integrations/marketing/esps/sailthru.md): Integrate with Sailthru for email service provider functionality
 - [Salesforce Marketing Cloud](https://docs.permutive.com/integrations/marketing/esps/sfmc.md): Integrate with Salesforce Marketing Cloud for email campaign management and audience activation
-- [Overview](https://docs.permutive.com/integrations/overview.md): Connect with 50+ partners across advertising, marketing, and data platforms
-- [Catalog](https://docs.permutive.com/integrations/social-media/catalog.md): Browse our comprehensive catalog of social media platform integrations.
-- [Facebook](https://docs.permutive.com/integrations/social-media/facebook.md): Activate Permutive cohorts to Facebook for custom audience targeting
-- [Instagram](https://docs.permutive.com/integrations/social-media/instagram.md): Activate Permutive cohorts to Instagram for custom audience targeting via Facebook integration
-- [LinkedIn](https://docs.permutive.com/integrations/social-media/linkedin.md): Activate Permutive cohorts to LinkedIn for professional audience targeting
-- [Pinterest](https://docs.permutive.com/integrations/social-media/pinterest.md): Activate Permutive cohorts to Pinterest for custom audience targeting in real-time
-- [TikTok](https://docs.permutive.com/integrations/social-media/tiktok.md): Integrate with TikTok for cohort activation and audience targeting
-- [X (Twitter)](https://docs.permutive.com/integrations/social-media/twitter.md): Activate Permutive cohorts to X for custom audience targeting in real-time
-- [YouTube](https://docs.permutive.com/integrations/social-media/youtube.md): Target ads on YouTube.com and YouTube channels using Google Audience within Google Ad Manager
-- [Apester](https://docs.permutive.com/integrations/survey/apester.md): Integrate with Apester for survey data collection
-- [Brand Metrics](https://docs.permutive.com/integrations/survey/brandmetrics.md): Integrate with Brand Metrics for brand lift measurement data collection
-- [Catalog](https://docs.permutive.com/integrations/survey/catalog.md): Browse our comprehensive catalog of survey platform integrations.
-- [Collective Audience](https://docs.permutive.com/integrations/survey/collective-audience.md): Integrate with Collective Audience (formerly BeOp) for survey data collection and cohort retargeting
-- [Opinary](https://docs.permutive.com/integrations/survey/opinary.md): Integrate with Opinary for survey functionality
-- [Qualifio](https://docs.permutive.com/integrations/survey/qualifio.md): Integrate with Qualifio for survey functionality
-- [Brightcove](https://docs.permutive.com/integrations/video/brightcove.md): Integrate with Brightcove for video event collection and cohort activation
+- [Adestra](https://docs.permutive.com/integrations/marketing/esps/adestra.md): Integrate with Adestra for email service provider functionality
+- [Sailthru](https://docs.permutive.com/integrations/marketing/esps/sailthru.md): Integrate with Sailthru for email service provider functionality
+- [Catalog](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/catalog.md): Browse our comprehensive catalog of data warehouse integrations.
+- [Google BigQuery](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/bigquery.md): Stream first-party event data to Google BigQuery via routing and import audience data for cohort building and activation
+- [AWS S3](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/aws-s3.md): Export first-party event data to AWS S3 via streaming or batch routing and import audience data for cohort building and activation
+- [Snowflake](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/snowflake.md): Stream first-party event data to Snowflake via routing and import audience data for cohort building and activation
+- [Google Cloud Storage](https://docs.permutive.com/integrations/data-collaboration/data-warehouses/gcs.md): Import audience data from Google Cloud Storage for cohort building and activation
 - [Catalog](https://docs.permutive.com/integrations/video/catalog.md): Browse our comprehensive catalog of video platform integrations.
+- [Brightcove](https://docs.permutive.com/integrations/video/brightcove.md): Integrate with Brightcove for video event collection and cohort activation
 - [Dailymotion](https://docs.permutive.com/integrations/video/dailymotion.md): Integrate with Dailymotion for targeting and campaign optimization
 - [JW Player](https://docs.permutive.com/integrations/video/jw-player.md): Integrate with JW Player for targeting and campaign optimization
 - [YouTube](https://docs.permutive.com/integrations/video/youtube.md): Integrate with YouTube for targeting and campaign optimization
-- [Introduction](https://docs.permutive.com/introduction.md): Learn about Permutive's predictive data collaboration platform
-- [Clean Room](https://docs.permutive.com/products/clean-room.md): Enable secure data collaboration between publishers and advertisers without exposing raw user data
-- [Events (Audience)](https://docs.permutive.com/products/connectivity/events.md): Capture and manage user behavior data across all touchpoints
-- [Imports (Audience)](https://docs.permutive.com/products/connectivity/imports.md): Import audience data from external sources like Google Cloud Storage and LiveRamp.
-- [Routing](https://docs.permutive.com/products/connectivity/routing.md): Export first-party event data to data warehouses and cloud storage.
-- [Sources (Beta)](https://docs.permutive.com/products/connectivity/sources.md): Set up connections to data warehouses and data lakes and import your data into Permutive
-- [Curation](https://docs.permutive.com/products/curation.md): Package and monetize publisher signals across multi-publisher curated deals
-- [Products](https://docs.permutive.com/products/overview.md): Explore Permutive's suite of products for audience activation, data collaboration, and curation
-- [Contextual Cohorts](https://docs.permutive.com/products/signals/cohorts/contextual.md): Target ads based on page content without processing user data
-- [Custom Cohorts](https://docs.permutive.com/products/signals/cohorts/custom.md): Build flexible audience segments based on user behavior and data imports.
-- [Classification Cohorts](https://docs.permutive.com/products/signals/cohorts/modeled-classification.md): Reach your non-endemic audience
-- [Lookalike Cohorts](https://docs.permutive.com/products/signals/cohorts/modeled-lookalike.md): Expand audience reach using real-time lookalike modeling
-- [Standard Cohorts](https://docs.permutive.com/products/signals/cohorts/standard.md): Pre-built standardized audience segments for common targeting needs
-- [Standard Contextual Cohorts](https://docs.permutive.com/products/signals/cohorts/standard-contextual.md): Ready-made contextual audience segments based on standardized taxonomies
-- [Identity Graph](https://docs.permutive.com/products/signals/identity/identity-graph.md): Manage user identity and cross-device recognition
-- [Identity Insights](https://docs.permutive.com/products/signals/identity/identity-insights.md): Visualize your identity graph and gain insights on the scale and performance of every identifier.
-- [Identity Manager](https://docs.permutive.com/products/signals/identity/identity-manager.md): Activate alternative IDs into the bid stream to maximize programmatic yield.
-- [Marketplace](https://docs.permutive.com/products/signals/marketplace.md): Discover and access third-party audience data
-- [Audience Insights](https://docs.permutive.com/products/workflows-insights/insights/audience.md): Understand your audience composition, behavior, and content preferences
-- [Campaign Insights](https://docs.permutive.com/products/workflows-insights/insights/campaign.md): Analyze campaign performance, delivery metrics, and audience engagement for your advertising campaigns
-- [Optimization](https://docs.permutive.com/products/workflows-insights/optimization.md): Optimize campaign performance and audience targeting with AI-driven recommendations
-- [Planning](https://docs.permutive.com/products/workflows-insights/planning.md): Create plans to respond to campaign briefs and build targeted audiences with instant insights
-- [Direct API Deployment](https://docs.permutive.com/sdks/api/overview.md): Deploy Permutive without an SDK using direct API calls for server-side, CTV, and non-O&O environments
-- [Android TV](https://docs.permutive.com/sdks/ctv/android-tv.md): Integrate Permutive on Android TV and Google TV using the Android SDK
-- [Connected TV Overview](https://docs.permutive.com/sdks/ctv/overview.md): Integrate Permutive across Connected TV platforms for audience targeting and video engagement tracking
-- [Roku](https://docs.permutive.com/sdks/ctv/roku.md): Integrate Permutive on Roku using the Permutive Roku Client
-- [tvOS](https://docs.permutive.com/sdks/ctv/tvos.md): Integrate Permutive on tvOS using the iOS SDK
-- [CTV Video Tracking](https://docs.permutive.com/sdks/ctv/video-tracking.md): Best practices for tracking video events across all CTV platforms
-- [Web-Based CTV](https://docs.permutive.com/sdks/ctv/web-ctv.md): Integrate Permutive on Samsung Tizen, LG WebOS, and HbbTV platforms using the JavaScript SDK
-- [Cohorts and Activations](https://docs.permutive.com/sdks/mobile/android/core-concepts/cohorts-and-activations.md): Understanding user segmentation and platform-specific targeting
-- [Contextual Data](https://docs.permutive.com/sdks/mobile/android/core-concepts/contextual-data.md): Real-time content-based segmentation for privacy-friendly targeting
-- [Event Properties](https://docs.permutive.com/sdks/mobile/android/core-concepts/event-properties.md): Add structured, typed data to your events
-- [Identity Management](https://docs.permutive.com/sdks/mobile/android/core-concepts/identity-management.md): Track users across sessions, devices, and platforms with aliases
-- [Event Tracking](https://docs.permutive.com/sdks/mobile/android/features/event-tracking.md): Track standalone events not associated with pages
-- [Page Tracking](https://docs.permutive.com/sdks/mobile/android/features/page-tracking.md): Track pages and screens with automatic engagement metrics
-- [Triggers Provider](https://docs.permutive.com/sdks/mobile/android/features/triggers-provider.md): React to real-time cohort membership changes
-- [Video Ad Tracking](https://docs.permutive.com/sdks/mobile/android/features/video-ad-tracking.md): Track video advertisements, clicks, and completions
-- [Video Tracking](https://docs.permutive.com/sdks/mobile/android/features/video-tracking.md): Track video playback, engagement, and completion metrics
-- [SDK Initialization](https://docs.permutive.com/sdks/mobile/android/getting-started/initialization.md): Initialize the Permutive SDK in your Android application
-- [Installation](https://docs.permutive.com/sdks/mobile/android/getting-started/installation.md): Install the Permutive Android SDK and optional add-ons
-- [Quick Start Guide](https://docs.permutive.com/sdks/mobile/android/getting-started/quick-start.md): Get up and running with the Permutive Android SDK in minutes
-- [Verifying Your Integration](https://docs.permutive.com/sdks/mobile/android/getting-started/verification.md): Verify your Permutive Android SDK integration is working correctly
-- [Migration Guide: v1.12.x](https://docs.permutive.com/sdks/mobile/android/guides/migration/v1-12.md): Upgrade to Permutive Android SDK v1.12.x and opt into config-driven automatic ID collection
-- [Migration Guide: v1.9.x to v1.10.x](https://docs.permutive.com/sdks/mobile/android/guides/migration/v1-9-to-v1-10.md): Upgrade from Permutive Android SDK v1.9.x to v1.10.x
-- [AAID Provider](https://docs.permutive.com/sdks/mobile/android/integrations/aaid-provider.md): Automatically identify users by Android Advertising ID
-- [Integrations](https://docs.permutive.com/sdks/mobile/android/integrations/overview.md): Connect the Android SDK with ad platforms and tracking providers
-- [Android SDK](https://docs.permutive.com/sdks/mobile/android/overview.md): Integrate Permutive into your Android application for user segmentation, personalization, and ad targeting
-- [Release Notes](https://docs.permutive.com/sdks/mobile/android/release-notes/index.md): Android SDK updates and announcements
-- [Troubleshooting](https://docs.permutive.com/sdks/mobile/android/troubleshooting/common-errors.md): Solutions to common issues when integrating the Permutive Android SDK
-- [Cohorts and Activations](https://docs.permutive.com/sdks/mobile/ios/core-concepts/cohorts-and-activations.md): Understanding user segmentation and platform-specific targeting
-- [Contextual Data](https://docs.permutive.com/sdks/mobile/ios/core-concepts/contextual-data.md): Real-time content-based segmentation for privacy-friendly targeting
-- [Event Properties](https://docs.permutive.com/sdks/mobile/ios/core-concepts/event-properties.md): Structure and validate event metadata
-- [Identity Management](https://docs.permutive.com/sdks/mobile/ios/core-concepts/identity-management.md): Track users across sessions, devices, and platforms with aliases
-- [Event Tracking](https://docs.permutive.com/sdks/mobile/ios/features/event-tracking.md): Track custom events directly with the Permutive SDK
-- [Page Tracking](https://docs.permutive.com/sdks/mobile/ios/features/page-tracking.md): Track page views and user engagement with PageTracker
-- [Triggers Provider](https://docs.permutive.com/sdks/mobile/ios/features/triggers-provider.md): React to cohort changes and user identity updates in real-time
-- [Video Ad Tracking](https://docs.permutive.com/sdks/mobile/ios/features/video-ad-tracking.md): Emit standard video ad events from iOS / tvOS using Permutive.shared.track()
-- [Video Tracking](https://docs.permutive.com/sdks/mobile/ios/features/video-tracking.md): Track video playback, engagement, and completion metrics
-- [Initialization](https://docs.permutive.com/sdks/mobile/ios/getting-started/initialization.md): Configure and start the Permutive SDK
-- [Installation](https://docs.permutive.com/sdks/mobile/ios/getting-started/installation.md): Add the Permutive SDK to your iOS or tvOS project
-- [Quick Start](https://docs.permutive.com/sdks/mobile/ios/getting-started/quick-start.md): Get up and running with the Permutive iOS SDK in minutes
-- [Verification](https://docs.permutive.com/sdks/mobile/ios/getting-started/verification.md): Verify your Permutive iOS SDK integration is working correctly
-- [Migration Guide: v2.6.x](https://docs.permutive.com/sdks/mobile/ios/guides/migration/v2-6.md): Upgrade to Permutive iOS SDK v2.6.x and opt into config-driven automatic ID collection
-- [IDFA Provider](https://docs.permutive.com/sdks/mobile/ios/integrations/idfa-provider.md): Apple advertising identifier integration and privacy considerations
-- [Integrations](https://docs.permutive.com/sdks/mobile/ios/integrations/overview.md): Connect the iOS SDK with ad platforms and tracking providers
-- [iOS SDK](https://docs.permutive.com/sdks/mobile/ios/overview.md): Integrate Permutive into your iOS and tvOS applications for user segmentation, personalization, and ad targeting
-- [Release Notes](https://docs.permutive.com/sdks/mobile/ios/release-notes/index.md): iOS SDK updates and announcements
-- [Common Issues](https://docs.permutive.com/sdks/mobile/ios/troubleshooting/common-errors.md): Solutions to common Permutive iOS SDK problems
-- [React Native](https://docs.permutive.com/sdks/mobile/react-native.md): Use Permutive native Android and iOS SDKs from within your React Native application
-- [Cohorts and Activations](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/cohorts-and-activations.md): Understanding user segmentation in the Permutive JavaScript SDK
-- [Consent Management](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/consent-management.md): Handle user consent with the Permutive JavaScript SDK
-- [Contextual Data](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/contextual-data.md): Content-based real-time targeting with the Permutive JavaScript SDK
-- [Event Properties](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/event-properties.md): Structure and validate event data in the Permutive JavaScript SDK
-- [Identity Management](https://docs.permutive.com/sdks/web/javascript-sdk/core-concepts/identity-management.md): Track users across sessions and devices with the Permutive JavaScript SDK
-- [Event Tracking](https://docs.permutive.com/sdks/web/javascript-sdk/features/event-tracking.md): Track custom events with the Permutive JavaScript SDK
-- [Pageview Tracking](https://docs.permutive.com/sdks/web/javascript-sdk/features/pageview-tracking.md): Track pageviews and user engagement with the Permutive JavaScript SDK
-- [Real-Time Triggers](https://docs.permutive.com/sdks/web/javascript-sdk/features/real-time-triggers.md): React to cohort changes with trigger(), segment(), segments(), and query()
-- [Video Tracking](https://docs.permutive.com/sdks/web/javascript-sdk/features/video-tracking.md): Track video content viewing with the Permutive JavaScript SDK using the CTV addon
-- [Initialization](https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/initialization.md): Configure and initialize the Permutive JavaScript SDK
-- [Installation](https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/installation.md): Install the Permutive JavaScript SDK via script tag or tag manager
-- [Quick Start](https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/quick-start.md): Get up and running with the Permutive JavaScript SDK in minutes
-- [Verification](https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/verification.md): Verify your Permutive JavaScript SDK integration is working correctly
-- [Tag Manager Integration](https://docs.permutive.com/sdks/web/javascript-sdk/guides/tag-managers.md): Deploy the Permutive JavaScript SDK via Google Tag Manager, Tealium, and Adobe Launch
-- [Integrations](https://docs.permutive.com/sdks/web/javascript-sdk/integrations/overview.md): Connect the JavaScript SDK with ad platforms and header bidding solutions
-- [JavaScript SDK](https://docs.permutive.com/sdks/web/javascript-sdk/overview.md): Integrate Permutive into your website for user segmentation, personalization, and ad targeting
-- [Release notes](https://docs.permutive.com/sdks/web/javascript-sdk/release-notes/index.md)
-- [Chrome Extension](https://docs.permutive.com/sdks/web/javascript-sdk/troubleshooting/chrome-extension.md): Validate your Permutive deployment by inspecting data collection, schema errors, cohort membership, and ad request targeting
-- [Common Errors](https://docs.permutive.com/sdks/web/javascript-sdk/troubleshooting/common-errors.md): Troubleshoot common issues with the Permutive JavaScript SDK
+- [Catalog](https://docs.permutive.com/integrations/social-media/catalog.md): Browse our comprehensive catalog of social media platform integrations.
+- [Facebook](https://docs.permutive.com/integrations/social-media/facebook.md): Activate Permutive cohorts to Facebook for custom audience targeting
+- [Instagram](https://docs.permutive.com/integrations/social-media/instagram.md): Activate Permutive cohorts to Instagram for custom audience targeting via Facebook integration
+- [Pinterest](https://docs.permutive.com/integrations/social-media/pinterest.md): Activate Permutive cohorts to Pinterest for custom audience targeting in real-time
+- [X (Twitter)](https://docs.permutive.com/integrations/social-media/twitter.md): Activate Permutive cohorts to X for custom audience targeting in real-time
+- [YouTube](https://docs.permutive.com/integrations/social-media/youtube.md): Target ads on YouTube.com and YouTube channels using Google Audience within Google Ad Manager
+- [TikTok](https://docs.permutive.com/integrations/social-media/tiktok.md): Integrate with TikTok for cohort activation and audience targeting
+- [LinkedIn](https://docs.permutive.com/integrations/social-media/linkedin.md): Activate Permutive cohorts to LinkedIn for professional audience targeting
+- [Catalog](https://docs.permutive.com/integrations/survey/catalog.md): Browse our comprehensive catalog of survey platform integrations.
+- [Collective Audience](https://docs.permutive.com/integrations/survey/collective-audience.md): Integrate with Collective Audience (formerly BeOp) for survey data collection and cohort retargeting
+- [Apester](https://docs.permutive.com/integrations/survey/apester.md): Integrate with Apester for survey data collection
+- [Brand Metrics](https://docs.permutive.com/integrations/survey/brandmetrics.md): Integrate with Brand Metrics for brand lift measurement data collection
+- [Opinary](https://docs.permutive.com/integrations/survey/opinary.md): Integrate with Opinary for survey functionality
+- [Qualifio](https://docs.permutive.com/integrations/survey/qualifio.md): Integrate with Qualifio for survey functionality
+- [Guides](https://docs.permutive.com/guides/introduction.md): Step-by-step instructions to help you get the most out of Permutive
+- [Creating & Updating Event Schema](https://docs.permutive.com/guides/connectivity/events/create-update-event-schema.md): How to add new events and event properties using your schema Google Sheet
+- [Tracking Off-Site Events with Pixels](https://docs.permutive.com/guides/connectivity/events/tracking-offsite-events.md): Capture conversions, email opens, and ad impressions that happen outside your site, and attribute them to your Permutive users.
+- [Creating an Import](https://docs.permutive.com/guides/connectivity/sources/creating-an-import.md): How to create a data import from an active connection in Permutive
+- [Connecting to BigQuery](https://docs.permutive.com/guides/connectivity/sources/connecting-to-bigquery.md): How to set up a connection to Google BigQuery to import data into Permutive
+- [Connecting to Snowflake](https://docs.permutive.com/guides/connectivity/sources/connecting-to-snowflake.md): How to set up a connection to Snowflake to import data into Permutive
+- [Connecting to Amazon S3](https://docs.permutive.com/guides/connectivity/sources/connecting-to-amazon-s3.md): How to set up a connection to Amazon S3 to import data into Permutive
+- [Connecting to Google Cloud Storage](https://docs.permutive.com/guides/connectivity/sources/connecting-to-gcs.md): How to set up a connection to Google Cloud Storage (GCS) to import data into Permutive
+- [Actioning Updates to Your Source Schema](https://docs.permutive.com/guides/connectivity/sources/actioning-updates-to-your-source-schema.md): How to apply schema changes from your data warehouse to an existing Permutive import
+- [Second-Party Data with Permutive](https://docs.permutive.com/guides/connectivity/imports/second-party-data-overview.md): Understand how to use second-party data in Permutive for audience enrichment and targeting
+- [Configuring Taxonomy](https://docs.permutive.com/guides/connectivity/imports/configuring-taxonomy.md): Set up a taxonomy to map segment codes to human-readable names for your imported audience data
+- [Ingesting Second-Party Data via LiveRamp](https://docs.permutive.com/guides/connectivity/imports/ingesting-data-via-liveramp.md): Set up LiveRamp to send advertiser first-party cohorts to Permutive as second-party data
+- [Adding Audiences in LiveRamp](https://docs.permutive.com/guides/connectivity/imports/adding-audiences-in-liveramp.md): How to find, request, and distribute audience segments from the LiveRamp Data Marketplace to Permutive
+- [Setting Up Google BigQuery Routing](https://docs.permutive.com/guides/connectivity/routing/setting-up-bigquery-routing.md): Configure routing to Google BigQuery for near real-time event data streaming
+- [Setting Up Snowflake Routing](https://docs.permutive.com/guides/connectivity/routing/setting-up-snowflake-routing.md): Configure routing to Snowflake using Snowpipe for automated data loading
+- [Setting Up AWS S3 Streaming Routing](https://docs.permutive.com/guides/connectivity/routing/setting-up-s3-streaming-routing.md): Configure near real-time event streaming to Amazon S3 with Hive-style partitioning
+- [Setting Up AWS S3 Batch Routing](https://docs.permutive.com/guides/connectivity/routing/setting-up-s3-batch-routing.md): Configure scheduled daily exports to Amazon S3 in JSON or Parquet format
+- [Creating Custom Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/creating-custom-cohorts.md): How to build audience segments using the Cohort Builder
+- [Editing Custom Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/editing-custom-cohorts.md): How to modify existing Custom Cohort rules and settings
+- [Deleting Custom Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/deleting-custom-cohorts.md): How to remove Custom Cohorts from your project
+- [Exporting Custom Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/exporting-custom-cohorts.md): How to export a report of all Custom Cohorts in your project
+- [Targeting Users by ISP](https://docs.permutive.com/guides/signals/cohorts/custom/targeting-users-by-isp.md): How to create cohorts that target users based on Internet Service Provider
+- [Using Audience Imports in Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/using-audience-imports.md): How to create Custom Cohorts using external user lists and segments
+- [Creating User Group Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/creating-user-group-cohorts.md): How to create cohorts that target groups of users (households) rather than individuals
+- [Bulk Activating Cohorts](https://docs.permutive.com/guides/signals/cohorts/custom/bulk-activating-cohorts.md): How to request bulk activation of 30 or more cohorts
+- [Creating Contextual Cohorts](https://docs.permutive.com/guides/signals/cohorts/contextual/creating-contextual-cohorts.md): How to build audience segments based on page content in Permutive
+- [Enabling Classification Providers](https://docs.permutive.com/guides/signals/cohorts/contextual/enabling-classification-providers.md): How to enable and configure content classification providers for Contextual Cohorts
+- [Previewing Classifications](https://docs.permutive.com/guides/signals/cohorts/contextual/previewing-classifications.md): How to preview content classifications before building Contextual Cohorts
+- [Using Keyword Explorer](https://docs.permutive.com/guides/signals/cohorts/contextual/using-keyword-explorer.md): How to use AI-powered keyword recommendations for building interest-based cohorts
+- [Activating Contextual Cohorts in Google Ad Manager](https://docs.permutive.com/guides/signals/cohorts/contextual/deploying-to-google-ad-manager.md): How to activate Permutive contextual cohorts in Google Ad Manager for privacy-safe ad targeting
+- [Custom Classifications via Webhook](https://docs.permutive.com/guides/signals/cohorts/contextual/custom-classifications-via-webhook.md): How to bring your own content classification data into Permutive using the Webhook (Custom) provider
+- [Creating a Lookalike Model](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/creating-lookalike-model.md): Learn how to set up a new lookalike model to expand your audience reach.
+- [Creating Lookalike Cohorts](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/creating-lookalike-cohorts.md): Learn how to use your trained model to create and activate lookalike cohorts.
+- [Editing a Seed Segment](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/editing-lookalike-seed.md): Learn how to update the underlying seed for your lookalike model.
+- [Deleting a Model](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/deleting-lookalike-model.md): Learn how to safely remove a lookalike model and understand the impact on associated cohorts.
+- [Using Include/Exclude Segments](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/lookalike-advanced-filtering.md): Learn how to use advanced filtering to refine your lookalike model training.
+- [Validating Model Weights](https://docs.permutive.com/guides/signals/cohorts/modeled-lookalike/validating-model-weights.md): Learn how to interpret model weights to ensure your lookalike model is accurate.
+- [Creating Classification Models](https://docs.permutive.com/guides/signals/cohorts/modeled/creating-classification-models.md): How to create a Classification Model from partner or first-party data
+- [Creating Classification Cohorts](https://docs.permutive.com/guides/signals/cohorts/modeled/creating-classification-cohorts.md): How to create Classification Cohorts from a trained model
+- [Viewing Classification Cohorts](https://docs.permutive.com/guides/signals/cohorts/modeled/viewing-classification-cohorts.md): How to view and manage your Classification Models and Cohorts
+- [Configuring Standard Cohorts](https://docs.permutive.com/guides/signals/cohorts/standard/configuring-standard-cohorts.md): How to manage which Standard Cohorts are active and included in ad requests
+- [Enabling Standard Contextual Cohorts](https://docs.permutive.com/guides/signals/cohorts/standard-contextual/enabling-standard-contextual-cohorts.md): How to enable content classification providers to generate Standard Contextual Cohorts
+- [Activating Standard Contextual Cohorts](https://docs.permutive.com/guides/signals/cohorts/standard-contextual/activating-standard-contextual-cohorts.md): How to activate Standard Contextual Cohorts to ad servers and SSPs
+- [Setting Up Google PPS](https://docs.permutive.com/guides/signals/cohorts/standard-contextual/setting-up-google-pps.md): How to generate PPS mapping files and upload to Google Ad Manager
+- [Configuring Identifiers](https://docs.permutive.com/guides/signals/identity/configuring-identifiers.md): How to add, view, and manage identifiers in the Identity Graph dashboard, including custom identifier setup
+- [Viewing Identifier Details](https://docs.permutive.com/guides/signals/identity/viewing-identifier-details.md): How to access and interpret the Identifier Details page, including metrics analysis and usage visualization
+- [Adding Identities via Identify Endpoint](https://docs.permutive.com/guides/signals/identity/adding-identities-via-identify.md): How to implement the /identify endpoint across Web, iOS, Android, and API platforms, including priority configuration
+- [Importing User Group Memberships](https://docs.permutive.com/guides/signals/identity/importing-user-group-memberships.md): How to set up Connectivity imports for user group memberships, including data format requirements and configuration
+- [Importing User Identity](https://docs.permutive.com/guides/signals/identity/importing-user-identity.md): How to set up Connectivity imports for user identity data, including data format requirements and configuration
+- [Understanding ID Resolution Privacy Considerations](https://docs.permutive.com/guides/signals/identity/understanding-id-resolution-privacy.md): Evaluate the trade-offs between improved audience reach and privacy when enabling identifiers for identity resolution
+- [Monitoring Data Ingestion](https://docs.permutive.com/guides/signals/identity/monitoring-data-ingestion.md): How to use the Ingestion tab to monitor daily data collection, identify drops in ingestion, and troubleshoot data collection issues
+- [Understanding Identity Overlap](https://docs.permutive.com/guides/signals/identity/understanding-identity-overlap.md): How to interpret the Slicer tab pivot table, including how to read overlap percentages and identify relationships between identifiers
+- [Analyzing Domain Overlap](https://docs.permutive.com/guides/signals/identity/analyzing-domain-overlap.md): How to interpret domain overlap metrics and assess cross-domain user stitching effectiveness
+- [Accessing Identity Insights](https://docs.permutive.com/guides/signals/identity/accessing-identity-insights.md): How to access Identity Insights in the Permutive dashboard and navigate the three main tabs
+- [Creating a Plan](https://docs.permutive.com/guides/planning/creating-a-plan.md): Learn how to create and edit plans for campaign opportunities
+- [Building Audiences](https://docs.permutive.com/guides/planning/building-audiences.md): Combine cohorts with boolean logic to build targeted audiences within plans
+- [Using Plan Insights](https://docs.permutive.com/guides/planning/using-plan-insights.md): Analyze audience reach, overlap, and composition with Plan Insights
+- [Sharing Plans](https://docs.permutive.com/guides/planning/sharing-plans.md): Share plans with colleagues via unique URLs
+- [GAM API Usage](https://docs.permutive.com/guides/platform-guides/gam-api-usage.md): How Permutive uses the Google Ad Manager reporting API for campaign optimization and insights
+- [Pageview Comparisons FAQ](https://docs.permutive.com/guides/insights/pageview-comparisons.md): Understanding how Permutive pageviews compare to Google Analytics
+- [Setting Up Advertiser Connections](https://docs.permutive.com/guides/clean-room/setting-up-advertiser-connections.md): How to connect with advertisers in the Clean Room
+- [Creating Clean Room Audiences](https://docs.permutive.com/guides/clean-room/creating-clean-room-audiences.md): How to create matched and modeled audiences in the Clean Room
+- [Configuring Ad Server Targeting](https://docs.permutive.com/guides/clean-room/configuring-ad-server-targeting.md): How to configure Clean Room targeting in Google Ad Manager or Microsoft Monetize
+- [Sharing Proposal and Deal Information](https://docs.permutive.com/guides/clean-room/sharing-proposal-and-deal-information.md): How to share GAM proposals and order details with advertisers
+- [Uploading Advertiser Data](https://docs.permutive.com/guides/clean-room/uploading-advertiser-data.md): How to upload first-party data to Clean Room data sources
+- [Configuring Frequency Control](https://docs.permutive.com/guides/clean-room/configuring-frequency-control.md): How to set up frequency caps for Clean Room campaigns
+- [Configuring Prebid for Curation](https://docs.permutive.com/guides/curation/configuring-prebid-for-curation.md): How to configure Prebid.js to enable curation signals for SSP curation marketplaces
+- [Configuring Google Curate](https://docs.permutive.com/guides/curation/configuring-google-curate.md): How to configure Google Ad Manager for Curation to enable cohort signals in Google Curate
+- [Managing Cohort Exclusions](https://docs.permutive.com/guides/curation/managing-cohort-exclusions.md): How to control which cohorts participate in Curation using UI toggles and exclusion tags
+- [Introduction](https://docs.permutive.com/api/introduction.md): Learn how to start using Permutive's APIs
+- [Authentication](https://docs.permutive.com/api/authentication.md): Authenticate and access Permutive APIs
+- [Versioning](https://docs.permutive.com/api/versioning.md): Selecting the right version of our APIs
+- [Requests & Responses](https://docs.permutive.com/api/requests-and-responses.md): Sending & receiving calls from the API
+- [Errors](https://docs.permutive.com/api/errors.md): How errors are represented in API responses
+- [Introduction](https://docs.permutive.com/api/events/introduction.md): Capture behavioral and contextual data
+- [Track an event](https://docs.permutive.com/api/events/track.md): This endpoint creates a new event for a user, persisting the event in Permutive for downstream consumption, such as for segmentation, insights, or routing to a data lake. It validates the event against the schema defined in your workspace, and generates an event ID for the event and optionally enric…
+- [Introduction](https://docs.permutive.com/api/identity/introduction.md): Manage device, user, and household identities
+- [Create a user ID](https://docs.permutive.com/api/identity/create.md): This endpoint generates a new user ID that can be used to identify a user within Permutive.
+- [Identify a user](https://docs.permutive.com/api/identity/identify.md): Associate one or more identities with a Permutive user, allowing you to identify users in multiple ways.
+- [Retrieve identities](https://docs.permutive.com/api/identity/retrieve.md): Retrieves all identities available for a given user.
+- [Introduction](https://docs.permutive.com/api/contextual/introduction.md): Retrieve contextual cohort targeting values for ad server integration.
+- [Get Contextual Segments](https://docs.permutive.com/api/contextual/segment.md)
+- [Introduction](https://docs.permutive.com/api/ccs/introduction.md): Real-time user segmentation based on events and cohort definitions
+- [Segment User](https://docs.permutive.com/api/ccs/segmentation.md): This endpoint accepts a list of events for a given user and combines them with any pre-existing state for the user to determine the full list of cohorts of which they are a member. State is also persisted, to be applied to subsequent requests for the same user.
+- [Stateless Segmentation](https://docs.permutive.com/api/ccs/segmentation-stateless.md): This endpoint accepts a list of events for a given user and optionally some pre-existing state for the user. It uses these to determine the full list of cohorts of which they are a member, and returns these along with the updated state for the user. State is not persisted, so will not be used in the…
+- [Introduction](https://docs.permutive.com/api/cohorts/introduction.md): Programmatically manage cohorts
+- [Cohort query format](https://docs.permutive.com/api/cohorts/cohort-query-format.md): How to define the behavior of cohorts
+- [Create a cohort](https://docs.permutive.com/api/cohorts/create-cohort.md): This endpoint allows the creation of a new cohort. The query definition is provided using the Cohort API JSON query definition format.
+- [Retrieve individual cohort](https://docs.permutive.com/api/cohorts/get-cohort.md): This endpoint returns details of a single cohort belonging either to the workspace that owns the requesting API key, or to a parent workspace if the requesting workspace inherits the cohort from that workspace.
+- [Retrieve all cohorts](https://docs.permutive.com/api/cohorts/get-cohorts.md): By default this endpoint returns all cohorts belonging to the workspace to which the supplied API key belongs, plus any cohorts inherited from parent workspaces in the organization hierarchy. If the API key has the required access level, it is also possible to return segments belonging to child work…
+- [Update a cohort](https://docs.permutive.com/api/cohorts/update-cohort.md): This endpoint allows updating an existing cohort. Depending on the access level of the provided API key, it can update cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be updated via th…
+- [Delete a cohort](https://docs.permutive.com/api/cohorts/delete-cohort.md): This endpoint allows deleting an existing cohort. Depending on the access level of the provided API key, it can delete cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be deleted via th…
+- [Introduction](https://docs.permutive.com/api/taxonomy/introduction.md): Programmatically manage second-party taxonomies
+- [Get all imports](https://docs.permutive.com/api/taxonomy/get-imports.md)
+- [Retrieve an import](https://docs.permutive.com/api/taxonomy/retrieve-import.md)
+- [Get all segments for an import](https://docs.permutive.com/api/taxonomy/get-segments-for-import.md): Retrieves all segments for an import. This is a paginated endpoint and takes an optional pagination token as a query parameter. If no token is provided then it retrieves the first page of results.
+- [Get a segment by its public ID from an import](https://docs.permutive.com/api/taxonomy/get-a-segment-by-id.md): Retrieves a single segment for a given import. The segment is identified by its globally unique public ID (UUID)
+- [Get a segment by its code from an import](https://docs.permutive.com/api/taxonomy/get-a-segment-by-code.md): Retrieves a single segment for a given import. The segment is identified by its code.
+- [Create a segment for an import](https://docs.permutive.com/api/taxonomy/create-a-segment.md)
+- [Update a segment by its public ID](https://docs.permutive.com/api/taxonomy/update-a-segment-by-id.md): Updates a segment for an import. The segment is identified by its globally unique public ID.
+- [Update a segment by its code](https://docs.permutive.com/api/taxonomy/update-a-segment-by-code.md): Updates a segment for an import. The segment is identified by its code.
+- [Batch update segments](https://docs.permutive.com/api/taxonomy/batch-update.md): Note that operation order is not guaranteed. No more than 5,000 operations can be contained in a batch.
+- [Delete a segment by its public ID](https://docs.permutive.com/api/taxonomy/delete-a-segment-by-id.md): Deletes a segment for an import. The segment is identified by its code.
+- [Delete a segment by its code](https://docs.permutive.com/api/taxonomy/delete-a-segment-by-code.md): Deletes a segment for an import. The segment is identified by its globally unique public ID.
+- [Introduction](https://docs.permutive.com/api/mcp/introduction.md): Audience intelligence, built for AI agents
+- [1.1 - Campaign Optimization](https://docs.permutive.com/api/mcp/releases/v1-1.md): Deep analysis on campaign delivery and performance
+- [1.2 - Audience Extension, Comparison & Detailed Analysis](https://docs.permutive.com/api/mcp/releases/v1-2.md): Explain an audience, not just size it
+- [Overview](https://docs.permutive.com/api/mcp/tools.md): Tools exposed by the Permutive MCP server
+- [Get Organizations And Workspaces](https://docs.permutive.com/api/mcp/get_orgs_and_workspaces.md)
+- [Get Workspace Details](https://docs.permutive.com/api/mcp/get_workspace_details.md)
+- [Get Campaign](https://docs.permutive.com/api/mcp/get_campaign.md)
+- [List Campaigns](https://docs.permutive.com/api/mcp/list_campaigns.md)
+- [Get Cohort Detail](https://docs.permutive.com/api/mcp/get_cohort_detail.md)
+- [List Cohorts](https://docs.permutive.com/api/mcp/list_cohorts.md)
+- [Search Cohorts](https://docs.permutive.com/api/mcp/search_cohorts.md)
+- [Compare Audience](https://docs.permutive.com/api/mcp/compare_audience.md)
+- [Find Audience Extensions](https://docs.permutive.com/api/mcp/find_audience_extensions.md)
+- [Measure Audiences](https://docs.permutive.com/api/mcp/measure_audiences.md)
 
 ## OpenAPI Specs
 

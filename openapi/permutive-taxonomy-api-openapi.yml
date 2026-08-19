@@ -1,366 +1,1216 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
-  title: Permutive Cohorts Taxonomy API
-  version: '2.0'
-  description: Permutive is an agentic data collaboration and activation platform for premium publishers, advertisers and agencies. This OpenAPI description was DERIVED by API Evangelist from Permutive's public developer documentation (https://developer.permutive.com/) — the operation set, paths, HTTP methods, titles and descriptions are taken verbatim from the published API reference; request/response schemas are lightly modeled where the docs do not publish a machine-readable spec. It is a discovery aid, not the authoritative Permutive contract.
-  contact:
-    name: Permutive Developer Support
-    url: https://developer.permutive.com/
-  x-apievangelist-generated: '2026-07-20'
-  x-apievangelist-method: derived
-  x-apievangelist-source: https://developer.permutive.com/
+  title: Taxonomy API
+  version: v1
 servers:
-- url: https://api.permutive.com
-  description: Permutive API host
-security:
-- ApiKeyAuth: []
-tags:
-- name: Taxonomy
-  description: Manage second-party data imports and their segment taxonomy.
+- url: https://api.permutive.app/audience-api/v1
 paths:
   /imports:
     get:
       tags:
-      - Taxonomy
+      - v1
+      summary: Get all 2nd party data imports
       operationId: getImports
-      summary: Get all imports
-      description: Retrieves all second-party data imports available to the workspace.
       responses:
         '200':
-          $ref: '#/components/responses/OK'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '500':
-          $ref: '#/components/responses/ServerError'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WrappedResponse_Import_DataSource'
+              example:
+                items:
+                - id: ef832310-b808-44f4-86bc-947be1cd37c7
+                  name: Data Provider Name
+                  code: data_provider_name
+                  relation: 3rd
+                  identifiers:
+                  - appnexus
+                  inheritance:
+                    workspace_id: 5de2731c-8dcf-4e12-a815-e58b481bd8ac
+                    relation: ancestor
+                  source:
+                    id: f93e5c65-7b2e-4c38-b721-3beb93e4f877
+                    state:
+                      type: active
+                    type: live_ramp_3p
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
   /imports/{importId}:
     get:
       tags:
-      - Taxonomy
-      operationId: retrieveImport
-      summary: Retrieve an import
-      description: Retrieves a single second-party data import by its identifier.
+      - v1
+      summary: Retrieves an import
+      operationId: getImportsImportid
       parameters:
       - name: importId
         in: path
+        description: Import ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
       responses:
         '200':
-          $ref: '#/components/responses/OK'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Import_DataSource'
+              example:
+                id: ef832310-b808-44f4-86bc-947be1cd37c7
+                name: Data Provider Name
+                code: data_provider_name
+                relation: 3rd
+                identifiers:
+                - appnexus
+                inheritance:
+                  workspace_id: 5de2731c-8dcf-4e12-a815-e58b481bd8ac
+                  relation: ancestor
+                source:
+                  id: f93e5c65-7b2e-4c38-b721-3beb93e4f877
+                  state:
+                    type: active
+                  type: live_ramp_3p
+        '400':
+          description: 'Invalid value for: path parameter importId'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
   /imports/{importId}/segments:
     get:
       tags:
-      - Taxonomy
-      operationId: getSegmentsForImport
-      summary: Get all segments for an import
-      description: Retrieves all segments for an import. This is a paginated endpoint and takes an optional pagination cursor.
+      - v1
+      summary: Get all segments for an import.
+      description: Retrieves all segments for an import. This is a paginated endpoint and takes an optional
+        pagination token as a query parameter. If no token is provided then it retrieves the first page
+        of results.
+      operationId: getImportsImportidSegments
       parameters:
       - name: importId
         in: path
+        description: Import ID
         required: true
         schema:
           type: string
-      - name: cursor
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
+      - name: pagination_token
         in: query
+        description: Pagination Token
         required: false
         schema:
           type: string
+        examples:
+          '123':
+            value: MTIzNA==
       responses:
         '200':
-          $ref: '#/components/responses/OK'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse_Segment'
+              example:
+                elements:
+                - id: 1b890475-1482-496d-bcfd-6b2f5564b249
+                  code: '1234'
+                  name: Segment Name
+                  import_id: 9f87bd3e-32eb-4d15-8e85-17fb275fa809
+                  description: segment description
+                  cpm: 2
+                  categories:
+                  - category_1
+                  updated_at: '2023-04-12T11:27:00.716632Z'
+                pagination:
+                  next_token: MTIzNA==
+                  total_count: 5
+        '400':
+          description: 'Invalid value for: path parameter importId, Invalid value for: query parameter
+            pagination_token'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
     post:
       tags:
-      - Taxonomy
-      operationId: createSegment
-      summary: Create a segment
-      description: Creates a new segment within the given import.
+      - v1
+      summary: Creates a segment for an import.
+      operationId: postImportsImportidSegments
       parameters:
       - name: importId
         in: path
+        description: Import ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Segment'
+              $ref: '#/components/schemas/SegmentCreate'
+            example:
+              name: segment
+              code: '1234'
+              description: segment description
+              cpm: 2
+              categories:
+              - category1
+        required: true
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+          description: 'Invalid value for: path parameter importId, Invalid value for: body'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
     patch:
       tags:
-      - Taxonomy
-      operationId: batchUpdateSegments
-      summary: Batch update segments
-      description: Applies a batch of segment operations. Operation order is not guaranteed and no more than 5,000 operations can be contained in a single request.
+      - v1
+      summary: Batch update operations.
+      description: Note that operation order is not guaranteed. No more than 5,000 operations can be contained
+        in a batch.
+      operationId: patchImportsImportidSegments
       parameters:
       - name: importId
         in: path
+        description: Import ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchRequest'
+            example:
+              operations:
+              - data:
+                  name: segment
+                  code: '1234'
+                  description: segment description
+                  cpm: 2
+                  categories:
+                  - category1
+                operation: Create
+              - code: '12345'
+                operation: Delete
+              - code: '1234'
+                data:
+                  name: segment
+                  description: segment description
+                  cpm: 2
+                  categories:
+                  - category1
+                operation: Update
+        required: true
       responses:
         '200':
-          $ref: '#/components/responses/OK'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WrappedResponse_Segment'
+              example:
+                items:
+                - id: 1b890475-1482-496d-bcfd-6b2f5564b249
+                  code: '1234'
+                  name: Segment Name
+                  import_id: 9f87bd3e-32eb-4d15-8e85-17fb275fa809
+                  description: segment description
+                  cpm: 2
+                  categories:
+                  - category_1
+                  updated_at: '2023-04-12T11:27:00.716632Z'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+          description: 'Invalid value for: path parameter importId, Invalid value for: body'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
   /imports/{importId}/segments/{segmentId}:
     get:
       tags:
-      - Taxonomy
-      operationId: getSegmentById
-      summary: Get a segment by its public ID
-      description: Retrieves a single segment for a given import, identified by its globally unique public ID.
+      - v1
+      summary: Retrieves a single segment by its public ID for an import.
+      description: Retrieves a single segment for a given import. The segment is identified by its globally
+        unique public ID (UUID)
+      operationId: getImportsImportidSegmentsSegmentid
       parameters:
       - name: importId
         in: path
+        description: Import ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
       - name: segmentId
         in: path
+        description: Segment ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 1b890475-1482-496d-bcfd-6b2f5564b249
       responses:
         '200':
-          $ref: '#/components/responses/OK'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    patch:
-      tags:
-      - Taxonomy
-      operationId: updateSegmentById
-      summary: Update a segment by its public ID
-      description: Updates a segment for an import, identified by its globally unique public ID.
-      parameters:
-      - name: importId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: segmentId
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/OK'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+              example:
+                id: 1b890475-1482-496d-bcfd-6b2f5564b249
+                code: '1234'
+                name: Segment Name
+                import_id: 9f87bd3e-32eb-4d15-8e85-17fb275fa809
+                description: segment description
+                cpm: 2
+                categories:
+                - category_1
+                updated_at: '2023-04-12T11:27:00.716632Z'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+          description: 'Invalid value for: path parameter importId, Invalid value for: path parameter
+            segmentId'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
     delete:
       tags:
-      - Taxonomy
-      operationId: deleteSegmentById
-      summary: Delete a segment by its public ID
-      description: Deletes a segment for an import, identified by its globally unique public ID.
+      - v1
+      summary: Deletes a segment by its code for an import
+      description: Deletes a segment for an import. The segment is identified by its code.
+      operationId: deleteImportsImportidSegmentsSegmentid
       parameters:
       - name: importId
         in: path
+        description: Import ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
       - name: segmentId
         in: path
+        description: Segment ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 1b890475-1482-496d-bcfd-6b2f5564b249
       responses:
-        '204':
-          description: Segment deleted
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+              example:
+                id: 1b890475-1482-496d-bcfd-6b2f5564b249
+                code: '1234'
+                name: Segment Name
+                import_id: 9f87bd3e-32eb-4d15-8e85-17fb275fa809
+                description: segment description
+                cpm: 2
+                categories:
+                - category_1
+                updated_at: '2023-04-12T11:27:00.716632Z'
+        '400':
+          description: 'Invalid value for: path parameter importId, Invalid value for: path parameter
+            segmentId'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+    patch:
+      tags:
+      - v1
+      summary: Updates a segment by its public ID for an import
+      description: Updates a segment for an import. The segment is identified by its globally unique public
+        ID.
+      operationId: patchImportsImportidSegmentsSegmentid
+      parameters:
+      - name: importId
+        in: path
+        description: Import ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
+      - name: segmentId
+        in: path
+        description: Segment ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 1b890475-1482-496d-bcfd-6b2f5564b249
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentUpdate'
+            example:
+              name: segment
+              description: segment description
+              cpm: 2
+              categories:
+              - category1
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+              example:
+                id: 1b890475-1482-496d-bcfd-6b2f5564b249
+                code: '1234'
+                name: Segment Name
+                import_id: 9f87bd3e-32eb-4d15-8e85-17fb275fa809
+                description: segment description
+                cpm: 2
+                categories:
+                - category_1
+                updated_at: '2023-04-12T11:27:00.716632Z'
+        '400':
+          description: 'Invalid value for: path parameter importId, Invalid value for: path parameter
+            segmentId, Invalid value for: body'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
   /imports/{importId}/segments/code/{segmentCode}:
     get:
       tags:
-      - Taxonomy
-      operationId: getSegmentByCode
-      summary: Get a segment by its code
-      description: Retrieves a single segment for a given import, identified by its code.
+      - v1
+      summary: Retrieves a single segment by its code for an import.
+      description: Retrieves a single segment for a given import. The segment is identified by its code.
+      operationId: getImportsImportidSegmentsCodeSegmentcode
       parameters:
       - name: importId
         in: path
+        description: Import ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
       - name: segmentCode
         in: path
+        description: Segment Code
         required: true
         schema:
           type: string
+        example: code
       responses:
         '200':
-          $ref: '#/components/responses/OK'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
-    patch:
-      tags:
-      - Taxonomy
-      operationId: updateSegmentByCode
-      summary: Update a segment by its code
-      description: Updates a segment for an import, identified by its code.
-      parameters:
-      - name: importId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: segmentCode
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/OK'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+              example:
+                id: 1b890475-1482-496d-bcfd-6b2f5564b249
+                code: '1234'
+                name: Segment Name
+                import_id: 9f87bd3e-32eb-4d15-8e85-17fb275fa809
+                description: segment description
+                cpm: 2
+                categories:
+                - category_1
+                updated_at: '2023-04-12T11:27:00.716632Z'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+          description: 'Invalid value for: path parameter importId'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
     delete:
       tags:
-      - Taxonomy
-      operationId: deleteSegmentByCode
-      summary: Delete a segment by its code
-      description: Deletes a segment for an import, identified by its code.
+      - v1
+      summary: Deletes a segment by its public ID for an import
+      description: Deletes a segment for an import. The segment is identified by its globally unique public
+        ID.
+      operationId: deleteImportsImportidSegmentsCodeSegmentcode
       parameters:
       - name: importId
         in: path
+        description: Import ID
         required: true
         schema:
           type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
       - name: segmentCode
         in: path
+        description: Segment Code
         required: true
         schema:
           type: string
+        example: code
       responses:
-        '204':
-          description: Segment deleted
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+              example:
+                id: 1b890475-1482-496d-bcfd-6b2f5564b249
+                code: '1234'
+                name: Segment Name
+                import_id: 9f87bd3e-32eb-4d15-8e85-17fb275fa809
+                description: segment description
+                cpm: 2
+                categories:
+                - category_1
+                updated_at: '2023-04-12T11:27:00.716632Z'
+        '400':
+          description: 'Invalid value for: path parameter importId'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+    patch:
+      tags:
+      - v1
+      summary: Updates a segment by its code for an import
+      description: Updates a segment for an import. The segment is identified by its code.
+      operationId: patchImportsImportidSegmentsCodeSegmentcode
+      parameters:
+      - name: importId
+        in: path
+        description: Import ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 32f8e031-c532-41bb-b25e-65bdb677a96f
+      - name: segmentCode
+        in: path
+        description: Segment Code
+        required: true
+        schema:
+          type: string
+        example: code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentUpdate'
+            example:
+              name: segment
+              description: segment description
+              cpm: 2
+              categories:
+              - category1
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+              example:
+                id: 1b890475-1482-496d-bcfd-6b2f5564b249
+                code: '1234'
+                name: Segment Name
+                import_id: 9f87bd3e-32eb-4d15-8e85-17fb275fa809
+                description: segment description
+                cpm: 2
+                categories:
+                - category_1
+                updated_at: '2023-04-12T11:27:00.716632Z'
+        '400':
+          description: 'Invalid value for: path parameter importId, Invalid value for: body'
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
 components:
-  responses:
-    Created:
-      description: Resource created
-      content:
-        application/json:
-          schema:
-            type: object
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    OK:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    ServerError:
-      description: An unexpected error occurred on Permutive's side.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    NotFound:
-      description: The requested resource does not exist.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   schemas:
-    Segment:
+    Active:
+      type: object
+    Active1:
+      required:
+      - bucket
+      - permissions
+      type: object
+      properties:
+        bucket:
+          type: string
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+    AlreadyExists:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    Ancestor:
+      required:
+      - workspaceId
+      type: object
+      properties:
+        workspaceId:
+          type: string
+          format: uuid
+    AuthorizationFailed:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    AuthorizationFailedForAPIKey:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    AuthorizationFailedForUser:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    AuthorizationMissing:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    BadEncoding:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    BadOrigin:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    BatchOperation:
+      oneOf:
+      - $ref: '#/components/schemas/Create'
+      - $ref: '#/components/schemas/Delete'
+      - $ref: '#/components/schemas/Update'
+    BatchRequest:
+      required:
+      - operations
+      type: object
+      properties:
+        operations:
+          required:
+          - head
+          type: object
+          properties:
+            head:
+              $ref: '#/components/schemas/BatchOperation'
+            tail:
+              type: array
+              items:
+                $ref: '#/components/schemas/BatchOperation'
+    Bespoke:
+      type: object
+    Create:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SegmentCreate'
+    Creating:
+      type: object
+    Creating1:
+      required:
+      - permissions
+      type: object
+      properties:
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+    DataSource:
+      oneOf:
+      - $ref: '#/components/schemas/Active1'
+      - $ref: '#/components/schemas/Bespoke'
+      - $ref: '#/components/schemas/Creating1'
+      - $ref: '#/components/schemas/LiveRamp3P'
+      - $ref: '#/components/schemas/PrincipalError'
+      - $ref: '#/components/schemas/RealtimeAPI'
+      - $ref: '#/components/schemas/SetupFailure'
+      - $ref: '#/components/schemas/Updating1'
+      - $ref: '#/components/schemas/V1'
+      - $ref: '#/components/schemas/V11'
+    Delete:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: string
+    Details_DataSource:
+      required:
+      - id
+      - state
+      - details
       type: object
       properties:
         id:
           type: string
+          format: uuid
+        state:
+          $ref: '#/components/schemas/State'
+        details:
+          $ref: '#/components/schemas/DataSource'
+    DoesNotExist:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    Error:
+      required:
+      - errors
+      type: object
+      properties:
+        errors:
+          $ref: '#/components/schemas/NonEmptyList_String'
+    Failure:
+      type: object
+    Group:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+    HttpError:
+      oneOf:
+      - $ref: '#/components/schemas/AlreadyExists'
+      - $ref: '#/components/schemas/AuthorizationFailed'
+      - $ref: '#/components/schemas/AuthorizationFailedForAPIKey'
+      - $ref: '#/components/schemas/AuthorizationFailedForUser'
+      - $ref: '#/components/schemas/AuthorizationMissing'
+      - $ref: '#/components/schemas/BadEncoding'
+      - $ref: '#/components/schemas/BadOrigin'
+      - $ref: '#/components/schemas/DoesNotExist'
+      - $ref: '#/components/schemas/InsufficientAPIKey'
+      - $ref: '#/components/schemas/InvalidAPIKey'
+      - $ref: '#/components/schemas/InvalidHeader'
+      - $ref: '#/components/schemas/InvalidParameters'
+      - $ref: '#/components/schemas/InvalidRequestBody'
+      - $ref: '#/components/schemas/MissingHeader'
+      - $ref: '#/components/schemas/MissingOrigin'
+      - $ref: '#/components/schemas/MissingParameters'
+      - $ref: '#/components/schemas/MissingRequestBody'
+      - $ref: '#/components/schemas/RouteDeprecated'
+      - $ref: '#/components/schemas/SchemeNotSupported'
+      - $ref: '#/components/schemas/UnknownError'
+      - $ref: '#/components/schemas/UnspecifiedInternalError'
+      - $ref: '#/components/schemas/ValidationError'
+      - $ref: '#/components/schemas/VerbNotImplemented'
+    HttpErrorResponse:
+      required:
+      - requestId
+      - error
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid
+        error:
+          $ref: '#/components/schemas/HttpError'
+    HttpStatus:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+    Import_DataSource:
+      required:
+      - id
+      - name
+      - code
+      - relation
+      - identifiers
+      - source
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        code:
+          type: string
+        relation:
+          $ref: '#/components/schemas/Relation'
+        identifiers:
+          $ref: '#/components/schemas/NonEmptyList_Identifier'
+        inheritance:
+          $ref: '#/components/schemas/Inheritance'
+        source:
+          $ref: '#/components/schemas/Details_DataSource'
+    Inheritance:
+      oneOf:
+      - $ref: '#/components/schemas/Ancestor'
+    InsufficientAPIKey:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    InvalidAPIKey:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    InvalidHeader:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    InvalidParameters:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    InvalidRequestBody:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    JsonObject:
+      type: object
+    LiveRamp3P:
+      type: object
+    MissingHeader:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    MissingOrigin:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    MissingParameters:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    MissingRequestBody:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    NonEmptyList_Identifier:
+      required:
+      - head
+      type: object
+      properties:
+        head:
+          type: string
+        tail:
+          type: array
+          items:
+            type: string
+    NonEmptyList_String:
+      required:
+      - head
+      type: object
+      properties:
+        head:
+          type: string
+        tail:
+          type: array
+          items:
+            type: string
+    PaginatedResponse_Segment:
+      required:
+      - pagination
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Segment'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      type: object
+      properties:
+        nextToken:
+          $ref: '#/components/schemas/PaginationToken'
+        totalCount:
+          $ref: '#/components/schemas/PaginationCount'
+    PaginationCount:
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
+    PaginationToken:
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+    Permissions:
+      type: object
+      properties:
+        read:
+          type: array
+          items:
+            $ref: '#/components/schemas/Principal'
+        write:
+          type: array
+          items:
+            $ref: '#/components/schemas/Principal'
+        sync:
+          type: array
+          items:
+            $ref: '#/components/schemas/Principal'
+    Principal:
+      oneOf:
+      - $ref: '#/components/schemas/Group'
+      - $ref: '#/components/schemas/ServiceAccount'
+      - $ref: '#/components/schemas/User'
+    PrincipalError:
+      required:
+      - bucket
+      - permissions
+      - errors
+      type: object
+      properties:
+        bucket:
+          type: string
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+        errors:
+          $ref: '#/components/schemas/NonEmptyList_String'
+    RealtimeAPI:
+      type: object
+    Relation:
+      oneOf:
+      - $ref: '#/components/schemas/Second'
+      - $ref: '#/components/schemas/Third'
+    RouteDeprecated:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    SchemeNotSupported:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    Second:
+      type: object
+    Segment:
+      required:
+      - id
+      - code
+      - name
+      - importId
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
         code:
           type: string
         name:
           type: string
+        importId:
+          type: string
+          format: uuid
         description:
           type: string
-        import_id:
+        cpm:
+          type: number
+          format: double
+        categories:
+          type: array
+          items:
+            type: string
+        updatedAt:
           type: string
-    Problem:
+          format: date-time
+    SegmentCreate:
+      required:
+      - name
+      - code
       type: object
-      description: Error payload.
       properties:
-        type:
+        name:
           type: string
-        title:
+        code:
           type: string
-        status:
+        description:
+          type: string
+        cpm:
+          type: number
+          format: double
+        categories:
+          type: array
+          items:
+            type: string
+    SegmentUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        cpm:
+          type: number
+          format: double
+        categories:
+          type: array
+          items:
+            type: string
+    ServiceAccount:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+    SetupFailure:
+      required:
+      - permissions
+      type: object
+      properties:
+        bucket:
+          type: string
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+    State:
+      oneOf:
+      - $ref: '#/components/schemas/Active'
+      - $ref: '#/components/schemas/Creating'
+      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Failure'
+      - $ref: '#/components/schemas/Updating'
+    Third:
+      type: object
+    UnknownError:
+      required:
+      - s
+      - co
+      - m
+      type: object
+      properties:
+        s:
+          $ref: '#/components/schemas/HttpStatus'
+        co:
           type: integer
-        detail:
+          format: int32
+        m:
           type: string
-  securitySchemes:
-    ApiKeyAuth:
-      type: http
-      scheme: bearer
-      description: Permutive workspace API key supplied as a bearer token. See https://developer.permutive.com/api/authentication for the exact header and key-provisioning details.
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    UnspecifiedInternalError:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    Update:
+      required:
+      - code
+      - data
+      type: object
+      properties:
+        code:
+          type: string
+        data:
+          $ref: '#/components/schemas/SegmentUpdate'
+    Updating:
+      type: object
+    Updating1:
+      required:
+      - bucket
+      - permissions
+      type: object
+      properties:
+        bucket:
+          type: string
+        permissions:
+          $ref: '#/components/schemas/Permissions'
+    User:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+    V1:
+      required:
+      - advertiserName
+      - organizationId
+      type: object
+      properties:
+        advertiserName:
+          type: string
+        organizationId:
+          type: string
+          format: uuid
+    V11:
+      required:
+      - organizationId
+      type: object
+      properties:
+        organizationId:
+          type: string
+          format: uuid
+    ValidationError:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    VerbNotImplemented:
+      type: object
+      properties:
+        c:
+          type: string
+        d:
+          $ref: '#/components/schemas/JsonObject'
+    WrappedResponse_Import_DataSource:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Import_DataSource'
+    WrappedResponse_Segment:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Segment'

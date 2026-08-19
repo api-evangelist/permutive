@@ -1,0 +1,742 @@
+{
+  "item": [
+    {
+      "id": "a978c529-8a40-40b1-9db9-58f0c1955177",
+      "name": "API version 1",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4e4094fa-f1ef-4249-98f5-34be9c4da916",
+          "name": "Segment user based on provided events and pre-existing state",
+          "request": {
+            "name": "Segment user based on provided events and pre-existing state",
+            "description": {
+              "content": "This endpoint accepts a list of events for a given user and combines them with any pre-existing state for the user to determine the full list of cohorts of which they are a member. State is also persisted, to be applied to subsequent requests for the same user.\n\nEvents provided to this endpoint are published to the Permutive Events API, meaning that they will be reflected in other areas of Permutive, for example Insights.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ccs",
+                "v1",
+                "segmentation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "activations",
+                  "value": "false",
+                  "description": "Return a list of activated cohorts in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "synchronous-validation",
+                  "value": "false",
+                  "description": "Validate provided event(s) against their schema before proceeding with segmentation.\n\nBy default validation is performed asynchronously after segmentation has been performed and the response has been returned. This can make it difficult to debug issues with invalid events.\n\nIt is recommended to use this option only during development and debugging, as validation can be expensive and slow."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "k"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<uuid>\",\n  \"alias\": {\n    \"tag\": \"<string>\",\n    \"id\": \"<string>\"\n  },\n  \"aliases\": [\n    {\n      \"priority\": \"<integer>\",\n      \"tag\": \"<string>\",\n      \"id\": \"<string>\"\n    },\n    {\n      \"priority\": \"<integer>\",\n      \"tag\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  ],\n  \"events\": [\n    {\n      \"name\": \"<string>\",\n      \"time\": \"<dateTime>\",\n      \"properties\": \"<object>\",\n      \"view_id\": \"<uuid>\",\n      \"session_id\": \"<uuid>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"time\": \"<dateTime>\",\n      \"properties\": \"<object>\",\n      \"view_id\": \"<uuid>\",\n      \"session_id\": \"<uuid>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "018db136-4076-4a4c-822a-1773f4326b75",
+              "name": "List of cohorts of which the user is currently a member, along with the Permutive User ID and activations if requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "activations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"cohorts\": [\n    \"12345\",\n    \"23456\",\n    \"34567\"\n  ],\n  \"activations\": {\n    \"gam\": [\n      \"12345\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bede947-20c9-4cd2-b367-566836af1acc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "activations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"error\": {\n    \"type\": \"string\",\n    \"status_code\": 2374,\n    \"status\": \"string\",\n    \"code\": 1910,\n    \"message\": \"string\",\n    \"docs\": \"string\",\n    \"cause\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b64de82-65d0-4cc0-9f8a-6ce450b99498",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "activations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"error\": {\n    \"type\": \"string\",\n    \"status_code\": 2374,\n    \"status\": \"string\",\n    \"code\": 1910,\n    \"message\": \"string\",\n    \"docs\": \"string\",\n    \"cause\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57635212-567c-4c30-b080-42981fb5b84a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "activations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"error\": {\n    \"type\": \"string\",\n    \"status_code\": 2374,\n    \"status\": \"string\",\n    \"code\": 1910,\n    \"message\": \"string\",\n    \"docs\": \"string\",\n    \"cause\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7e1c515-690c-4ec9-a973-3b929ce36a76",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "activations",
+                      "value": "false"
+                    },
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"error\": {\n    \"type\": \"string\",\n    \"status_code\": 2374,\n    \"status\": \"string\",\n    \"code\": 1910,\n    \"message\": \"string\",\n    \"docs\": \"string\",\n    \"cause\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "254be040-b552-4f8a-84ff-b41467ad9ddb",
+          "name": "Segment user based on provided events and state only",
+          "request": {
+            "name": "Segment user based on provided events and state only",
+            "description": {
+              "content": "This endpoint accepts a list of events for a given user and optionally some pre-existing state for the user. It uses these to determine the full list of cohorts of which they are a member, and returns these along with the updated state for the user. State is not persisted, so will not be used in the next request unless it is passed back in as part of that request.\n\nIt is likely that this endpoint is more performant than the stateful segmentation endpoint, since it does not need to read state for the user from a database. It is also useful for testing purposes.\n\nEvents provided to this endpoint are published to the Permutive Events API, meaning that they will be reflected in other areas of Permutive, for example Insights.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ccs",
+                "v1",
+                "segmentation",
+                "stateless"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "synchronous-validation",
+                  "value": "false",
+                  "description": "Validate provided event(s) against their schema before proceeding with segmentation.\n\nBy default validation is performed asynchronously after segmentation has been performed and the response has been returned. This can make it difficult to debug issues with invalid events.\n\nIt is recommended to use this option only during development and debugging, as validation can be expensive and slow."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "k"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "query"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<uuid>\",\n  \"alias\": {\n    \"tag\": \"<string>\",\n    \"id\": \"<string>\"\n  },\n  \"aliases\": [\n    {\n      \"priority\": \"<integer>\",\n      \"tag\": \"<string>\",\n      \"id\": \"<string>\"\n    },\n    {\n      \"priority\": \"<integer>\",\n      \"tag\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  ],\n  \"events\": [\n    {\n      \"name\": \"<string>\",\n      \"time\": \"<dateTime>\",\n      \"properties\": \"<object>\",\n      \"view_id\": \"<uuid>\",\n      \"session_id\": \"<uuid>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"time\": \"<dateTime>\",\n      \"properties\": \"<object>\",\n      \"view_id\": \"<uuid>\",\n      \"session_id\": \"<uuid>\"\n    }\n  ],\n  \"state\": {\n    \"internal_state\": {\n      \"key_0\": {\n        \"key_0\": {}\n      },\n      \"key_1\": {\n        \"key_0\": {}\n      }\n    },\n    \"external_state\": {\n      \"key_0\": {\n        \"key_0\": {}\n      },\n      \"key_1\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    },\n    \"cohorts\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6384310a-ee33-430e-89c5-06958a7927f9",
+              "name": "The Permutive User ID and the user's state (including the list of cohorts of which they are a member).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation",
+                    "stateless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ],\n  \"state\": {\n    \"internal_state\": {\n      \"12345\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"external_state\": {\n      \"67890\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"cohorts\": [\n      \"12345\",\n      \"67890\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"state\": {\n    \"internal_state\": {\n      \"12345\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"external_state\": {\n      \"67890\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"cohorts\": [\n      \"12345\",\n      \"67890\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf411f93-1881-4681-82e3-f6be08e68690",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation",
+                    "stateless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ],\n  \"state\": {\n    \"internal_state\": {\n      \"12345\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"external_state\": {\n      \"67890\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"cohorts\": [\n      \"12345\",\n      \"67890\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"error\": {\n    \"type\": \"string\",\n    \"status_code\": 2374,\n    \"status\": \"string\",\n    \"code\": 1910,\n    \"message\": \"string\",\n    \"docs\": \"string\",\n    \"cause\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bb3abcb-547f-460a-ad34-5e1bb4ade4d6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation",
+                    "stateless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ],\n  \"state\": {\n    \"internal_state\": {\n      \"12345\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"external_state\": {\n      \"67890\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"cohorts\": [\n      \"12345\",\n      \"67890\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"error\": {\n    \"type\": \"string\",\n    \"status_code\": 2374,\n    \"status\": \"string\",\n    \"code\": 1910,\n    \"message\": \"string\",\n    \"docs\": \"string\",\n    \"cause\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcce7d6a-7f62-44a0-921a-e9c1431a9545",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation",
+                    "stateless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ],\n  \"state\": {\n    \"internal_state\": {\n      \"12345\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"external_state\": {\n      \"67890\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"cohorts\": [\n      \"12345\",\n      \"67890\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"error\": {\n    \"type\": \"string\",\n    \"status_code\": 2374,\n    \"status\": \"string\",\n    \"code\": 1910,\n    \"message\": \"string\",\n    \"docs\": \"string\",\n    \"cause\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2699c75-30b6-4cad-a136-707d2c7661f9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ccs",
+                    "v1",
+                    "segmentation",
+                    "stateless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "synchronous-validation",
+                      "value": "false"
+                    },
+                    {
+                      "key": "k",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"2008c38f-dece-4570-976d-87593ed001c3\",\n  \"alias\": null,\n  \"aliases\": null,\n  \"events\": [\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:43.179Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_property\": \"interesting\"\n      }\n    },\n    {\n      \"name\": \"Pageview\",\n      \"time\": \"2022-06-22T19:40:45.152Z\",\n      \"view_id\": \"a55a9c8b-4a0b-4fe7-99a9-170624850501\",\n      \"session_id\": \"1d145310-1338-4ff7-96dd-e6128f54cbe5\",\n      \"properties\": {\n        \"my_object\": {\n          \"inner_property\": 42\n        }\n      }\n    }\n  ],\n  \"state\": {\n    \"internal_state\": {\n      \"12345\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"external_state\": {\n      \"67890\": {\n        \"0c8b70cdb7\": [\n          \"p\",\n          1\n        ]\n      }\n    },\n    \"cohorts\": [\n      \"12345\",\n      \"67890\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"error\": {\n    \"type\": \"string\",\n    \"status_code\": 2374,\n    \"status\": \"string\",\n    \"code\": 1910,\n    \"message\": \"string\",\n    \"docs\": \"string\",\n    \"cause\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.permutive.app",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9da6974f-04f8-4763-b184-56423581d966",
+    "name": "Custom Cohort Segmentation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

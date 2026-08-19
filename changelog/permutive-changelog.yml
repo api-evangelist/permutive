@@ -1,0 +1,117 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.permutive.com/sdks/mobile/ios/release-notes/index
+notes: >-
+  Permutive publishes dated release notes for its SDKs, not for its APIs. There
+  is no API changelog: the Events, Identity, Cohorts, Taxonomy, Segmentation
+  and Contextual APIs have no dated change record anywhere on the developer
+  site, so a consumer of the REST surface has no way to see what changed and
+  when. The iOS and Android release notes below are month-dated and structured;
+  the JavaScript SDK notes are a Keep-a-Changelog dump of commit subjects with
+  no version headings and no dates, so its recent entries cannot be dated
+  honestly and are recorded as an undated highlight list.
+scheme: semver
+surfaces:
+- {name: iOS / tvOS SDK, url: 'https://docs.permutive.com/sdks/mobile/ios/release-notes/index',
+   dated: true, granularity: month, current: v3.0.2}
+- {name: Android SDK, url: 'https://docs.permutive.com/sdks/mobile/android/release-notes/index',
+   dated: true, granularity: month, current: v1.12.1 (Core)}
+- {name: JavaScript SDK, url: 'https://docs.permutive.com/sdks/web/javascript-sdk/release-notes/index',
+   dated: false, granularity: none,
+   note: 'Keep a Changelog format claimed, but published without version headings or dates.'}
+- {name: REST APIs, url: null, dated: false, note: 'No API changelog published.'}
+
+entries:
+- product: ios-sdk
+  version: v3.0.2
+  date: '2026-08'
+  breaking: false
+  changes:
+  - {type: fix, summary: 'Fixes crashes on low-memory devices caused by serializing user state on every event'}
+  - {type: fix, summary: 'Reduces CoreData work by keeping user state loaded between writes and rate-limiting state persistence'}
+- product: ios-sdk
+  version: v3.0.1
+  date: '2026-08'
+  breaking: false
+  changes:
+  - {type: fix, summary: 'Fixes VideoCompletion schema rejections by omitting empty cohort and segment aggregations from MediaTracker completion events'}
+- product: ios-sdk
+  version: v3.0.0
+  date: '2026-07'
+  breaking: true
+  changes:
+  - {type: feature, summary: 'Add async API for cohorts and activations that awaits pending work'}
+  - {type: breaking, summary: 'Bump min supported iOS and tvOS versions to 13'}
+- product: ios-sdk
+  version: v2.6.1
+  date: '2026-07'
+  breaking: false
+  changes:
+  - {type: fix, summary: 'Fixes memory accumulation from user state and reduces unnecessary CoreData writes'}
+- product: ios-sdk
+  version: v2.6.0
+  date: '2026-06'
+  breaking: false
+  changes:
+  - {type: feature, summary: 'Config-driven automatic ID collection'}
+- product: ios-sdk
+  version: v2.5.2
+  date: '2026-05'
+  breaking: false
+  changes:
+  - {type: fix, summary: 'Defaults to the Core Engine when no A/B test configuration applies'}
+  - {type: fix, summary: 'Persists Core Engine state in file storage instead of UserDefaults to fit within the tvOS UserDefaults size limit'}
+- product: android-sdk
+  version: v1.12.1 (Core)
+  date: '2026-08'
+  breaking: false
+  changes:
+  - {type: fix, summary: 'Validate the queries file format before use and discard incompatible cached scripts, preventing a crash when upgrading from pre-Kotlin query runtime versions (v1.7.x and earlier)'}
+- product: android-sdk
+  version: v1.12.0 (Core)
+  date: '2026-05'
+  breaking: false
+  changes:
+  - {type: feature, summary: 'Config-driven automatic ID collection'}
+- product: android-sdk
+  version: v1.11.3 (Core)
+  date: '2026-03'
+  breaking: false
+  changes:
+  - {type: fix, summary: 'Header encoding for OkHttp 4.x compatibility'}
+- product: android-sdk
+  version: v1.11.2 (Core)
+  date: '2026-03'
+  breaking: false
+  changes:
+  - {type: fix, summary: 'Add 16KB page size support for Android 15+ devices'}
+- product: android-sdk
+  version: v1.11.1 (Core)
+  date: '2026-03'
+  breaking: false
+  changes:
+  - {type: fix, summary: 'Fix missing logs() method in Logger interface'}
+- product: android-sdk
+  version: v1.11.0 (Core)
+  date: '2026-02'
+  breaking: false
+  changes:
+  - {type: update, summary: 'Integrate contextual cohorts with classification models'}
+
+undated_highlights:
+  product: javascript-sdk
+  source: https://docs.permutive.com/sdks/web/javascript-sdk/release-notes/index
+  note: 'Published without version headings or dates; order is newest-first as rendered.'
+  items:
+  - 'fix(javascript-sdk): align stackadapt addon key with extensions platform (#3432)'
+  - 'perf(SlotClicked): listen to blur and visibilitychange (#2825)'
+  - 'fix(dfp): add `rts` to all segments Set (#3396)'
+  - 'fix(javascript-sdk): make reset() wait for segmentation service reinitialisation (#3356)'
+  - 'feat(equativ): add cookie sync addon (#3316)'
+  - 'fix(query-language): evaluate invalidated TPD queries (#3334)'
+  - 'feat(javascript-sdk): add stackadapt cookie sync addon (#3321)'
+
+cross_links:
+  lifecycle: lifecycle/permutive-lifecycle.yml
+  packages: packages/permutive-packages.yml
+checked: '2026-08-13'

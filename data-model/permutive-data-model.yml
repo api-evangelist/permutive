@@ -1,55 +1,159 @@
-generated: '2026-07-20'
+generated: '2026-08-13'
 method: derived
-source: openapi/permutive-openapi.yml
-docs: https://developer.permutive.com/concepts/overview
+source: openapi/*.yml (five Permutive-published OpenAPI documents + one derived contextual spec)
+docs: https://docs.permutive.com/concepts/overview
 notes: >-
-  Entity-relationship graph derived from the Permutive API operations and object
-  references. Core domains: identity (user), behavioural events, audience
-  cohorts, and second-party data imports with their segment taxonomy.
+  Entity-relationship graph derived from the schemas and id-reference fields of
+  Permutive's own OpenAPI documents. This replaces the 2026-07-20 file, which
+  was derived from an API Evangelist-authored spec.
+  Two facts shape the whole model. First, WORKSPACE is the hard boundary: every
+  API key belongs to one workspace, and workspaces nest in an organization
+  hierarchy so a cohort can be inherited downward and, with the right access
+  level, read upward via `include-child-workspaces`. Second, the platform's
+  vocabulary is SPLIT: the product, docs and Cohorts API paths all say "cohort",
+  but the Cohorts API SCHEMAS are all named Segment* (SegmentSummaryApiV2,
+  SegmentQueryApiV2, CreateSegmentV2), while the Taxonomy API uses "segment" to
+  mean something completely different — an entry in an imported second-party
+  data taxonomy. The same word names two unrelated entities in two APIs.
+
 entities:
-  - name: User
-    description: A Permutive user identity, addressable by user_id and aliases.
-    id_field: user_id
-  - name: Event
-    description: A behavioural event tracked against a user.
-    id_field: null
-  - name: Alias
-    description: An external identity associated with a Permutive user.
-    id_field: id
-  - name: Cohort
-    description: An audience definition built from a cohort query, owned by a workspace.
-    id_field: id
-  - name: Import
-    description: A second-party data import that carries a segment taxonomy.
-    id_field: importId
-  - name: Segment
-    description: A segment within an import, addressable by public ID or code.
-    id_field: id
-  - name: Workspace
-    description: The tenant boundary that owns cohorts, imports and API keys.
-    id_field: null
+- name: Workspace
+  id_format: uuid
+  api: implicit (carried by the API key)
+  description: >-
+    The tenancy boundary. Owns cohorts, imports, publisher domains and API keys.
+    Workspaces nest in an organization hierarchy.
+  fields: [workspaceId]
+  note: 'No REST operation returns a workspace. Workspace metadata is only reachable through the invitation-only MCP server (get_orgs_and_workspaces, get_workspace_details).'
+- name: Cohort
+  aka: [Segment (in Cohorts API schema names)]
+  id_format: uuid
+  secondary_id: code (integer, workspace-scoped short id)
+  api: openapi/permutive-cohorts-api-openapi.yml
+  schemas: [SegmentSummaryApiV2WithAudience, SegmentQueryApiV2WithAudience, SegmentDetailApiV2WithAudience,
+    SegmentLookalikeApiWithAudience, CreateSegmentV2, UpdateSegmentV2]
+  fields: [id, code, name, description, query, tags, state, workspaceId, segmentType,
+    liveAudienceSize, createdAt, lastUpdatedAt]
+  variants: [SegmentType.RealTime, SegmentType.Offline, Lookalike]
+  note: >-
+    `query` is a JSON cohort-definition language documented separately at
+    /api/cohorts/cohort-query-format. `liveAudienceSize` is the measured reach.
+- name: User
+  id_format: uuid
+  aka: [Permutive ID]
+  api: openapi/permutive-identity-api-openapi.yml
+  schemas: [NewUserId, ResolvedIdentity, IdentityResponse]
+  fields: [id, user_id, permutive_id]
+  description: >-
+    First-party, publisher-scoped identity generated on-device. Distinct across
+    publishers; no cross-domain or cross-device tracking by itself.
+- name: Alias
+  id_format: 'string (tag + id pair)'
+  api: [openapi/permutive-identity-api-openapi.yml, openapi/permutive-events-api-openapi.yml,
+    openapi/permutive-segmentation-api-openapi.yml]
+  schemas: [PrioritizedAlias, PrioritisedAlias, Alias, IdentifyUser]
+  fields: [tag, id, priority]
+  description: >-
+    An external identifier bound to a Permutive user — an email hash, a partner
+    ID (ID5, RampID, UID2). `tag` names the identifier namespace, `priority`
+    orders resolution.
+  spelling_note: 'The Identity/Events specs spell it PrioritizedAlias; the CCS spec spells it PrioritisedAlias. Same entity, two spellings.'
+- name: Event
+  id_format: 'server-generated event id'
+  api: [openapi/permutive-events-api-openapi.yml, openapi/permutive-segmentation-api-openapi.yml]
+  schemas: [PostEvent, EventResponse, EventUnenrichedResponse, Event]
+  fields: [user_id, aliases, name, time, view_id, session_id, segments, cohorts, properties]
+  description: >-
+    A user action. Validated against the event schema defined in the workspace;
+    Permutive generates the event id and may enrich the event before persisting.
+- name: View
+  id_format: uuid
+  fields: [view_id]
+  description: 'One page/screen view. Set by the SDK; carried on events.'
+- name: Session
+  id_format: uuid
+  fields: [session_id]
+  description: 'A user session. Carried on events.'
+- name: UserState
+  api: openapi/permutive-segmentation-api-openapi.yml
+  schemas: [UserState, ChecksummedState, DeviceState, CohortState]
+  fields: [internal_state, external_state, cohorts]
+  description: >-
+    Serialized segmentation state for a user. The CCS API has two modes:
+    stateful (Permutive persists it) and stateless (the caller round-trips the
+    state blob).
+- name: Activation
+  api: [openapi/permutive-segmentation-api-openapi.yml, openapi/permutive-contextual-api-openapi.yml]
+  schemas: [SegmentationResponse]
+  fields: [activations]
+  description: >-
+    The mapping of cohorts to destination-specific targeting keys, keyed by
+    destination (e.g. target_dfp, appnexus_adserver).
+- name: Import
+  id_format: uuid
+  api: openapi/permutive-taxonomy-api-openapi.yml
+  schemas: [Import_DataSource, Details_DataSource, DataSource]
+  fields: [id, name, code, relation, identifiers, inheritance, source]
+  relation_values: [second-party, third-party]
+  source_types: [live_ramp_3p, RealtimeAPI, Active, Bespoke, Creating, SetupFailure, PrincipalError]
+  description: 'A second- or third-party data import into the workspace.'
+- name: TaxonomySegment
+  aka: [Segment (Taxonomy API)]
+  id_format: uuid
+  secondary_id: code (string, import-scoped)
+  api: openapi/permutive-taxonomy-api-openapi.yml
+  schemas: [Segment, SegmentCreate, SegmentUpdate]
+  fields: [id, code, name, importId, description, cpm, categories, updatedAt]
+  description: >-
+    An entry in an imported data taxonomy — code-to-name mapping plus metadata.
+    NOT a Permutive cohort. `cpm` prices the segment for data collaboration.
+- name: ContextualClassification
+  api: openapi/permutive-contextual-api-openapi.yml
+  fields: [value, confidence, taxonomy, provider]
+  dimension_types: [categories, keywords, entities, sentiment, emotion, concepts]
+  taxonomies: [iab_2.0, iab_2.2, iab_3.0, custom]
+  providers: [ibm_watson, silverbullet_4d, os_data_solutions, text_razor, webhook_custom]
+  description: 'Content classification of a URL, produced by a classification provider.'
+
 relationships:
-  - from: Event
-    to: User
-    type: belongs_to
-    via: user_id
-  - from: Alias
-    to: User
-    type: belongs_to
-    via: user_id
-  - from: User
-    to: Alias
-    type: has_many
-    via: aliases
-  - from: Cohort
-    to: Workspace
-    type: belongs_to
-    via: workspace
-  - from: Segment
-    to: Import
-    type: belongs_to
-    via: import_id
-  - from: Import
-    to: Segment
-    type: has_many
-    via: segments
+- {from: Workspace, to: Cohort, kind: has_many, via: workspaceId}
+- {from: Workspace, to: Import, kind: has_many, via: 'implicit (API key scope)'}
+- {from: Workspace, to: Workspace, kind: has_many, via: 'organization hierarchy (parent/child)',
+   note: 'Cohorts are inherited from ancestor workspaces; Import.inheritance.workspace_id records the ancestor.'}
+- {from: Cohort, to: Workspace, kind: belongs_to, via: workspaceId}
+- {from: User, to: Alias, kind: has_many, via: aliases}
+- {from: Alias, to: User, kind: belongs_to, via: user_id}
+- {from: Event, to: User, kind: belongs_to, via: user_id}
+- {from: Event, to: Alias, kind: has_many, via: aliases,
+   note: 'An event may carry aliases so identity is resolved at ingest.'}
+- {from: Event, to: View, kind: belongs_to, via: view_id}
+- {from: Event, to: Session, kind: belongs_to, via: session_id}
+- {from: Event, to: Cohort, kind: has_many, via: cohorts,
+   note: 'Cohort membership at the time of the event, returned on the enriched event response.'}
+- {from: UserState, to: User, kind: belongs_to, via: user_id}
+- {from: UserState, to: Cohort, kind: has_many, via: cohorts}
+- {from: Activation, to: Cohort, kind: has_many, via: 'activations map values'}
+- {from: Import, to: TaxonomySegment, kind: has_many, via: importId}
+- {from: TaxonomySegment, to: Import, kind: belongs_to, via: importId}
+- {from: Import, to: Workspace, kind: belongs_to, via: inheritance.workspace_id}
+- {from: ContextualClassification, to: Cohort, kind: feeds, via: 'contextual cohort evaluation',
+   note: 'Classifications drive contextual cohort codes returned by /ctx/v1/segment.'}
+
+id_conventions:
+  primary: 'UUID v4 for every resource id, user id, session id and view id'
+  short_codes:
+    cohort: 'integer `code`, workspace-scoped'
+    taxonomy_segment: 'string `code`, import-scoped'
+  prefixes: none
+  timestamps: ISO 8601
+  casing_divergence: >-
+    The Cohorts and Taxonomy APIs use camelCase field names (workspaceId,
+    createdAt, importId, requestId); the Events, Identity and CCS APIs use
+    snake_case (user_id, view_id, session_id, request_id). The error envelope
+    is `requestId` in the Cohorts/Taxonomy specs and `request_id` in the
+    Events/Identity/CCS specs and in the errors reference.
+
+render: null
+cross_links:
+  conventions: conventions/permutive-conventions.yml
+  errors: errors/permutive-problem-types.yml

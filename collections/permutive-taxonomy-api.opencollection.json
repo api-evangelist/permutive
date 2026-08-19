@@ -1,0 +1,277 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Taxonomy API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all 2nd party data imports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.permutive.app/audience-api/v1/imports"
+          },
+          "docs": "Get all 2nd party data imports"
+        },
+        {
+          "info": {
+            "name": "Retrieves an import",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              }
+            ]
+          },
+          "docs": "Retrieves an import"
+        },
+        {
+          "info": {
+            "name": "Get all segments for an import.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              },
+              {
+                "name": "pagination_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination Token"
+              }
+            ]
+          },
+          "docs": "Retrieves all segments for an import. This is a paginated endpoint and takes an optional pagination token as a query parameter. If no token is provided then it retrieves the first page of results."
+        },
+        {
+          "info": {
+            "name": "Creates a segment for an import.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a segment for an import."
+        },
+        {
+          "info": {
+            "name": "Batch update operations.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Note that operation order is not guaranteed. No more than 5,000 operations can be contained in a batch."
+        },
+        {
+          "info": {
+            "name": "Retrieves a single segment by its public ID for an import.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments/:segmentId",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              },
+              {
+                "name": "segmentId",
+                "value": "1b890475-1482-496d-bcfd-6b2f5564b249",
+                "type": "path",
+                "description": "Segment ID"
+              }
+            ]
+          },
+          "docs": "Retrieves a single segment for a given import. The segment is identified by its globally unique public ID (UUID)"
+        },
+        {
+          "info": {
+            "name": "Updates a segment by its public ID for an import",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments/:segmentId",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              },
+              {
+                "name": "segmentId",
+                "value": "1b890475-1482-496d-bcfd-6b2f5564b249",
+                "type": "path",
+                "description": "Segment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a segment for an import. The segment is identified by its globally unique public ID."
+        },
+        {
+          "info": {
+            "name": "Deletes a segment by its code for an import",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments/:segmentId",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              },
+              {
+                "name": "segmentId",
+                "value": "1b890475-1482-496d-bcfd-6b2f5564b249",
+                "type": "path",
+                "description": "Segment ID"
+              }
+            ]
+          },
+          "docs": "Deletes a segment for an import. The segment is identified by its code."
+        },
+        {
+          "info": {
+            "name": "Retrieves a single segment by its code for an import.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments/code/:segmentCode",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              },
+              {
+                "name": "segmentCode",
+                "value": "code",
+                "type": "path",
+                "description": "Segment Code"
+              }
+            ]
+          },
+          "docs": "Retrieves a single segment for a given import. The segment is identified by its code."
+        },
+        {
+          "info": {
+            "name": "Updates a segment by its code for an import",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments/code/:segmentCode",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              },
+              {
+                "name": "segmentCode",
+                "value": "code",
+                "type": "path",
+                "description": "Segment Code"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a segment for an import. The segment is identified by its code."
+        },
+        {
+          "info": {
+            "name": "Deletes a segment by its public ID for an import",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.permutive.app/audience-api/v1/imports/:importId/segments/code/:segmentCode",
+            "params": [
+              {
+                "name": "importId",
+                "value": "32f8e031-c532-41bb-b25e-65bdb677a96f",
+                "type": "path",
+                "description": "Import ID"
+              },
+              {
+                "name": "segmentCode",
+                "value": "code",
+                "type": "path",
+                "description": "Segment Code"
+              }
+            ]
+          },
+          "docs": "Deletes a segment for an import. The segment is identified by its globally unique public ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

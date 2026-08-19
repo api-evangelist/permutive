@@ -1,0 +1,29 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Permutive Custom Cohort Segmentation API
+  version: 1.0.0
+extends: openapi/permutive-segmentation-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-source: https://docs.permutive.com/api/introduction
+    x-apievangelist-provenance: Permutive-published OpenAPI, recovered 2026-08-13 from the Permutive documentation
+      MCP server virtual filesystem (/openapi/api/segmentation/openapi.json). Not served over HTTP at
+      any public URL.
+    x-apievangelist-review: https://apis.io/permutive
+    x-apievangelist-product: Signals
+    x-apievangelist-agent-card: https://docs.permutive.com/.well-known/agent-card.json
+    x-apievangelist-mcp: https://docs.permutive.com/mcp
+    x-apievangelist-note: 'No server-side consent gate: Permutive documents that the caller must enforce
+      consent before sending events.'
+    x-apievangelist-observed-gaps:
+    - Maximum 10 events per request, stated in the docs but not expressed as a maxItems constraint in
+      the schema.
+    - No 429 declared despite the API being positioned for high-throughput use.
+    x-apievangelist-artifacts:
+      authentication: authentication/permutive-authentication.yml
+      conventions: conventions/permutive-conventions.yml
+      errors: errors/permutive-problem-types.yml
+      lifecycle: lifecycle/permutive-lifecycle.yml
+      rate_limits: rate-limits/permutive-rate-limits.yml
+      data_model: data-model/permutive-data-model.yml

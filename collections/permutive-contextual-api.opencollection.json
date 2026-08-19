@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permutive Cohorts Contextual API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contextual",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get contextual segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.permutive.com/ctx/v1/segment"
+          },
+          "docs": "Retrieve contextual cohort targeting values for ad-server integration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

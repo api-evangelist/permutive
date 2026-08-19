@@ -1,18 +1,95 @@
-generated: '2026-07-20'
+generated: '2026-08-13'
 method: searched
-source: openapi/permutive-openapi.yml
-docs: https://developer.permutive.com/api/authentication
+source: https://docs.permutive.com/api/authentication
+docs: https://docs.permutive.com/api/authentication
+specs:
+- openapi/permutive-cohorts-api-openapi.yml
+- openapi/permutive-events-api-openapi.yml
+- openapi/permutive-identity-api-openapi.yml
+- openapi/permutive-segmentation-api-openapi.yml
 notes: >-
-  Permutive APIs authenticate with a workspace-scoped API key. Cohorts, imports
-  and admin operations are authorized against the workspace that owns the key.
+  CORRECTION to the 2026-07-20 profile, which recorded HTTP bearer auth. That
+  was derived from an API Evangelist-authored spec and was wrong. Permutive's
+  own documentation and its own five OpenAPI documents both state the model
+  plainly: authentication is an API KEY in the form of a version-4 UUID, passed
+  either in the `X-API-Key` request header or on the `k` query parameter. There
+  is no bearer token, no OAuth2 and no OIDC on the Permutive product API.
+  Keys come in two grades — PUBLIC keys for surfaces you cannot keep secret
+  (sites and apps) and PRIVATE keys for account mutation. The Cohorts API and
+  the Taxonomy API accept private keys only. Client-side CCS integrations must
+  use a public key; server-side CCS integrations must use a private key.
+  Key provisioning is self-serve in the Permutive Dashboard under
+  Settings › Keys (https://dash.permutive.com/settings/keys).
 summary:
-  types:
-  - http
+  types: [apiKey]
+  api_key_in: [header, query]
+  api_key_names: [X-API-Key, k]
+  key_format: UUID v4
+  oauth2_flows: []
+  openid_connect: false
+  mutual_tls: false
+key_types:
+- name: public
+  description: >-
+    Used where the key cannot be kept secret — typically embedded in the web,
+    mobile and CTV SDK deployments on your own properties.
+  used_for: [Events API, Identity API, Contextual API, 'CCS API (client-side)']
+- name: private
+  description: >-
+    Used where the key can be kept secret. Required for anything that changes
+    the Permutive account.
+  used_for: [Cohorts API, Taxonomy API, 'CCS API (server-side)']
+  access_levels: >-
+    A private key defaults to read-only access to cohorts in the workspace that
+    owns it, plus cohorts inherited from parent workspaces. Broader access
+    levels are arranged with Permutive Technical Services
+    (technical-services@permutive.com).
+scopes_model:
+  kind: workspace
+  description: >-
+    Authorization is by workspace, not by OAuth scope. The behaviour of every
+    call depends on which workspace in the organization hierarchy owns the key;
+    the Cohorts API exposes an `include-child-workspaces` query parameter to
+    reach workspaces below the requesting one.
 schemes:
-- name: ApiKeyAuth
-  type: http
-  scheme: bearer
-  description: Permutive workspace API key supplied as a bearer token. See https://developer.permutive.com/api/authentication
-    for the exact header and key-provisioning details.
+- name: Header
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: >-
+    Permutive API key (UUID v4) supplied in the X-API-Key request header. The
+    CCS API spells the same header `X-Api-Key`; header names are
+    case-insensitive per RFC 9110.
   sources:
-  - openapi/permutive-openapi.yml
+  - openapi/permutive-events-api-openapi.yml
+  - openapi/permutive-identity-api-openapi.yml
+  - openapi/permutive-segmentation-api-openapi.yml
+- name: Parameter
+  type: apiKey
+  in: query
+  parameter: k
+  description: >-
+    Permutive API key (UUID v4) supplied on the `k` query parameter. Documented
+    as the primary mechanism for the Contextual API and as an alternative
+    everywhere else. Note that keys on the query string are logged by
+    intermediaries — prefer the header wherever you control the client.
+  sources:
+  - openapi/permutive-cohorts-api-openapi.yml
+  - openapi/permutive-events-api-openapi.yml
+  - openapi/permutive-identity-api-openapi.yml
+  - openapi/permutive-segmentation-api-openapi.yml
+gaps:
+- >-
+  openapi/permutive-taxonomy-api-openapi.yml declares no securitySchemes at all,
+  although the Taxonomy API documentation states that every request must carry a
+  private API key. The spec understates the contract.
+sso:
+  platform_login: >-
+    The Permutive platform (dash.permutive.com) supports enterprise SSO via SAML
+    and OpenID Connect with MFA enforced through the customer IdP. This is
+    console authentication for humans and is unrelated to API authentication.
+  source: https://docs.permutive.com/governance/security
+cross_links:
+  conventions: conventions/permutive-conventions.yml
+  errors: errors/permutive-problem-types.yml
+  key_management: https://dash.permutive.com/settings/keys

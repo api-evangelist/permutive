@@ -1,58 +1,192 @@
-generated: '2026-07-20'
+generated: '2026-08-13'
 method: searched
 source: https://github.com/permutive-engineering
 notes: >-
-  First-party Permutive client libraries are published under the
-  `permutive-engineering` GitHub organization and the `@permutive-engineering`
-  npm scope. Web (JavaScript) and mobile (iOS / tvOS / Android) SDKs are the
-  primary supported integration surface; the realtime-api-client packages wrap
-  the Permutive Realtime API.
+  First-party Permutive client libraries. Every entry below now carries a
+  structured `version` and `published` date read from the registry that
+  distributes it (registry.npmjs.org for npm, the GitHub tags/releases API for
+  the Swift Package Manager repositories), rather than being buried in prose.
+  THE HEADLINE FINDING IS A DISTRIBUTION GAP. Permutive's most-deployed client
+  by far — the JavaScript SDK, which every publisher on the platform loads on
+  every page — is NOT published to any package registry. It is served from a
+  per-tenant CDN path (`https://<ORGANIZATION_ID>.edge.permutive.app/<WORKSPACE_ID>-web.js`)
+  with NO version pinning anywhere in the URL, so a consumer cannot state which
+  version they are running, cannot pin one, and cannot diff two. The docs say
+  so themselves: "Current Version: See your Permutive dashboard for the latest
+  version." Its release notes are published without version headings or dates.
+  That is recorded as `version: null` with `registry: cdn` and an explicit
+  note — checked, nothing pinnable to record.
+  The Android SDK is likewise not on Maven Central or any public Maven
+  repository under a Permutive coordinate; only a demo repository is public.
+
 packages:
-  - language: javascript
-    registry: npm
-    name: "@permutive-engineering/realtime-api-client"
-    url: https://www.npmjs.com/package/@permutive-engineering/realtime-api-client
-    install: npm install @permutive-engineering/realtime-api-client
-    official: true
-    description: JavaScript client for the Permutive Realtime API.
-  - language: javascript
-    registry: npm
-    name: "@permutive-engineering/realtime-api-client-react"
-    url: https://www.npmjs.com/package/@permutive-engineering/realtime-api-client-react
-    install: npm install @permutive-engineering/realtime-api-client-react
-    official: true
-    description: React hooks for the Permutive Realtime API client.
-  - language: swift
-    registry: swift-package-manager
-    name: permutive-ios-spm
-    url: https://github.com/permutive-engineering/permutive-ios-spm
-    install: "Add https://github.com/permutive-engineering/permutive-ios-spm via Swift Package Manager"
-    official: true
-    description: Permutive iOS SDK (Swift Package Manager distribution).
-  - language: swift
-    registry: swift-package-manager
-    name: permutive-tvos-spm
-    url: https://github.com/permutive-engineering/permutive-tvos-spm
-    install: "Add https://github.com/permutive-engineering/permutive-tvos-spm via Swift Package Manager"
-    official: true
-    description: Permutive tvOS SDK (Swift Package Manager distribution).
-  - language: swift
-    registry: swift-package-manager
-    name: permutive-ios-appnexus-spm
-    url: https://github.com/permutive-engineering/permutive-ios-appnexus-spm
-    install: "Add https://github.com/permutive-engineering/permutive-ios-appnexus-spm via Swift Package Manager"
-    official: true
-    description: Permutive iOS AppNexus integration (Swift Package Manager distribution).
-  - language: kotlin
-    registry: github
-    name: android-sdk-demo
-    url: https://github.com/permutive-engineering/android-sdk-demo
-    install: "See the Android SDK docs at https://developer.permutive.com/sdks/mobile/android/getting-started/installation"
-    official: true
-    description: Permutive Android SDK demo and integration reference.
+- language: javascript
+  registry: npm
+  name: "@permutive-engineering/realtime-api-client"
+  url: https://www.npmjs.com/package/@permutive-engineering/realtime-api-client
+  install: npm install @permutive-engineering/realtime-api-client
+  official: true
+  version: 0.2.3
+  published: '2026-07-24'
+  version_source: https://registry.npmjs.org/@permutive-engineering/realtime-api-client
+  description: JavaScript client for the Permutive Realtime API.
+  note: 'Pre-1.0. Published by GitHub Actions.'
+- language: javascript
+  registry: npm
+  name: "@permutive-engineering/realtime-api-client-react"
+  url: https://www.npmjs.com/package/@permutive-engineering/realtime-api-client-react
+  install: npm install @permutive-engineering/realtime-api-client-react
+  official: true
+  version: 0.2.3
+  published: '2026-07-24'
+  version_source: https://registry.npmjs.org/@permutive-engineering/realtime-api-client-react
+  description: React hooks for the Permutive Realtime API client.
+  note: 'Pre-1.0. Released in lockstep with the base client.'
+- language: javascript
+  registry: cdn
+  name: permutive-web-sdk
+  url: https://docs.permutive.com/sdks/web/javascript-sdk/getting-started/installation
+  install: '<script async src="https://<ORGANIZATION_ID>.edge.permutive.app/<WORKSPACE_ID>-web.js"></script>'
+  official: true
+  version: null
+  published: null
+  version_source: null
+  description: The Permutive JavaScript (web) SDK — the primary integration surface for publishers.
+  note: >-
+    Checked, nothing to pin. The distribution URL is per-tenant and UNPINNED —
+    it floats to whatever build Permutive has deployed for that organization.
+    There is no npm package, no CDN version segment and no integrity hash. The
+    consumer cannot tell what they are getting; neither can we. Permutive's own
+    docs direct you to the dashboard to find out which version you are on.
+- language: swift
+  registry: swift-package-manager
+  name: permutive-ios-spm
+  url: https://github.com/permutive-engineering/permutive-ios-spm
+  install: "Add https://github.com/permutive-engineering/permutive-ios-spm via Swift Package Manager"
+  official: true
+  version: v3.0.2
+  published: '2026-08-12'
+  version_source: https://api.github.com/repos/permutive-engineering/permutive-ios-spm/tags
+  description: Permutive iOS SDK (Swift Package Manager distribution).
+  note: >-
+    v3.0.2 is the latest TAG; the latest GitHub Release object is v3.0.1
+    (2026-08-03). `published` is the repository push date for the tag.
+- language: swift
+  registry: swift-package-manager
+  name: permutive-tvos-spm
+  url: https://github.com/permutive-engineering/permutive-tvos-spm
+  install: "Add https://github.com/permutive-engineering/permutive-tvos-spm via Swift Package Manager"
+  official: true
+  version: v3.0.2
+  published: '2026-08-12'
+  version_source: https://api.github.com/repos/permutive-engineering/permutive-tvos-spm/tags
+  description: Permutive tvOS SDK (Swift Package Manager distribution).
+- language: swift
+  registry: swift-package-manager
+  name: permutive-ios-appnexus-spm
+  url: https://github.com/permutive-engineering/permutive-ios-appnexus-spm
+  install: "Add https://github.com/permutive-engineering/permutive-ios-appnexus-spm via Swift Package Manager"
+  official: true
+  version: v1.0.0
+  published: '2022-10-12'
+  version_source: https://api.github.com/repos/permutive-engineering/permutive-ios-appnexus-spm/tags
+  description: Permutive iOS AppNexus (Microsoft Monetize) integration.
+  note: >-
+    ABANDONMENT SIGNAL. One tag, v1.0.0, last pushed 2022-10-12 — nearly four
+    years stale, against an iOS SDK now on v3.0.2 that has had a breaking
+    major release since. No GitHub Release object exists.
+- language: kotlin
+  registry: github
+  name: android-sdk-demo
+  url: https://github.com/permutive-engineering/android-sdk-demo
+  install: "See https://docs.permutive.com/sdks/mobile/android/getting-started/installation"
+  official: true
+  version: null
+  published: '2024-12-19'
+  version_source: https://api.github.com/repos/permutive-engineering/android-sdk-demo
+  description: Permutive Android SDK demo and integration reference.
+  note: >-
+    Checked, nothing to record. This is a DEMO repository, not the SDK
+    artifact — it carries no tags and no releases. The Android SDK itself is
+    distributed to customers rather than published under a public Maven
+    coordinate, so its version (v1.12.1 Core, August 2026 per the release
+    notes) cannot be read from any registry.
+
+open_source_libraries:
+  note: >-
+    Permutive publishes a substantial first-party Scala open-source estate under
+    the Maven Central group `com.permutive` (801 GAVs across ~26 artifacts).
+    These are INFRASTRUCTURE libraries used to build Permutive's own platform,
+    not clients for the Permutive API, so they are listed separately rather
+    than as SDKs. All of them last published in 2024 — the estate is stable
+    rather than actively released.
+  group: com.permutive
+  registry: maven-central
+  artifact_count: 26
+  artifacts:
+  - {name: prometheus4cats, version: 3.0.0, published: '2024-08-29',
+     description: 'Functional Prometheus metrics API for Scala.', official: true}
+  - {name: gcp-auth, version: 1.2.0, published: '2024-11-07',
+     description: 'Authenticate with Google services over HTTP.', official: true}
+  - {name: fs2-pubsub, version: 1.1.0, published: '2024-07-23',
+     description: 'Google Cloud Pub/Sub stream-based client on cats-effect and fs2.', official: true}
+  - {name: common-types-gcp, version: 1.1.0, published: '2024-09-18',
+     description: 'Shared GCP types for Scala services.', official: true}
+  - {name: log4cats-odin, version: 2.1.0, published: '2024-07-19',
+     description: 'Odin logging integrations (odin-contrib).', official: true}
+  - {name: doobie-pureconfig, version: 0.1.0, published: '2024-11-11',
+     description: "Pureconfig instances for Doobie's Transactor settings.", official: true}
+  version_source: https://search.maven.org/solrsearch/select?q=g:com.permutive
+
+third_party_packages:
+  note: >-
+    Recorded so they are not mistaken for first-party. Neither is published by
+    Permutive and neither should be treated as a supported client.
+  packages:
+  - language: python
+    registry: pypi
+    name: permutive
+    url: https://pypi.org/project/permutive/
+    official: false
+    version: 0.7.0
+    published: '2017-04-28'
+    maintainer: 'Dinesh Vitharanage (tailsdotcom/permutive-sdk)'
+    note: 'Community "Python wrapper for Permutive API". Last released 2017 — nine years stale and predates the current v2 API entirely. Permutive publishes no Python SDK.'
+  - language: csharp
+    registry: nuget
+    name: Permutive.Xamarin.Android
+    url: https://www.nuget.org/packages/Permutive.Xamarin.Android
+    official: false
+    version: 0.2.8
+    published: null
+    maintainer: 'Tom Hall'
+    note: 'Community Xamarin binding for the Permutive Android SDK. Twelve related Permutive.Xamarin.* packages exist under the same non-Permutive author. Not published by permutive-engineering.'
+
+distribution_gaps:
+- {surface: JavaScript / web SDK, gap: 'no registry, unpinned per-tenant CDN URL, no integrity hash'}
+- {surface: Android SDK, gap: 'no public Maven Central coordinate; only a demo repo is public'}
+- {surface: Roku client, gap: 'documented at /sdks/ctv/roku but no public package or repository found'}
+- {surface: React Native, gap: 'documented at /sdks/mobile/react-native but no public package found'}
+
 sdk_docs:
-  javascript: https://developer.permutive.com/sdks/web/javascript-sdk/overview
-  ios: https://developer.permutive.com/sdks/mobile/ios/overview
-  android: https://developer.permutive.com/sdks/mobile/android/overview
-  react_native: https://developer.permutive.com/sdks/mobile/react-native
-  ctv: https://developer.permutive.com/sdks/ctv/overview
+  javascript: https://docs.permutive.com/sdks/web/javascript-sdk/overview
+  ios: https://docs.permutive.com/sdks/mobile/ios/overview
+  android: https://docs.permutive.com/sdks/mobile/android/overview
+  react_native: https://docs.permutive.com/sdks/mobile/react-native
+  ctv: https://docs.permutive.com/sdks/ctv/overview
+  direct_api: https://docs.permutive.com/sdks/api/overview
+
+registries_probed:
+- {registry: npm, endpoint: 'registry.npmjs.org/-/v1/search?text=permutive',
+   result: '2 first-party packages under @permutive-engineering; the rest are publisher integrations (e.g. @financial-times/ads-permutive)'}
+- {registry: pypi, endpoint: 'pypi.org/pypi/permutive/json', http_status: 200,
+   result: 'one THIRD-PARTY package (community, 2017). No first-party Permutive Python SDK.'}
+- {registry: maven-central, endpoint: 'search.maven.org/solrsearch/select?q=g:com.permutive',
+   result: '801 GAVs across ~26 first-party artifacts — all Scala infrastructure OSS, no API client. Last published 2024.'}
+- {registry: nuget, endpoint: 'azuresearch-usnc.nuget.org/query?q=permutive',
+   result: '12 THIRD-PARTY Permutive.Xamarin.* binding packages by a non-Permutive author. No first-party package.'}
+- {registry: rubygems, endpoint: 'rubygems.org/api/v1/search.json?query=permutive', result: 'no Permutive package'}
+- {registry: crates.io, endpoint: 'crates.io/api/v1/crates?q=permutive', result: 'no Permutive crate'}
+- {registry: packagist, endpoint: 'packagist.org/search.json?q=permutive', result: 'no Permutive package'}
+- {registry: pkg.go.dev, result: 'no Permutive module'}
+checked: '2026-08-13'

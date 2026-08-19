@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cohorts API",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "v2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all cohorts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.permutive.app/cohorts-api/v2/cohorts",
+            "params": [
+              {
+                "name": "include-child-workspaces",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return cohorts belonging to workspaces below the requesting workspace in the organization hierarchy. Defaults to false if not specified."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "k",
+              "value": "{{k}}",
+              "placement": "query"
+            }
+          },
+          "docs": "By default this endpoint returns all cohorts belonging to the workspace to which the supplied API key belongs, plus any cohorts inherited from parent workspaces in the organization hierarchy. If the API key has the required access level, it is also possible to return segments belonging to child workspaces below the requesting workspace in the organization hierarchy.\n\nThe queries defining the behaviour of the cohorts are not returned from this endpoint. To retrieve the query of a given cohort, us"
+        },
+        {
+          "info": {
+            "name": "Create cohort",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.permutive.app/cohorts-api/v2/cohorts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "k",
+              "value": "{{k}}",
+              "placement": "query"
+            }
+          },
+          "docs": "This endpoint allows the creation of a new cohort. The query definition is provided using the Cohort API JSON query definition format.\n\nThe cohort will belong to the workspace which owns the provided API key."
+        },
+        {
+          "info": {
+            "name": "Retrieve individual cohort",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.permutive.app/cohorts-api/v2/cohorts/:cohortId",
+            "params": [
+              {
+                "name": "cohortId",
+                "value": "38470a62-9837-4c86-bbf3-45dd6d52dd83",
+                "type": "path",
+                "description": "Cohort UUID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "k",
+              "value": "{{k}}",
+              "placement": "query"
+            }
+          },
+          "docs": "This endpoint returns details of a single cohort belonging either to the workspace that owns the requesting API key, or to a parent workspace if the requesting workspace inherits the cohort from that workspace.\n\nIf the requested cohort is not a lookalike-based cohort, the response will include the query definition."
+        },
+        {
+          "info": {
+            "name": "Update cohort",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.permutive.app/cohorts-api/v2/cohorts/:cohortId",
+            "params": [
+              {
+                "name": "cohortId",
+                "value": "38470a62-9837-4c86-bbf3-45dd6d52dd83",
+                "type": "path",
+                "description": "Cohort UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "k",
+              "value": "{{k}}",
+              "placement": "query"
+            }
+          },
+          "docs": "This endpoint allows updating an existing cohort. Depending on the access level of the provided API key, it can update cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be updated via the Cohort API.\n\nAny top level fields for which no value is provided in the request body will remain unchanged. Optional fields (currently only `description`) can be deleted by explicitly specifying `nu"
+        },
+        {
+          "info": {
+            "name": "Delete cohort",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.permutive.app/cohorts-api/v2/cohorts/:cohortId",
+            "params": [
+              {
+                "name": "cohortId",
+                "value": "38470a62-9837-4c86-bbf3-45dd6d52dd83",
+                "type": "path",
+                "description": "Cohort UUID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "k",
+              "value": "{{k}}",
+              "placement": "query"
+            }
+          },
+          "docs": "This endpoint allows deleting an existing cohort. Depending on the access level of the provided API key, it can delete cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be deleted via the Cohort API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

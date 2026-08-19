@@ -1,19 +1,93 @@
-generated: '2026-07-20'
+generated: '2026-08-13'
 method: searched
-source: https://developer.permutive.com/api/versioning
+source: https://docs.permutive.com/api/versioning
 notes: >-
-  Versioning is expressed in the URI path (v1/v2 prefixes per product). Permutive
-  operates an Atlassian Statuspage at status.permutive.com. No public,
-  machine-readable deprecation policy (RFC 8594 Sunset/Deprecation headers) was
-  found, so no Deprecation pointer is emitted.
+  Permutive versions its APIs in the URI path and states a semantic-versioning
+  compatibility promise. What it does NOT publish is a deprecation policy: no
+  notice period, no sunset window, no RFC 8594 Sunset/Deprecation header
+  support, and no deprecation notices page. The only trace of deprecation in
+  the whole published surface is a `RouteDeprecated` error variant inside the
+  Taxonomy API's error union — i.e. a consumer discovers a retired route by
+  calling it and getting an error, which is the opposite of a deprecation
+  policy. No Deprecation pointer is emitted.
+  One live example of the cost of that gap: developer.permutive.com, the
+  documentation hostname referenced throughout the catalog and still emitted in
+  live API error payloads (`docs: https://developer.permutive.com/docs/errors/
+  401/2000`), now 301-redirects to docs.permutive.com, where those error pages
+  do not exist. The hostname moved without a documented transition.
+
 versioning:
   scheme: uri-path
-  current: v2
-  examples: [/v2/cohorts, /ccs/v1/segmentation, /ctx/v1/segment]
-  docs: https://developer.permutive.com/api/versioning
-status_page: https://status.permutive.com/
-sdk_release_notes:
-  javascript: https://developer.permutive.com/sdks/web/javascript-sdk/release-notes/index
-  ios: https://developer.permutive.com/sdks/mobile/ios/release-notes/index
-  android: https://developer.permutive.com/sdks/mobile/android/release-notes/index
+  current: '2.0'
+  policy: semver
+  policy_statement: >-
+    "Version numbers follow Semantic Versioning. In short, this means that
+    versions that have the same MAJOR number are backwards compatible... Versions
+    v2.x and v3.x are not guaranteed to be backwards compatible."
+  stability_statement: >-
+    "Fixes, improvements, and additions for a given version of the API are made
+    in a backwards-compatible manner to ensure each version has a stable
+    interface across its lifetime. While we don't expect public endpoints to
+    change greatly, keep in mind that the API is continuously under
+    development."
+  per_service:
+  - {api: Events, version: '2.0', path: /v2.0}
+  - {api: Identity, version: '2.0', path: /v2.0}
+  - {api: Cohorts, version: '2', path: /cohorts-api/v2}
+  - {api: Segmentation (CCS), version: '1', path: /ccs/v1}
+  - {api: Taxonomy, version: '1', path: /audience-api/v1}
+  - {api: Contextual, version: '1', path: /ctx/v1}
+  docs: https://docs.permutive.com/api/versioning
+
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  notice_period: null
+  runtime_signal:
+    error_variant: RouteDeprecated
+    source: openapi/permutive-taxonomy-api-openapi.yml#/components/schemas/HttpError
+    note: 'The only published deprecation mechanism is a runtime error type.'
+
+host_migration:
+  api:
+    from: https://api.permutive.com
+    to: https://api.permutive.app
+    status: both-supported
+    statement: >-
+      "Customers who have been with Permutive longer may have deployments with a
+      base URL of https://api.permutive.com. Permutive continues to support this
+      address but we recommend and ask that new deployments use the .app base
+      URL."
+    sunset_date: null
+    source: https://docs.permutive.com/api/requests-and-responses
+  docs:
+    from: https://developer.permutive.com
+    to: https://docs.permutive.com
+    status: redirected
+    http_status: 301
+    verified: '2026-08-13'
+    broken_by_move: 'https://developer.permutive.com/docs/errors/{status}/{code} — the per-subcode error pages still cited in live API error payloads'
+
+sla:
+  url: null
+  uptime_target: null
+  published: false
+  mcp_note: 'Permutive states the MCP server alpha has "no SLA yet".'
+
+status_page:
+  url: https://status.permutive.com/
+  provider: Atlassian Statuspage
+  machine_readable: https://status.permutive.com/api/v2/summary.json
+  verified: {http_status: 200, checked: '2026-08-13'}
+
+release_notes:
+  javascript_sdk: https://docs.permutive.com/sdks/web/javascript-sdk/release-notes/index
+  ios_sdk: https://docs.permutive.com/sdks/mobile/ios/release-notes/index
+  android_sdk: https://docs.permutive.com/sdks/mobile/android/release-notes/index
+  api: null
+  api_note: 'The APIs themselves have no changelog. Only the SDKs publish release notes.'
+  reference: changelog/permutive-changelog.yml
+
 deprecated_operations: []

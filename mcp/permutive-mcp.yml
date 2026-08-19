@@ -1,34 +1,123 @@
-generated: '2026-07-20'
-method: searched
+generated: '2026-08-13'
+method: probed
 status: published
-source: https://developer.permutive.com/api/mcp/introduction
+source: https://docs.permutive.com/mcp
 notes: >-
-  Permutive publishes an official Model Context Protocol (MCP) server —
-  "Audience intelligence, built for AI agents" — exposing cohort and workspace
-  intelligence tools for agents. The tool set below is taken from the published
-  MCP reference (https://developer.permutive.com/api/mcp/tools). The transport
-  endpoint URL is not published verbatim in the public docs and is left unset.
-server:
-  name: permutive
-  description: Audience intelligence, built for AI agents.
+  Permutive ships TWO distinct MCP surfaces and they are not the same product.
+  (1) A DOCUMENTATION MCP server at https://docs.permutive.com/mcp — anonymous,
+  reachable right now, tools/list returns three tools with real inputSchemas.
+  This is the one an agent can call today, and it is the surface graded below.
+  (2) The PERMUTIVE AUDIENCE-INTELLIGENCE MCP server — "Audience intelligence,
+  built for AI agents" — documented in full at /api/mcp/*, ten read-only tools
+  over workspaces, campaigns, cohorts and audience analysis. Permutive's own
+  docs state it is "in a testing phase with partnering customers", access is
+  invitation-only, and NO transport endpoint URL is published anywhere public.
+  Its endpoint is therefore left null: guessing one would assert an agent
+  surface that has not been verified.
+  Note also that docs.permutive.com/.well-known/mcp.json advertises a Mintlify
+  PREVIEW hostname (permutive.main-kill-isr.mintlify.me/mcp) rather than the
+  canonical docs host; the canonical host is what was probed and what is
+  recorded here.
+
+deployment:
+  mode: remote
+  endpoint: https://docs.permutive.com/mcp
+  auth: none
+  verified: probed
+  probe:
+    method: 'POST tools/list (JSON-RPC 2.0)'
+    http_status: 200
+    transport: 'HTTP + text/event-stream'
+    tools_returned: 3
+    checked: '2026-08-13'
+  scope: >-
+    Documentation only. This endpoint searches and reads the Permutive docs; it
+    does NOT reach cohort, audience or workspace data.
+
+servers:
+- name: permutive-docs
+  title: Permutive documentation MCP server
+  status: published
   transport: http
-  docs: https://developer.permutive.com/api/mcp/introduction
-tools:
-  - name: get_cohort_detail
-    description: Retrieve full detail for a single cohort.
-    docs: https://developer.permutive.com/api/mcp/get_cohort_detail
-  - name: get_orgs_and_workspaces
-    description: List the organizations and workspaces available to the caller.
-    docs: https://developer.permutive.com/api/mcp/get_orgs_and_workspaces
-  - name: get_workspace_details
-    description: Retrieve details for a specific workspace.
-    docs: https://developer.permutive.com/api/mcp/get_workspace_details
-  - name: list_cohorts
-    description: List cohorts in a workspace.
-    docs: https://developer.permutive.com/api/mcp/list_cohorts
-  - name: measure_audiences
-    description: Measure and size audiences across cohorts.
-    docs: https://developer.permutive.com/api/mcp/measure_audiences
-  - name: search_cohorts
-    description: Search cohorts by name or attributes.
-    docs: https://developer.permutive.com/api/mcp/search_cohorts
+  url: https://docs.permutive.com/mcp
+  auth: none
+  verified: probed
+  descriptor: well-known/permutive-mcp.json
+  tools:
+  - name: search_permutive
+    title: Search documentation
+    description: >-
+      Search across the Permutive knowledge base to find relevant information,
+      code examples, API references, and guides.
+    input_schema: {query: string}
+    annotations: {readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false}
+  - name: query_docs_filesystem_permutive
+    description: >-
+      Run a read-only shell-like query (rg/grep/find/tree/ls/cat/head/tail/jq …)
+      against a virtualized in-memory filesystem containing only the Permutive
+      documentation pages and OpenAPI specs. Stateless per call; output
+      truncated to 30KB.
+    input_schema: {command: string}
+  - name: submit_feedback
+    title: Submit documentation feedback
+    input_schema: {path: string, feedback: string}
+  finding: >-
+    This tool set is how the five provider-published OpenAPI documents were
+    recovered — they are mounted at /openapi/api/<service>/openapi.json inside
+    the virtual filesystem and are not otherwise served over HTTP.
+
+- name: permutive-audience-intelligence
+  title: Permutive MCP server (audience intelligence)
+  status: invitation-only
+  transport: http
+  url: null
+  auth: api-key
+  auth_note: Authentication is per organization; an agent sees only that organization's data.
+  verified: searched
+  docs: https://docs.permutive.com/api/mcp/introduction
+  tool_reference: https://docs.permutive.com/api/mcp/tools
+  availability: >-
+    Alpha / structured technical-validation stage with a small group of design
+    partners. No SLA. Access by request through a Permutive representative.
+  access_class: read-only
+  access_note: >-
+    Permutive states the tools explore and evaluate audience data — they do not
+    create, edit or delete anything in the account.
+  tools:
+  - {name: get_orgs_and_workspaces, category: workspaces, access: read-only,
+     description: 'Returns the organizations and workspaces accessible to the authenticated user.',
+     docs: 'https://docs.permutive.com/api/mcp/get_orgs_and_workspaces'}
+  - {name: get_workspace_details, category: workspaces, access: read-only,
+     description: "Describes one or more workspaces: name, publisher domains, cohort tags, and reach (users and page views, whole-workspace and broken down by domain, device and country).",
+     docs: 'https://docs.permutive.com/api/mcp/get_workspace_details'}
+  - {name: get_campaign, category: campaigns, access: read-only,
+     description: 'Reads one GAM campaign (order) — details and lifetime delivery (impressions, CTR, viewability) — with optional breakdowns per cohort, per day or per line item.',
+     docs: 'https://docs.permutive.com/api/mcp/get_campaign'}
+  - {name: list_campaigns, category: campaigns, access: read-only,
+     description: "Lists a workspace's GAM campaigns (orders) with lifetime delivery, filtered by name/id search, active status and Permutive-targeting, ordered by name, dates, impressions or CTR. Paged.",
+     docs: 'https://docs.permutive.com/api/mcp/list_campaigns'}
+  - {name: get_cohort_detail, category: cohorts, access: read-only,
+     description: 'Returns metadata for specific cohorts: name, type, state, tags, subject entity, description, creation time, owning workspace and workspace availability.',
+     docs: 'https://docs.permutive.com/api/mcp/get_cohort_detail'}
+  - {name: list_cohorts, category: cohorts, access: read-only,
+     description: 'Browses cohorts across one or more workspaces, filtered by type, state, tags, subject entity, name keyword and user-count range. Paged.',
+     docs: 'https://docs.permutive.com/api/mcp/list_cohorts'}
+  - {name: search_cohorts, category: cohorts, access: read-only,
+     description: 'Searches for cohorts matching a natural language query across one or more workspaces.',
+     docs: 'https://docs.permutive.com/api/mcp/search_cohorts'}
+  - {name: compare_audience, category: audience-analysis, access: read-only,
+     description: 'Measures how a set of cohorts relate to an audience: overlap, index (affinity) and net-new users added.',
+     docs: 'https://docs.permutive.com/api/mcp/compare_audience'}
+  - {name: find_audience_extensions, category: audience-analysis, access: read-only,
+     description: 'Discovers unspecified cohorts whose users correlate with a seed audience, each with overlap and index. A discovery tool, not a reporting one.',
+     docs: 'https://docs.permutive.com/api/mcp/find_audience_extensions'}
+  - {name: measure_audiences, category: audience-analysis, access: read-only,
+     description: 'Measures the reach of an audience by combining multiple cohorts — how many users are in it and how many page views they generate.',
+     docs: 'https://docs.permutive.com/api/mcp/measure_audiences'}
+  schema_note: >-
+    Tool names, categories, access levels and descriptions are taken verbatim
+    from Permutive's published Tool Reference. Input schemas are NOT recorded
+    because tools/list on this server requires an invitation-only credential;
+    they need authenticated introspection.
+
+crosswalk: mcp/permutive-tool-crosswalk.yml
