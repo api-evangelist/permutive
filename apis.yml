@@ -99,6 +99,9 @@ apis:
   humanURL: https://docs.permutive.com/api/events/introduction
   baseURL: https://api.permutive.app/v2.0
   tags:
+  - Event
+  - Data Collection
+  tags_raw:
   - Events
   - Data Collection
   properties:
@@ -137,6 +140,9 @@ apis:
   humanURL: https://docs.permutive.com/api/ccs/introduction
   baseURL: https://api.permutive.app
   tags:
+  - Segmentation
+  - Real-Time
+  tags_raw:
   - Segmentation
   - Real Time
   properties:
