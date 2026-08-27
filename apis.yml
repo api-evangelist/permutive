@@ -52,35 +52,13 @@ tags:
 - Segmentation
 - Agents
 apis:
-- aid: permutive:permutive-cohorts-api
-  name: Permutive Cohorts API
-  description: >-
-    Programmatic create, read, update and delete of audience cohorts in a
-    Permutive workspace. Cohort behaviour is defined by a JSON query language;
-    cohorts carry a UUID id, a short workspace-scoped integer code, tags, state,
-    a real-time or offline segment type and a live audience size. Requires a
-    private API key; access defaults to read-only.
-  humanURL: https://docs.permutive.com/api/cohorts/introduction
-  baseURL: https://api.permutive.app/cohorts-api
-  tags:
-  - Cohorts
-  - Audience
-  properties:
-  - type: OpenAPI
-    url: openapi/permutive-cohorts-api-openapi.yml
-  - type: Overlay
-    url: overlays/permutive-cohorts-api-overlay.yaml
-  - type: AgentSkill
-    name: Manage Permutive audience cohorts
-    url: skills/permutive-manage-cohorts.md
 - aid: permutive:permutive-contextual-api
   name: Permutive Contextual API
   description: >-
-    Retrieve contextual cohort targeting values for a page URL without
-    processing any user data, for ad-server integration. Returns cohort codes,
-    per-destination activation mappings and content classifications (categories,
-    keywords, entities, sentiment, emotion, concepts) against IAB 2.0/2.2/3.0 or
-    custom taxonomies. Safe to call for unconsented users.
+    Retrieve contextual cohort targeting values for a page URL without processing any user data, for ad-server
+    integration. Returns cohort codes, per-destination activation mappings and content classifications
+    (categories, keywords, entities, sentiment, emotion, concepts) against IAB 2.0/2.2/3.0 or custom taxonomies.
+    Safe to call for unconsented users.
   humanURL: https://docs.permutive.com/api/contextual/introduction
   baseURL: https://api.permutive.com/ctx/v1
   tags:
@@ -89,99 +67,13 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/permutive-contextual-api-openapi.yml
-- aid: permutive:permutive-events-api
-  name: Permutive Events API
-  description: >-
-    Track first-party behavioural events into Permutive for downstream
-    segmentation, insights and data-lake routing. Events are validated against
-    the event schema defined in the workspace; Permutive generates the event id
-    and may enrich the event before persisting it.
-  humanURL: https://docs.permutive.com/api/events/introduction
-  baseURL: https://api.permutive.app/v2.0
-  tags:
-  - Event
-  - Data Collection
-  tags_raw:
-  - Events
-  - Data Collection
-  properties:
-  - type: OpenAPI
-    url: openapi/permutive-events-api-openapi.yml
-  - type: Overlay
-    url: overlays/permutive-events-api-overlay.yaml
-  - type: AgentSkill
-    name: Track events and identify Permutive users
-    url: skills/permutive-track-and-identify.md
-- aid: permutive:permutive-identity-api
-  name: Permutive Identity API
-  description: >-
-    Mint a first-party Permutive user ID, associate external identities with it
-    (email hashes, ID5, LiveRamp RampID, UID2) as prioritised aliases, and read
-    the resolved identity set back. Publisher-scoped by design — the Permutive
-    ID does not track users across domains or devices on its own.
-  humanURL: https://docs.permutive.com/api/identity/introduction
-  baseURL: https://api.permutive.app/v2.0
-  tags:
-  - Identity
-  - Resolution
-  properties:
-  - type: OpenAPI
-    url: openapi/permutive-identity-api-openapi.yml
-  - type: Overlay
-    url: overlays/permutive-identity-api-overlay.yaml
-- aid: permutive:permutive-segmentation-api
-  name: Permutive Segmentation API
-  description: >-
-    Custom Cohort Segmentation (CCS) — evaluate a batch of up to ten events for
-    a user against the workspace's cohort definitions and return the cohorts
-    they belong to plus per-destination activation values. Two modes: stateful,
-    where Permutive persists segmentation state, and stateless, where the caller
-    round-trips the state blob. For server-side, CTV and SDK-less deployments.
-  humanURL: https://docs.permutive.com/api/ccs/introduction
-  baseURL: https://api.permutive.app
-  tags:
-  - Segmentation
-  - Real-Time
-  tags_raw:
-  - Segmentation
-  - Real Time
-  properties:
-  - type: OpenAPI
-    url: openapi/permutive-segmentation-api-openapi.yml
-  - type: Overlay
-    url: overlays/permutive-segmentation-api-overlay.yaml
-  - type: AgentSkill
-    name: Segment users without a Permutive SDK
-    url: skills/permutive-segment-without-an-sdk.md
-- aid: permutive:permutive-taxonomy-api
-  name: Permutive Taxonomy API
-  description: >-
-    Manage second- and third-party data imports and the segment taxonomy inside
-    them — the mapping of partner segment codes to names, descriptions,
-    categories and CPM. Supports single-segment addressing by UUID or by partner
-    code, batch operations up to 5,000 per request, and is the only paged
-    surface on the platform.
-  humanURL: https://docs.permutive.com/api/taxonomy/introduction
-  baseURL: https://api.permutive.app/audience-api/v1
-  tags:
-  - Taxonomy
-  - Data Collaboration
-  properties:
-  - type: OpenAPI
-    url: openapi/permutive-taxonomy-api-openapi.yml
-  - type: Overlay
-    url: overlays/permutive-taxonomy-api-overlay.yaml
-  - type: AgentSkill
-    name: Manage Permutive import segment taxonomy
-    url: skills/permutive-manage-import-taxonomy.md
 - aid: permutive:permutive-mcp
   name: Permutive MCP Server
   description: >-
-    Permutive's Model Context Protocol surface. A live, anonymous documentation
-    MCP server at https://docs.permutive.com/mcp (search, virtual-filesystem
-    query, feedback), plus an invitation-only audience-intelligence MCP server
-    exposing ten read-only tools over workspaces, Google Ad Manager campaigns,
-    cohorts and audience analysis (measure, compare, extend).
+    Permutive's Model Context Protocol surface. A live, anonymous documentation MCP server at https://docs.permutive.com/mcp
+    (search, virtual-filesystem query, feedback), plus an invitation-only audience-intelligence MCP server
+    exposing ten read-only tools over workspaces, Google Ad Manager campaigns, cohorts and audience analysis
+    (measure, compare, extend).
   humanURL: https://docs.permutive.com/api/mcp/introduction
   baseURL: https://docs.permutive.com/mcp
   tags:
@@ -193,12 +85,68 @@ apis:
     url: mcp/permutive-mcp.yml
   - type: ToolCrosswalk
     url: mcp/permutive-tool-crosswalk.yml
+- aid: permutive:permutive-api-version-1-api
+  name: Permutive API version 1 API
+  description: The API version 1 API from Permutive — 2 operation(s) for api version 1.
+  humanURL: https://docs.permutive.com/api/cohorts/introduction
+  baseURL: https://api.permutive.app/cohorts-api
+  tags:
+  - API version 1
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-api-version-1-api-openapi.yml
+- aid: permutive:permutive-v1-api
+  name: Permutive V1 API
+  description: The v1 API from Permutive — 5 operation(s) for v1.
+  humanURL: https://docs.permutive.com/api/cohorts/introduction
+  baseURL: https://api.permutive.app/cohorts-api
+  tags:
+  - v1
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-v1-api-openapi.yml
+- aid: permutive:permutive-v2-0-api
+  name: Permutive V2.0 API
+  description: The v2.0 API from Permutive — 4 operation(s) for v2.0.
+  humanURL: https://docs.permutive.com/api/cohorts/introduction
+  baseURL: https://api.permutive.app/cohorts-api
+  tags:
+  - v2.0
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-v2-0-api-openapi.yml
+- aid: permutive:permutive-v2-api
+  name: Permutive V2 API
+  description: The v2 API from Permutive — 2 operation(s) for v2.
+  humanURL: https://docs.permutive.com/api/cohorts/introduction
+  baseURL: https://api.permutive.app/cohorts-api
+  tags:
+  - v2
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-v2-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgentSkill
+  url: skills/permutive-manage-cohorts.md
+- type: Overlay
+  url: overlays/permutive-events-api-overlay.yaml
+- type: AgentSkill
+  url: skills/permutive-track-and-identify.md
+- type: Overlay
+  url: overlays/permutive-identity-api-overlay.yaml
+- type: Overlay
+  url: overlays/permutive-segmentation-api-overlay.yaml
+- type: AgentSkill
+  url: skills/permutive-segment-without-an-sdk.md
+- type: Overlay
+  url: overlays/permutive-taxonomy-api-overlay.yaml
+- type: AgentSkill
+  url: skills/permutive-manage-import-taxonomy.md
 - type: Website
   url: https://permutive.com/
 - type: DeveloperPortal
