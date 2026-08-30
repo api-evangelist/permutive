@@ -1,0 +1,462 @@
+openapi: 3.2.0
+info:
+  title: Custom Cohort Segmentation API version 1 API
+  version: v1
+servers:
+- url: https://api.permutive.app
+tags:
+- name: API version 1
+paths:
+  /ccs/v1/segmentation:
+    post:
+      tags:
+      - API version 1
+      summary: Segment user based on provided events and pre-existing state
+      description: 'This endpoint accepts a list of events for a given user and combines them with any pre-existing state for the user to determine the full list of cohorts of which they are a member. State is also persisted, to be applied to subsequent requests for the same user.
+
+
+        Events provided to this endpoint are published to the Permutive Events API, meaning that they will be reflected in other areas of Permutive, for example Insights.
+
+        '
+      operationId: postCcsV1Segmentation
+      parameters:
+      - name: activations
+        in: query
+        description: Return a list of activated cohorts in the response
+        required: false
+        schema:
+          default: false
+          type: boolean
+      - name: synchronous-validation
+        in: query
+        description: 'Validate provided event(s) against their schema before proceeding with segmentation.
+
+
+          By default validation is performed asynchronously after segmentation has been performed and the response has been returned. This can make it difficult to debug issues with invalid events.
+
+
+          It is recommended to use this option only during development and debugging, as validation can be expensive and slow.'
+        required: false
+        schema:
+          default: false
+          type: boolean
+      requestBody:
+        description: 'A user identifier together with a list of events to be used for segmentation.
+
+
+          The user identifier must be either a `user_id`, an `alias`, or a list of prioritised aliases.
+
+
+          The largest number of events that can currently be included in a single request is 10.
+
+          '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentationRequest'
+            example:
+              user_id: 2008c38f-dece-4570-976d-87593ed001c3
+              alias: null
+              aliases: null
+              events:
+              - name: Pageview
+                time: '2022-06-22T19:40:43.179Z'
+                view_id: a55a9c8b-4a0b-4fe7-99a9-170624850501
+                session_id: 1d145310-1338-4ff7-96dd-e6128f54cbe5
+                properties:
+                  my_property: interesting
+              - name: Pageview
+                time: '2022-06-22T19:40:45.152Z'
+                view_id: a55a9c8b-4a0b-4fe7-99a9-170624850501
+                session_id: 1d145310-1338-4ff7-96dd-e6128f54cbe5
+                properties:
+                  my_object:
+                    inner_property: 42
+        required: true
+      responses:
+        '200':
+          description: List of cohorts of which the user is currently a member, along with the Permutive User ID and activations if requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentationResponse'
+              example:
+                user_id: 2008c38f-dece-4570-976d-87593ed001c3
+                cohorts:
+                - '12345'
+                - '23456'
+                - '34567'
+                activations:
+                  gam:
+                  - '12345'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      security:
+      - apiKeyAuth: []
+      - apiKeyAuth1: []
+  /ccs/v1/segmentation/stateless:
+    post:
+      tags:
+      - API version 1
+      summary: Segment user based on provided events and state only
+      description: 'This endpoint accepts a list of events for a given user and optionally some pre-existing state for the user. It uses these to determine the full list of cohorts of which they are a member, and returns these along with the updated state for the user. State is not persisted, so will not be used in the next request unless it is passed back in as part of that request.
+
+
+        It is likely that this endpoint is more performant than the stateful segmentation endpoint, since it does not need to read state for the user from a database. It is also useful for testing purposes.
+
+
+        Events provided to this endpoint are published to the Permutive Events API, meaning that they will be reflected in other areas of Permutive, for example Insights.
+
+        '
+      operationId: postCcsV1SegmentationStateless
+      parameters:
+      - name: synchronous-validation
+        in: query
+        description: 'Validate provided event(s) against their schema before proceeding with segmentation.
+
+
+          By default validation is performed asynchronously after segmentation has been performed and the response has been returned. This can make it difficult to debug issues with invalid events.
+
+
+          It is recommended to use this option only during development and debugging, as validation can be expensive and slow.'
+        required: false
+        schema:
+          default: false
+          type: boolean
+      requestBody:
+        description: 'A user identifier and a list of events to be used for segmentation, plus optional pre-existing state for the user.
+
+
+          The user identifier must be either a `user_id`, an `alias`, or a list of prioritised aliases.
+
+
+          The largest number of events that can currently be included in a single request is 10.
+
+
+          State is in the JSON format returned by this endpoint. It is not intended to be parsed or understood outside the context of this API or a Permutive SDK.
+
+          '
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentationRequestWithState'
+            example:
+              user_id: 2008c38f-dece-4570-976d-87593ed001c3
+              alias: null
+              aliases: null
+              events:
+              - name: Pageview
+                time: '2022-06-22T19:40:43.179Z'
+                view_id: a55a9c8b-4a0b-4fe7-99a9-170624850501
+                session_id: 1d145310-1338-4ff7-96dd-e6128f54cbe5
+                properties:
+                  my_property: interesting
+              - name: Pageview
+                time: '2022-06-22T19:40:45.152Z'
+                view_id: a55a9c8b-4a0b-4fe7-99a9-170624850501
+                session_id: 1d145310-1338-4ff7-96dd-e6128f54cbe5
+                properties:
+                  my_object:
+                    inner_property: 42
+              state:
+                internal_state:
+                  '12345':
+                    0c8b70cdb7:
+                    - p
+                    - 1
+                external_state:
+                  '67890':
+                    0c8b70cdb7:
+                    - p
+                    - 1
+                cohorts:
+                - '12345'
+                - '67890'
+        required: true
+      responses:
+        '200':
+          description: The Permutive User ID and the user's state (including the list of cohorts of which they are a member).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentationResponseWithState'
+              example:
+                user_id: 2008c38f-dece-4570-976d-87593ed001c3
+                state:
+                  internal_state:
+                    '12345':
+                      0c8b70cdb7:
+                      - p
+                      - 1
+                  external_state:
+                    '67890':
+                      0c8b70cdb7:
+                      - p
+                      - 1
+                  cohorts:
+                  - '12345'
+                  - '67890'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      security:
+      - apiKeyAuth: []
+      - apiKeyAuth1: []
+components:
+  schemas:
+    DeviceState:
+      title: DeviceState
+      examples:
+      - '12345':
+          0c8b70cdb7:
+          - p
+          - 1
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/ChecksummedState'
+    Event:
+      title: Event
+      type: object
+      required:
+      - name
+      - time
+      - properties
+      properties:
+        name:
+          type: string
+        time:
+          type: string
+          format: date-time
+        view_id:
+          type: string
+          format: uuid
+        session_id:
+          type: string
+          format: uuid
+        properties:
+          $ref: '#/components/schemas/JsonObject'
+    JsonObject:
+      title: JsonObject
+      type: object
+    HttpErrorResponse:
+      title: HttpErrorResponse
+      type: object
+      required:
+      - request_id
+      - error
+      properties:
+        request_id:
+          $ref: '#/components/schemas/RequestId'
+        error:
+          type: object
+          required:
+          - type
+          - status_code
+          - status
+          - code
+          - message
+          - docs
+          properties:
+            type:
+              type: string
+            status_code:
+              type: integer
+              format: int32
+            status:
+              type: string
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+            docs:
+              type: string
+            cause:
+              type: string
+    RequestId:
+      title: RequestId
+      oneOf:
+      - type: string
+      - type: string
+      - type: string
+        format: uuid
+    SegmentationResponse:
+      title: SegmentationResponse
+      type: object
+      required:
+      - user_id
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        cohorts:
+          type: array
+          items:
+            type: string
+        activations:
+          $ref: '#/components/schemas/Map_Seq_String'
+    Map_Seq_String:
+      title: Map_Seq_String
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string
+    CohortState:
+      title: CohortState
+    SegmentationRequestWithState:
+      title: SegmentationRequestWithState
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        alias:
+          $ref: '#/components/schemas/Alias'
+        aliases:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrioritisedAlias'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        state:
+          $ref: '#/components/schemas/UserState'
+    Alias:
+      title: Alias
+      type: object
+      required:
+      - tag
+      - id
+      properties:
+        tag:
+          type: string
+        id:
+          type: string
+    ChecksummedState:
+      title: ChecksummedState
+      examples:
+      - 0c8b70cdb7:
+        - p
+        - 1
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CohortState'
+    UserState:
+      title: UserState
+      type: object
+      required:
+      - internal_state
+      - external_state
+      properties:
+        internal_state:
+          $ref: '#/components/schemas/DeviceState'
+        external_state:
+          $ref: '#/components/schemas/DeviceState'
+        cohorts:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/CohortId'
+    CohortId:
+      title: CohortId
+      examples:
+      - 12345
+      type: string
+    SegmentationRequest:
+      title: SegmentationRequest
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        alias:
+          $ref: '#/components/schemas/Alias'
+        aliases:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrioritisedAlias'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    PrioritisedAlias:
+      title: PrioritisedAlias
+      type: object
+      required:
+      - priority
+      - tag
+      - id
+      properties:
+        priority:
+          type: integer
+          format: int32
+        tag:
+          type: string
+        id:
+          type: string
+    SegmentationResponseWithState:
+      title: SegmentationResponseWithState
+      type: object
+      required:
+      - user_id
+      - state
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        state:
+          $ref: '#/components/schemas/UserState'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      name: k
+      in: query
+    apiKeyAuth1:
+      type: apiKey
+      name: X-Api-Key
+      in: header
