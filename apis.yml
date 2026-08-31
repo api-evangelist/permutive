@@ -122,7 +122,8 @@ apis:
   description: The v2.0 API from Permutive — 4 operation(s) for v2.0.
   humanURL: https://docs.permutive.com/api/cohorts/introduction
   baseURL: https://api.permutive.app/cohorts-api
-  tags:
+  tags: []
+  tags_raw:
   - v2.0
   properties:
   - type: OpenAPI
@@ -133,6 +134,8 @@ apis:
   humanURL: https://docs.permutive.com/api/cohorts/introduction
   baseURL: https://api.permutive.app/cohorts-api
   tags:
+  - V2
+  tags_raw:
   - v2
   properties:
   - type: OpenAPI
