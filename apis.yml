@@ -134,7 +134,7 @@ apis:
   humanURL: https://docs.permutive.com/api/cohorts/introduction
   baseURL: https://api.permutive.app/cohorts-api
   tags:
-  - V2
+  - v2
   tags_raw:
   - v2
   properties:
