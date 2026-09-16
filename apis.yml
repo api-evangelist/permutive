@@ -97,49 +97,56 @@ apis:
     url: mcp/permutive-mcp.yml
   - type: ToolCrosswalk
     url: mcp/permutive-tool-crosswalk.yml
-- aid: permutive:permutive-api-version-1-api
-  name: Permutive API version 1 API
-  description: The API version 1 API from Permutive — 2 operation(s) for api version 1.
-  humanURL: https://docs.permutive.com/api/cohorts/introduction
-  baseURL: https://api.permutive.app/cohorts-api
+- aid: permutive:permutive-cohorts-api
+  name: Permutive Cohorts API
+  description: Create, read, update and delete audience cohorts.
+  humanURL: https://docs.permutive.com/api/contextual/introduction
+  baseURL: https://api.permutive.com/ctx/v1
   tags:
-  - API version 1
+  - Cohorts
   properties:
   - type: OpenAPI
-    url: openapi/permutive-api-version-1-api-openapi.yml
-- aid: permutive:permutive-v1-api
-  name: Permutive V1 API
-  description: The v1 API from Permutive — 5 operation(s) for v1.
-  humanURL: https://docs.permutive.com/api/cohorts/introduction
-  baseURL: https://api.permutive.app/cohorts-api
+    url: openapi/permutive-cohorts-api-openapi.yml
+- aid: permutive:permutive-events-api
+  name: Permutive Events API
+  description: Track first-party behavioural events into Permutive.
+  humanURL: https://docs.permutive.com/api/contextual/introduction
+  baseURL: https://api.permutive.com/ctx/v1
   tags:
-  - v1
+  - Events
   properties:
   - type: OpenAPI
-    url: openapi/permutive-v1-api-openapi.yml
-- aid: permutive:permutive-v2-0-api
-  name: Permutive V2.0 API
-  description: The v2.0 API from Permutive — 4 operation(s) for v2.0.
-  humanURL: https://docs.permutive.com/api/cohorts/introduction
-  baseURL: https://api.permutive.app/cohorts-api
-  tags: []
-  tags_raw:
-  - v2.0
-  properties:
-  - type: OpenAPI
-    url: openapi/permutive-v2-0-api-openapi.yml
-- aid: permutive:permutive-v2-api
-  name: Permutive V2 API
-  description: The v2 API from Permutive — 2 operation(s) for v2.
-  humanURL: https://docs.permutive.com/api/cohorts/introduction
-  baseURL: https://api.permutive.app/cohorts-api
+    url: openapi/permutive-events-api-openapi.yml
+- aid: permutive:permutive-identity-api
+  name: Permutive Identity API
+  description: Create user IDs and associate identities with a Permutive user.
+  humanURL: https://docs.permutive.com/api/contextual/introduction
+  baseURL: https://api.permutive.com/ctx/v1
   tags:
-  - v2
-  tags_raw:
-  - v2
+  - Identity
   properties:
   - type: OpenAPI
-    url: openapi/permutive-v2-api-openapi.yml
+    url: openapi/permutive-identity-api-openapi.yml
+- aid: permutive:permutive-segmentation-api
+  name: Permutive Segmentation API
+  description: Cohort-based Segmentation (CCS) — evaluate a user's events into cohorts.
+  humanURL: https://docs.permutive.com/api/contextual/introduction
+  baseURL: https://api.permutive.com/ctx/v1
+  tags:
+  - Segmentation
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-segmentation-api-openapi.yml
+- aid: permutive:permutive-taxonomy-api
+  name: Permutive Taxonomy API
+  description: Manage second-party data imports and their segment taxonomy.
+  humanURL: https://docs.permutive.com/api/contextual/introduction
+  baseURL: https://api.permutive.com/ctx/v1
+  tags:
+  - Taxonomy
+  properties:
+  - type: OpenAPI
+    url: openapi/permutive-taxonomy-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
