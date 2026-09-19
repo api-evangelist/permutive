@@ -56,6 +56,19 @@ tags:
 - Advertising
 - AdTech
 - MarTech
+- Audiences
+- Data Collaboration
+- Data Management Platform
+- Contextual
+- Identity
+- Segmentation
+- Agents
+tags_raw:
+- Company
+- Publishing
+- Advertising
+- AdTech
+- MarTech
 - Audience
 - Data Collaboration
 - Data Management Platform
@@ -91,6 +104,10 @@ apis:
   tags:
   - MCP
   - Agents
+  - Audiences
+  tags_raw:
+  - MCP
+  - Agents
   - Audience
   properties:
   - type: MCPServer
@@ -113,6 +130,8 @@ apis:
   humanURL: https://docs.permutive.com/api/contextual/introduction
   baseURL: https://api.permutive.com/ctx/v1
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
