@@ -1,21 +1,22 @@
-openapi: 3.2.0
+openapi: 3.1.0
 info:
-  title: Custom Cohort Segmentation API version 1 API
+  title: Custom Cohort Segmentation API
   version: v1
 servers:
 - url: https://api.permutive.app
-tags:
-- name: API version 1
 paths:
   /ccs/v1/segmentation:
     post:
       tags:
       - API version 1
       summary: Segment user based on provided events and pre-existing state
-      description: 'This endpoint accepts a list of events for a given user and combines them with any pre-existing state for the user to determine the full list of cohorts of which they are a member. State is also persisted, to be applied to subsequent requests for the same user.
+      description: 'This endpoint accepts a list of events for a given user and combines them with any
+        pre-existing state for the user to determine the full list of cohorts of which they are a member.
+        State is also persisted, to be applied to subsequent requests for the same user.
 
 
-        Events provided to this endpoint are published to the Permutive Events API, meaning that they will be reflected in other areas of Permutive, for example Insights.
+        Events provided to this endpoint are published to the Permutive Events API, meaning that they
+        will be reflected in other areas of Permutive, for example Insights.
 
         '
       operationId: postCcsV1Segmentation
@@ -32,10 +33,12 @@ paths:
         description: 'Validate provided event(s) against their schema before proceeding with segmentation.
 
 
-          By default validation is performed asynchronously after segmentation has been performed and the response has been returned. This can make it difficult to debug issues with invalid events.
+          By default validation is performed asynchronously after segmentation has been performed and
+          the response has been returned. This can make it difficult to debug issues with invalid events.
 
 
-          It is recommended to use this option only during development and debugging, as validation can be expensive and slow.'
+          It is recommended to use this option only during development and debugging, as validation can
+          be expensive and slow.'
         required: false
         schema:
           default: false
@@ -75,7 +78,8 @@ paths:
         required: true
       responses:
         '200':
-          description: List of cohorts of which the user is currently a member, along with the Permutive User ID and activations if requested
+          description: List of cohorts of which the user is currently a member, along with the Permutive
+            User ID and activations if requested
           content:
             application/json:
               schema:
@@ -121,13 +125,18 @@ paths:
       tags:
       - API version 1
       summary: Segment user based on provided events and state only
-      description: 'This endpoint accepts a list of events for a given user and optionally some pre-existing state for the user. It uses these to determine the full list of cohorts of which they are a member, and returns these along with the updated state for the user. State is not persisted, so will not be used in the next request unless it is passed back in as part of that request.
+      description: 'This endpoint accepts a list of events for a given user and optionally some pre-existing
+        state for the user. It uses these to determine the full list of cohorts of which they are a member,
+        and returns these along with the updated state for the user. State is not persisted, so will not
+        be used in the next request unless it is passed back in as part of that request.
 
 
-        It is likely that this endpoint is more performant than the stateful segmentation endpoint, since it does not need to read state for the user from a database. It is also useful for testing purposes.
+        It is likely that this endpoint is more performant than the stateful segmentation endpoint, since
+        it does not need to read state for the user from a database. It is also useful for testing purposes.
 
 
-        Events provided to this endpoint are published to the Permutive Events API, meaning that they will be reflected in other areas of Permutive, for example Insights.
+        Events provided to this endpoint are published to the Permutive Events API, meaning that they
+        will be reflected in other areas of Permutive, for example Insights.
 
         '
       operationId: postCcsV1SegmentationStateless
@@ -137,16 +146,19 @@ paths:
         description: 'Validate provided event(s) against their schema before proceeding with segmentation.
 
 
-          By default validation is performed asynchronously after segmentation has been performed and the response has been returned. This can make it difficult to debug issues with invalid events.
+          By default validation is performed asynchronously after segmentation has been performed and
+          the response has been returned. This can make it difficult to debug issues with invalid events.
 
 
-          It is recommended to use this option only during development and debugging, as validation can be expensive and slow.'
+          It is recommended to use this option only during development and debugging, as validation can
+          be expensive and slow.'
         required: false
         schema:
           default: false
           type: boolean
       requestBody:
-        description: 'A user identifier and a list of events to be used for segmentation, plus optional pre-existing state for the user.
+        description: 'A user identifier and a list of events to be used for segmentation, plus optional
+          pre-existing state for the user.
 
 
           The user identifier must be either a `user_id`, an `alias`, or a list of prioritised aliases.
@@ -155,7 +167,8 @@ paths:
           The largest number of events that can currently be included in a single request is 10.
 
 
-          State is in the JSON format returned by this endpoint. It is not intended to be parsed or understood outside the context of this API or a Permutive SDK.
+          State is in the JSON format returned by this endpoint. It is not intended to be parsed or understood
+          outside the context of this API or a Permutive SDK.
 
           '
         content:
@@ -197,7 +210,8 @@ paths:
         required: true
       responses:
         '200':
-          description: The Permutive User ID and the user's state (including the list of cohorts of which they are a member).
+          description: The Permutive User ID and the user's state (including the list of cohorts of which
+            they are a member).
           content:
             application/json:
               schema:
@@ -247,6 +261,33 @@ paths:
       - apiKeyAuth1: []
 components:
   schemas:
+    Alias:
+      title: Alias
+      type: object
+      required:
+      - tag
+      - id
+      properties:
+        tag:
+          type: string
+        id:
+          type: string
+    ChecksummedState:
+      title: ChecksummedState
+      examples:
+      - 0c8b70cdb7:
+        - p
+        - 1
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CohortState'
+    CohortId:
+      title: CohortId
+      examples:
+      - 12345
+      type: string
+    CohortState:
+      title: CohortState
     DeviceState:
       title: DeviceState
       examples:
@@ -278,9 +319,6 @@ components:
           format: uuid
         properties:
           $ref: '#/components/schemas/JsonObject'
-    JsonObject:
-      title: JsonObject
-      type: object
     HttpErrorResponse:
       title: HttpErrorResponse
       type: object
@@ -316,28 +354,9 @@ components:
               type: string
             cause:
               type: string
-    RequestId:
-      title: RequestId
-      oneOf:
-      - type: string
-      - type: string
-      - type: string
-        format: uuid
-    SegmentationResponse:
-      title: SegmentationResponse
+    JsonObject:
+      title: JsonObject
       type: object
-      required:
-      - user_id
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        cohorts:
-          type: array
-          items:
-            type: string
-        activations:
-          $ref: '#/components/schemas/Map_Seq_String'
     Map_Seq_String:
       title: Map_Seq_String
       type: object
@@ -345,8 +364,45 @@ components:
         type: array
         items:
           type: string
-    CohortState:
-      title: CohortState
+    PrioritisedAlias:
+      title: PrioritisedAlias
+      type: object
+      required:
+      - priority
+      - tag
+      - id
+      properties:
+        priority:
+          type: integer
+          format: int32
+        tag:
+          type: string
+        id:
+          type: string
+    RequestId:
+      title: RequestId
+      oneOf:
+      - type: string
+      - type: string
+      - type: string
+        format: uuid
+    SegmentationRequest:
+      title: SegmentationRequest
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        alias:
+          $ref: '#/components/schemas/Alias'
+        aliases:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrioritisedAlias'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
     SegmentationRequestWithState:
       title: SegmentationRequestWithState
       type: object
@@ -366,26 +422,33 @@ components:
             $ref: '#/components/schemas/Event'
         state:
           $ref: '#/components/schemas/UserState'
-    Alias:
-      title: Alias
+    SegmentationResponse:
+      title: SegmentationResponse
       type: object
       required:
-      - tag
-      - id
+      - user_id
       properties:
-        tag:
+        user_id:
           type: string
-        id:
-          type: string
-    ChecksummedState:
-      title: ChecksummedState
-      examples:
-      - 0c8b70cdb7:
-        - p
-        - 1
+          format: uuid
+        cohorts:
+          type: array
+          items:
+            type: string
+        activations:
+          $ref: '#/components/schemas/Map_Seq_String'
+    SegmentationResponseWithState:
+      title: SegmentationResponseWithState
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/CohortState'
+      required:
+      - user_id
+      - state
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        state:
+          $ref: '#/components/schemas/UserState'
     UserState:
       title: UserState
       type: object
@@ -402,55 +465,6 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/CohortId'
-    CohortId:
-      title: CohortId
-      examples:
-      - 12345
-      type: string
-    SegmentationRequest:
-      title: SegmentationRequest
-      type: object
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        alias:
-          $ref: '#/components/schemas/Alias'
-        aliases:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrioritisedAlias'
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-    PrioritisedAlias:
-      title: PrioritisedAlias
-      type: object
-      required:
-      - priority
-      - tag
-      - id
-      properties:
-        priority:
-          type: integer
-          format: int32
-        tag:
-          type: string
-        id:
-          type: string
-    SegmentationResponseWithState:
-      title: SegmentationResponseWithState
-      type: object
-      required:
-      - user_id
-      - state
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        state:
-          $ref: '#/components/schemas/UserState'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

@@ -1,27 +1,30 @@
-openapi: 3.2.0
+openapi: 3.0.1
 info:
-  title: Cohorts V2 API
+  title: Cohorts API
   version: '1'
   description: Programmatically view and maintain cohort definitions
 servers:
 - url: https://api.permutive.app/cohorts-api
-tags:
-- name: v2
 paths:
   /v2/cohorts:
     get:
       tags:
       - v2
       summary: Retrieve all cohorts
-      description: 'By default this endpoint returns all cohorts belonging to the workspace to which the supplied API key belongs, plus any cohorts inherited from parent workspaces in the organization hierarchy. If the API key has the required access level, it is also possible to return segments belonging to child workspaces below the requesting workspace in the organization hierarchy.
+      description: 'By default this endpoint returns all cohorts belonging to the workspace to which the
+        supplied API key belongs, plus any cohorts inherited from parent workspaces in the organization
+        hierarchy. If the API key has the required access level, it is also possible to return segments
+        belonging to child workspaces below the requesting workspace in the organization hierarchy.
 
 
-        The queries defining the behaviour of the cohorts are not returned from this endpoint. To retrieve the query of a given cohort, use the ''Retrieve individual cohort'' endpoint.'
+        The queries defining the behaviour of the cohorts are not returned from this endpoint. To retrieve
+        the query of a given cohort, use the ''Retrieve individual cohort'' endpoint.'
       operationId: getV2Cohorts
       parameters:
       - name: include-child-workspaces
         in: query
-        description: Whether to return cohorts belonging to workspaces below the requesting workspace in the organization hierarchy. Defaults to false if not specified.
+        description: Whether to return cohorts belonging to workspaces below the requesting workspace
+          in the organization hierarchy. Defaults to false if not specified.
         required: false
         schema:
           type: boolean
@@ -146,7 +149,9 @@ paths:
                   status_code: 500
                   status: Internal Server Error
                   code: 5000
-                  message: An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.
+                  message: An error of unspecified nature was encountered while processing your request.
+                    Feel free to get in touch with us at support@permutive.com referencing the Request
+                    ID.
                   docs: https://developer.permutive.com/reference#errors
       security:
       - apiKeyAuth: []
@@ -154,7 +159,8 @@ paths:
       tags:
       - v2
       summary: Create cohort
-      description: 'This endpoint allows the creation of a new cohort. The query definition is provided using the Cohort API JSON query definition format.
+      description: 'This endpoint allows the creation of a new cohort. The query definition is provided
+        using the Cohort API JSON query definition format.
 
 
         The cohort will belong to the workspace which owns the provided API key.'
@@ -303,7 +309,9 @@ paths:
                   status_code: 500
                   status: Internal Server Error
                   code: 5000
-                  message: An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.
+                  message: An error of unspecified nature was encountered while processing your request.
+                    Feel free to get in touch with us at support@permutive.com referencing the Request
+                    ID.
                   docs: https://developer.permutive.com/reference#errors
       security:
       - apiKeyAuth: []
@@ -312,7 +320,9 @@ paths:
       tags:
       - v2
       summary: Retrieve individual cohort
-      description: 'This endpoint returns details of a single cohort belonging either to the workspace that owns the requesting API key, or to a parent workspace if the requesting workspace inherits the cohort from that workspace.
+      description: 'This endpoint returns details of a single cohort belonging either to the workspace
+        that owns the requesting API key, or to a parent workspace if the requesting workspace inherits
+        the cohort from that workspace.
 
 
         If the requested cohort is not a lookalike-based cohort, the response will include the query definition.'
@@ -445,7 +455,9 @@ paths:
                   status_code: 500
                   status: Internal Server Error
                   code: 5000
-                  message: An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.
+                  message: An error of unspecified nature was encountered while processing your request.
+                    Feel free to get in touch with us at support@permutive.com referencing the Request
+                    ID.
                   docs: https://developer.permutive.com/reference#errors
       security:
       - apiKeyAuth: []
@@ -453,7 +465,10 @@ paths:
       tags:
       - v2
       summary: Delete cohort
-      description: This endpoint allows deleting an existing cohort. Depending on the access level of the provided API key, it can delete cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be deleted via the Cohort API.
+      description: This endpoint allows deleting an existing cohort. Depending on the access level of
+        the provided API key, it can delete cohorts owned by the requesting workspace, or also by child
+        workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts
+        cannot be deleted via the Cohort API.
       operationId: deleteV2CohortsCohortid
       parameters:
       - name: cohortId
@@ -554,7 +569,9 @@ paths:
                   status_code: 500
                   status: Internal Server Error
                   code: 5000
-                  message: An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.
+                  message: An error of unspecified nature was encountered while processing your request.
+                    Feel free to get in touch with us at support@permutive.com referencing the Request
+                    ID.
                   docs: https://developer.permutive.com/reference#errors
       security:
       - apiKeyAuth: []
@@ -562,10 +579,15 @@ paths:
       tags:
       - v2
       summary: Update cohort
-      description: 'This endpoint allows updating an existing cohort. Depending on the access level of the provided API key, it can update cohorts owned by the requesting workspace, or also by child workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts cannot be updated via the Cohort API.
+      description: 'This endpoint allows updating an existing cohort. Depending on the access level of
+        the provided API key, it can update cohorts owned by the requesting workspace, or also by child
+        workspaces below the requesting workspace in the organization hierarchy. Lookalike-based cohorts
+        cannot be updated via the Cohort API.
 
 
-        Any top level fields for which no value is provided in the request body will remain unchanged. Optional fields (currently only `description`) can be deleted by explicitly specifying `null` as the value.'
+        Any top level fields for which no value is provided in the request body will remain unchanged.
+        Optional fields (currently only `description`) can be deleted by explicitly specifying `null`
+        as the value.'
       operationId: patchV2CohortsCohortid
       parameters:
       - name: cohortId
@@ -726,17 +748,14 @@ paths:
                   status_code: 500
                   status: Internal Server Error
                   code: 5000
-                  message: An error of unspecified nature was encountered while processing your request. Feel free to get in touch with us at support@permutive.com referencing the Request ID.
+                  message: An error of unspecified nature was encountered while processing your request.
+                    Feel free to get in touch with us at support@permutive.com referencing the Request
+                    ID.
                   docs: https://developer.permutive.com/reference#errors
       security:
       - apiKeyAuth: []
 components:
   schemas:
-    SegmentType:
-      oneOf:
-      - $ref: '#/components/schemas/Offline'
-      - $ref: '#/components/schemas/RealTime'
-    Json: {}
     HttpErrorResponse:
       required:
       - requestId
@@ -747,53 +766,6 @@ components:
           type: string
         error:
           $ref: '#/components/schemas/HttpError'
-    UpdateOrDelete_String:
-      type:
-      - string
-      - 'null'
-    Offline:
-      type: object
-    SegmentQueryApiV2:
-      required:
-      - id
-      - code
-      - name
-      - query
-      - state
-      - segmentType
-      - createdAt
-      - lastUpdatedAt
-      type: object
-      properties:
-        id:
-          type: string
-        code:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        query:
-          $ref: '#/components/schemas/Json'
-        tags:
-          type: array
-          items:
-            type: string
-        state:
-          type: string
-          enum:
-          - Enabled
-          - Disabled
-        workspaceId:
-          type: string
-        segmentType:
-          $ref: '#/components/schemas/SegmentType'
-        createdAt:
-          type: string
-          format: date-time
-        lastUpdatedAt:
-          type: string
-          format: date-time
     HttpError:
       required:
       - status
@@ -809,6 +781,66 @@ components:
           type: string
         cause:
           type: string
+    HttpStatus:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: integer
+    SegmentSummaryApiV2WithAudience:
+      required:
+      - id
+      - code
+      - name
+      - state
+      - workspaceId
+      - segmentType
+      - createdAt
+      - lastUpdatedAt
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        state:
+          type: string
+          enum:
+          - Enabled
+          - Disabled
+        workspaceId:
+          type: string
+        segmentType:
+          $ref: '#/components/schemas/SegmentType'
+        liveAudienceSize:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        lastUpdatedAt:
+          type: string
+          format: date-time
+    SegmentType:
+      oneOf:
+      - $ref: '#/components/schemas/Offline'
+      - $ref: '#/components/schemas/RealTime'
+    Offline:
+      type: object
+    RealTime:
+      type: object
+    SegmentDetailApiV2WithAudience:
+      oneOf:
+      - $ref: '#/components/schemas/SegmentLookalikeApiWithAudience'
+      - $ref: '#/components/schemas/SegmentQueryApiV2WithAudience'
     SegmentLookalikeApiWithAudience:
       required:
       - id
@@ -892,6 +924,7 @@ components:
         lastUpdatedAt:
           type: string
           format: date-time
+    Json: {}
     CreateSegmentV2:
       required:
       - name
@@ -910,13 +943,13 @@ components:
             type: string
         segmentType:
           $ref: '#/components/schemas/SegmentType'
-    SegmentSummaryApiV2WithAudience:
+    SegmentQueryApiV2:
       required:
       - id
       - code
       - name
+      - query
       - state
-      - workspaceId
       - segmentType
       - createdAt
       - lastUpdatedAt
@@ -930,6 +963,8 @@ components:
           type: string
         description:
           type: string
+        query:
+          $ref: '#/components/schemas/Json'
         tags:
           type: array
           items:
@@ -943,27 +978,12 @@ components:
           type: string
         segmentType:
           $ref: '#/components/schemas/SegmentType'
-        liveAudienceSize:
-          type: integer
         createdAt:
           type: string
           format: date-time
         lastUpdatedAt:
           type: string
           format: date-time
-    SegmentDetailApiV2WithAudience:
-      oneOf:
-      - $ref: '#/components/schemas/SegmentLookalikeApiWithAudience'
-      - $ref: '#/components/schemas/SegmentQueryApiV2WithAudience'
-    HttpStatus:
-      required:
-      - code
-      type: object
-      properties:
-        code:
-          type: integer
-    RealTime:
-      type: object
     UpdateSegmentV2:
       type: object
       properties:
@@ -982,6 +1002,9 @@ components:
           enum:
           - Enabled
           - Disabled
+    UpdateOrDelete_String:
+      type: string
+      nullable: true
   securitySchemes:
     apiKeyAuth:
       type: apiKey

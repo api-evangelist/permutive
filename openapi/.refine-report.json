@@ -1,12 +1,7 @@
 {
   "provider": "permutive",
   "sources": [
-    "permutive-cohorts-api-openapi.yml",
-    "permutive-contextual-api-openapi.yml",
-    "permutive-events-api-openapi.yml",
-    "permutive-identity-api-openapi.yml",
-    "permutive-segmentation-api-openapi.yml",
-    "permutive-taxonomy-api-openapi.yml"
+    "_original/permutive-openapi.yml"
   ],
   "outputs": [
     "permutive-cohorts-api-openapi.yml",
@@ -19,6 +14,28 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "10 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "permutive-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/permutive-taxonomy-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/permutive-taxonomy-api-openapi-original.json: archived document superseded by a larger archived document",
+    "_original/permutive-segmentation-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/permutive-segmentation-api-openapi-original.json: archived document superseded by a larger archived document",
+    "_original/permutive-identity-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/permutive-identity-api-openapi-original.json: archived document superseded by a larger archived document",
+    "_original/permutive-events-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/permutive-events-api-openapi-original.json: archived document superseded by a larger archived document",
+    "_original/permutive-cohorts-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/permutive-cohorts-api-openapi-original.json: archived document superseded by a larger archived document",
+    "permutive-cohorts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "permutive-contextual-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "permutive-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "permutive-identity-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "permutive-segmentation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "permutive-taxonomy-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
