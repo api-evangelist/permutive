@@ -63,7 +63,43 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    OK:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    ServerError:
+      description: An unexpected error occurred on Permutive's side.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
   schemas:
+    SegmentationRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        state:
+          type: object
     Problem:
       type: object
       description: Error payload.
@@ -90,42 +126,6 @@ components:
           format: date-time
       required:
       - name
-    SegmentationRequest:
-      type: object
-      properties:
-        user_id:
-          type: string
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        state:
-          type: object
-  responses:
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    OK:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    ServerError:
-      description: An unexpected error occurred on Permutive's side.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   securitySchemes:
     ApiKeyAuth:
       type: http

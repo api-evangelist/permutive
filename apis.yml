@@ -63,6 +63,7 @@ tags:
 - Identity
 - Segmentation
 - Agents
+- A2A
 tags_raw:
 - Company
 - Publishing
@@ -76,6 +77,7 @@ tags_raw:
 - Identity
 - Segmentation
 - Agents
+- A2A
 apis:
 - aid: permutive:permutive-contextual-api
   name: Permutive Contextual API
@@ -295,3 +297,10 @@ x-enrichment:
     provider-published Agent Skill, and the real API base host
     (api.permutive.app), which corrected the auth model, base URLs, error
     envelope and every skill in this repo.
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.permutive.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

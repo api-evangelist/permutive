@@ -81,6 +81,43 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    OK:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    ServerError:
+      description: An unexpected error occurred on Permutive's side.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    TooManyRequests:
+      description: Rate limit exceeded.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
   schemas:
     Problem:
       type: object
@@ -110,43 +147,6 @@ components:
                 type: string
               priority:
                 type: integer
-  responses:
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    OK:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    ServerError:
-      description: An unexpected error occurred on Permutive's side.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    NotFound:
-      description: The requested resource does not exist.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    TooManyRequests:
-      description: Rate limit exceeded.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   securitySchemes:
     ApiKeyAuth:
       type: http
