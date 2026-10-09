@@ -1,4 +1,4 @@
-generated: '2026-08-13'
+generated: '2026-09-23'
 method: generated
 source: openapi/permutive-cohorts-api-openapi.yml, openapi/permutive-contextual-api-openapi.yml,
   openapi/permutive-events-api-openapi.yml, openapi/permutive-identity-api-openapi.yml, openapi/permutive-segmentation-api-openapi.yml,
@@ -9,26 +9,16 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 23
   by_action_class:
-    connected: 8
-    acting: 15
+    acting: 14
+    connected: 9
   by_consequence:
-    read: 8
-    write: 15
+    write: 14
+    read: 9
   human_in_the_loop_required: 0
 operations:
 - path: /v2/cohorts
-  method: get
-  operationId: getV2Cohorts
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v2/cohorts
   method: post
-  operationId: postV2Cohorts
+  operationId: createCohort
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -42,9 +32,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v2/cohorts/{cohortId}
+- path: /v2/cohorts
   method: get
-  operationId: getV2CohortsCohortid
+  operationId: getCohorts
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -53,24 +43,34 @@ operations:
       max-ttl: 3600
     audit: none
 - path: /v2/cohorts/{cohortId}
-  method: delete
-  operationId: deleteV2CohortsCohortid
+  method: get
+  operationId: getCohort
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/cohorts/{cohortId}
   method: patch
-  operationId: patchV2CohortsCohortid
+  operationId: updateCohort
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/cohorts/{cohortId}
+  method: delete
+  operationId: deleteCohort
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -88,21 +88,15 @@ operations:
   method: post
   operationId: getContextualSegments
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /events
   method: post
-  operationId: createEvent
+  operationId: trackEvent
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -150,7 +144,7 @@ operations:
     audit: required
 - path: /users/{userId}/aliases
   method: get
-  operationId: getIdentities
+  operationId: retrieveIdentities
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -160,7 +154,7 @@ operations:
     audit: none
 - path: /ccs/v1/segmentation
   method: post
-  operationId: postCcsV1Segmentation
+  operationId: segmentUser
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -176,7 +170,7 @@ operations:
     audit: required
 - path: /ccs/v1/segmentation/stateless
   method: post
-  operationId: postCcsV1SegmentationStateless
+  operationId: statelessSegmentation
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -202,7 +196,7 @@ operations:
     audit: none
 - path: /imports/{importId}
   method: get
-  operationId: getImportsImportid
+  operationId: retrieveImport
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -212,7 +206,7 @@ operations:
     audit: none
 - path: /imports/{importId}/segments
   method: get
-  operationId: getImportsImportidSegments
+  operationId: getSegmentsForImport
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -222,7 +216,7 @@ operations:
     audit: none
 - path: /imports/{importId}/segments
   method: post
-  operationId: postImportsImportidSegments
+  operationId: createSegment
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -238,7 +232,7 @@ operations:
     audit: required
 - path: /imports/{importId}/segments
   method: patch
-  operationId: patchImportsImportidSegments
+  operationId: batchUpdateSegments
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -254,7 +248,7 @@ operations:
     audit: required
 - path: /imports/{importId}/segments/{segmentId}
   method: get
-  operationId: getImportsImportidSegmentsSegmentid
+  operationId: getSegmentById
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -263,8 +257,8 @@ operations:
       max-ttl: 3600
     audit: none
 - path: /imports/{importId}/segments/{segmentId}
-  method: delete
-  operationId: deleteImportsImportidSegmentsSegmentid
+  method: patch
+  operationId: updateSegmentById
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -279,8 +273,8 @@ operations:
       - high-value
     audit: required
 - path: /imports/{importId}/segments/{segmentId}
-  method: patch
-  operationId: patchImportsImportidSegmentsSegmentid
+  method: delete
+  operationId: deleteSegmentById
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -296,7 +290,7 @@ operations:
     audit: required
 - path: /imports/{importId}/segments/code/{segmentCode}
   method: get
-  operationId: getImportsImportidSegmentsCodeSegmentcode
+  operationId: getSegmentByCode
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -305,8 +299,8 @@ operations:
       max-ttl: 3600
     audit: none
 - path: /imports/{importId}/segments/code/{segmentCode}
-  method: delete
-  operationId: deleteImportsImportidSegmentsCodeSegmentcode
+  method: patch
+  operationId: updateSegmentByCode
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -321,8 +315,8 @@ operations:
       - high-value
     audit: required
 - path: /imports/{importId}/segments/code/{segmentCode}
-  method: patch
-  operationId: patchImportsImportidSegmentsCodeSegmentcode
+  method: delete
+  operationId: deleteSegmentByCode
   x-agentic-access:
     action-class: acting
     consequence: write
