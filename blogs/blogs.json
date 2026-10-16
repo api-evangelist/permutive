@@ -2,6 +2,27 @@
   "repo": "permutive",
   "feeds": [
     {
+      "source": "https://permutive.com/blog",
+      "feed_url": "https://permutive.com/blog",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://permutive.com/news-publishers",
+      "feed_url": "https://permutive.com/feed",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    },
+    {
+      "source": "https://permutive.com/feed",
+      "feed_url": "https://permutive.com/feed",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://docs.permutive.com/implementation-overview",
       "feed_url": "https://docs.permutive.com/implementation-overview",
       "title": "",
@@ -9,6 +30,6 @@
       "method": "none"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-10-03T12:30:02Z"
+  "post_count": 1,
+  "fetched": "2026-10-10T13:15:00Z"
 }
