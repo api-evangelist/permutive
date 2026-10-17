@@ -82,14 +82,8 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   responses:
-    OK:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    NotFound:
-      description: The requested resource does not exist.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/problem+json:
           schema:
@@ -100,8 +94,8 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    ServerError:
-      description: An unexpected error occurred on Permutive's side.
+    NotFound:
+      description: The requested resource does not exist.
       content:
         application/problem+json:
           schema:
@@ -112,12 +106,18 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    Unauthorized:
-      description: Missing or invalid API key.
+    ServerError:
+      description: An unexpected error occurred on Permutive's side.
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+    OK:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
   schemas:
     Problem:
       type: object

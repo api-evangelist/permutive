@@ -64,14 +64,8 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   responses:
-    OK:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    ServerError:
-      description: An unexpected error occurred on Permutive's side.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/problem+json:
           schema:
@@ -82,12 +76,18 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    Unauthorized:
-      description: Missing or invalid API key.
+    ServerError:
+      description: An unexpected error occurred on Permutive's side.
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+    OK:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
   schemas:
     Problem:
       type: object
@@ -101,17 +101,6 @@ components:
           type: integer
         detail:
           type: string
-    SegmentationRequest:
-      type: object
-      properties:
-        user_id:
-          type: string
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        state:
-          type: object
     Event:
       type: object
       properties:
@@ -126,6 +115,17 @@ components:
           format: date-time
       required:
       - name
+    SegmentationRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        state:
+          type: object
   securitySchemes:
     ApiKeyAuth:
       type: http

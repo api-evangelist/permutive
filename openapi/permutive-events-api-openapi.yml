@@ -52,20 +52,14 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    OK:
-      description: Successful response
-      content:
-        application/json:
-          schema:
-            type: object
-    TooManyRequests:
-      description: Rate limit exceeded.
+    Forbidden:
+      description: The API key does not have access to this resource or operation.
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    ServerError:
-      description: An unexpected error occurred on Permutive's side.
+    TooManyRequests:
+      description: Rate limit exceeded.
       content:
         application/problem+json:
           schema:
@@ -76,12 +70,18 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    Forbidden:
-      description: The API key does not have access to this resource or operation.
+    ServerError:
+      description: An unexpected error occurred on Permutive's side.
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+    OK:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
   schemas:
     Problem:
       type: object
