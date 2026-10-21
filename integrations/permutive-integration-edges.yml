@@ -15,6 +15,11 @@ checked:
 - https://www.antler.co/portfolio
 - https://www.techstars.com/portfolio
 - https://www.ycombinator.com/companies
+- https://cdn.cocoapods.org/all_pods.txt
+- https://cert.appdefensealliance.org/certifications
+- https://play.google.com/sdks
+- https://search.maven.org/solrsearch/select
+- google-play/integrations/google-play-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: IAB Europe TCF Global Vendor List
@@ -143,5 +148,64 @@ edges:
     status: Active
   detected_by: sweep-accelerator-portfolios.py
   first_seen: '2026-10-21'
+- partner_name: CocoaPods trunk
+  partner: null
+  partner_match: register
+  type: register
+  channel: package-registry
+  relationship: distribution-channel
+  direction: provider-built
+  evidence: https://cocoapods.org/pods/PermutiveSDK
+  category: iOS SDK (CocoaPods)
+  contract_reference:
+    register: CocoaPods trunk (cdn.cocoapods.org Specs; github.com/CocoaPods/Specs)
+    spec_file: null
+    role: cocoapods-publisher
+    registered_name: Daniele Forlani
+    matched_domain: permutive.com
+    matched_by: domain
+    pods:
+    - pod: PermutiveSDK
+      version: 0.19.2
+      homepage: http://permutive.com/
+      deprecated: false
+    - pod: PermutiveSDK_swift5
+      version: 2.0.3
+      homepage: http://permutive.com/
+      deprecated: false
+    - pod: PermutiveSDK_swift5.1
+      version: 2.0.5
+      homepage: http://permutive.com/
+      deprecated: false
+    - pod: Permutive_iOS
+      version: 3.1.1
+      homepage: http://permutive.com/
+      deprecated: false
+    - pod: Permutive_tvOS
+      version: 3.1.1
+      homepage: http://permutive.com/
+      deprecated: false
+    signal_note: latest podspec homepage (domain) + authors (name); pods, versions and counts are context
+    detected_by: sweep-mobile-sdk-index.py
+    detected: '2026-10-21'
+  detected_by: sweep-mobile-sdk-index.py
+  first_seen: '2026-10-21'
+- partner_name: Google Play Developer (Google Play SDK Index)
+  partner: google-play
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: Google Play SDK Index
+  evidence: https://play.google.com/sdks/details/com-permutive-android-core
+  mirror_of: google-play/integrations/google-play-integration-edges.yml
+  apps:
+  - Permutive Android
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: mobile SDK (ads)
 source:
 - https://a2aregistry.org/api/agents
